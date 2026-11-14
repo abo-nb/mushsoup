@@ -8,6 +8,7 @@ import { Icon } from '../components/Icon'
 import { MarkdownView } from '../components/MarkdownView'
 import { ErrorNote, Loading } from '../components/Ui'
 import { typeLabel } from '../format'
+import { useRecordRecent } from '../recent'
 
 const MODE_LABELS: Record<string, string> = {
   sequence: '顺序练习',
@@ -36,6 +37,7 @@ export function PracticePage() {
 
   const card = nextQuery.data?.card ?? null
   const session = nextQuery.data?.session
+  useRecordRecent('bank', session?.bankId)
 
   const submitMutation = useMutation({
     mutationFn: (body: SubmitAnswerBody) => api.submitAnswer(sessionId ?? '', body),
@@ -172,7 +174,7 @@ export function PracticePage() {
   if (nextQuery.isError && !nextQuery.data) {
     return (
       <div>
-        <Link to="/" className="back-link">
+        <Link to="/banks" className="back-link">
           ← 返回题库
         </Link>
         <ErrorNote message={errorMessage(nextQuery.error)} />

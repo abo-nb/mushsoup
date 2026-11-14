@@ -23,6 +23,8 @@
     <Project Path="src/Modules/Practice/Practice.csproj" />
     <Project Path="src/Modules/Questions.Contracts/Questions.Contracts.csproj" />
     <Project Path="src/Modules/Questions/Questions.csproj" />
+    <Project Path="src/Modules/Recents.Contracts/Recents.Contracts.csproj" />
+    <Project Path="src/Modules/Recents/Recents.csproj" />
     <Project Path="src/Modules/Scheduling.Contracts/Scheduling.Contracts.csproj" />
     <Project Path="src/Modules/Scheduling/Scheduling.csproj" />
   </Folder>

@@ -1984,7 +1984,8 @@ input[type="checkbox"] {
   .main-nav {
     order: 3;
     width: 100%;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 8px 16px;
   }
 
   .nav-link {

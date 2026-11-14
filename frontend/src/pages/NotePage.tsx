@@ -11,6 +11,7 @@ import { NoteBlocks } from '../components/NoteBlocks'
 import { ErrorNote, Loading } from '../components/Ui'
 import { asBlocks, asString } from '../note-format'
 import { formatDate } from '../format'
+import { useRecordRecent } from '../recent'
 
 const NOTICE_TONES = ['tip', 'warn', 'note', 'example']
 const NOTICE_LABELS: Record<string, string> = {
@@ -119,6 +120,7 @@ function TocList({
 
 export function NotePage() {
   const { id } = useParams<{ id: string }>()
+  useRecordRecent('note', id)
   const noteId = id ?? ''
   const { user } = useAuth()
   const noteQuery = useQuery({

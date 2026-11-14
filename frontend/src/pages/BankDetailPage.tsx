@@ -6,6 +6,7 @@ import type { QuestionSummary } from '../api'
 import { Icon } from '../components/Icon'
 import { DifficultyDots, EmptyState, ErrorNote, Loading } from '../components/Ui'
 import { formatDate, previewText, typeLabel } from '../format'
+import { useRecordRecent } from '../recent'
 
 const CHAPTER_SEP = '\u001f'
 
@@ -183,6 +184,7 @@ const QuestionList = memo(function QuestionList({
 
 export function BankDetailPage() {
   const { id } = useParams<{ id: string }>()
+  useRecordRecent('bank', id)
   const bankId = id ?? ''
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -373,7 +375,7 @@ export function BankDetailPage() {
   if (accessQuery.isError) {
     return (
       <div>
-        <Link to="/" className="back-link">
+        <Link to="/banks" className="back-link">
           ← 返回题库
         </Link>
         <ErrorNote message={errorMessage(accessQuery.error)} />
@@ -388,7 +390,7 @@ export function BankDetailPage() {
 
   return (
     <div>
-      <Link to="/" className="back-link">
+      <Link to="/banks" className="back-link">
         ← 返回题库
       </Link>
 

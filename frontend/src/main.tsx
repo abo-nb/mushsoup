@@ -13,6 +13,7 @@ import './styles/practice.css'
 import './styles/chapters.css'
 import './styles/notes.css'
 import './styles/leaderboard.css'
+import './styles/recent.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {

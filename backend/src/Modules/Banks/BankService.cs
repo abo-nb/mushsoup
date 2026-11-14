@@ -22,7 +22,8 @@ file static class BankMapper
         new BankSettingsDto(bank.Settings.DefaultShuffleOptions, bank.Settings.RequireReview),
         bank.MemberIds,
         bank.QuestionCount,
-        bank.CreatedAt);
+        bank.CreatedAt,
+        bank.UpdatedAt);
 }
 
 internal sealed class BankService(

@@ -35,7 +35,7 @@ export function BankSettingsPage() {
   if (accessQuery.isError) {
     return (
       <div>
-        <Link to="/" className="back-link">
+        <Link to="/banks" className="back-link">
           ← 返回题库
         </Link>
         <ErrorNote message={errorMessage(accessQuery.error)} />

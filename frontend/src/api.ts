@@ -53,6 +53,14 @@ export interface Bank {
   semester: string
   questionCount: number
   createdAt: string
+  updatedAt: string
+}
+
+export interface RecentItem {
+  kind: 'bank' | 'note'
+  itemId: string
+  lastOpenedAt: string
+  openCount: number
 }
 
 export interface BankAccess {
@@ -585,6 +593,11 @@ export const api = {
     request<User>('/api/me/prefs', { method: 'PATCH', body: prefs }),
 
   banks: () => request<Bank[]>('/api/banks'),
+
+  recentItems: (limit = 6) => request<RecentItem[]>(`/api/recents?limit=${limit}`),
+
+  recordRecent: (kind: 'bank' | 'note', itemId: string) =>
+    request<void>('/api/recents', { method: 'POST', body: { kind, itemId } }),
 
   bank: (bankId: string) => request<BankAccess>(`/api/banks/${encodeURIComponent(bankId)}`),
 

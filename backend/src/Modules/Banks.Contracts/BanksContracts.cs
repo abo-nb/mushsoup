@@ -24,7 +24,8 @@ public sealed record BankDto(
     BankSettingsDto Settings,
     IReadOnlyList<string> MemberIds,
     int QuestionCount,
-    DateTime CreatedAt);
+    DateTime CreatedAt,
+    DateTime UpdatedAt);
 
 public sealed record BankAccessDto(BankDto Bank, bool IsOwner, bool IsMember, bool CanView, bool CanEdit);
 

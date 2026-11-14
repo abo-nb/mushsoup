@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.OpenApi;
 using Notes;
 using Practice;
 using Questions;
+using Recents;
 using Scheduling;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -78,6 +79,7 @@ IModule[] modules =
     new AssetsModule(),
     new NotesModule(),
     new LeaderboardModule(),
+    new RecentsModule(),
 ];
 
 foreach (var module in modules)

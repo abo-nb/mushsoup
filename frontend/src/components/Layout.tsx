@@ -23,6 +23,13 @@ export function Layout() {
               end
               className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
             >
+              <Icon name="clock" size={18} />
+              最近
+            </NavLink>
+            <NavLink
+              to="/banks"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
               <Icon name="book" size={18} />
               题库
             </NavLink>

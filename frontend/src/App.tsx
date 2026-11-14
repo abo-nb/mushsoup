@@ -16,6 +16,7 @@ import { PracticePage } from './pages/PracticePage'
 import { PoolsPage } from './pages/PoolsPage'
 import { PublicBanksPage } from './pages/PublicBanksPage'
 import { QuestionEditorPage } from './pages/QuestionEditorPage'
+import { RecentPage } from './pages/RecentPage'
 import { SettingsPage } from './pages/SettingsPage'
 
 function ProtectedLayout() {
@@ -37,7 +38,9 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedLayout />}>
-        <Route path="/" element={<BanksPage />} />
+        <Route path="/" element={<RecentPage />} />
+        <Route path="/banks" element={<BanksPage />} />
+        <Route path="/recent" element={<RecentPage />} />
         <Route path="/public" element={<PublicBanksPage />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/notes" element={<NotesPage />} />

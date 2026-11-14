@@ -11,6 +11,7 @@
     <ProjectReference Include="..\Modules\Scheduling\Scheduling.csproj" />
     <ProjectReference Include="..\Modules\Notes\Notes.csproj" />
     <ProjectReference Include="..\Modules\Leaderboard\Leaderboard.csproj" />
+    <ProjectReference Include="..\Modules\Recents\Recents.csproj" />
   </ItemGroup>
 
   <ItemGroup>
