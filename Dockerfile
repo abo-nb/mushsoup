@@ -38,8 +38,11 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
 # Render 会注入 PORT（render.yaml 里固定为 8080）；ASP.NET Core 读的是 ASPNETCORE_URLS。
+# Mongo__UseEmbedded 必须是 false：容器里的 /app 对非 root 用户只读，也没有 mongod 可执行文件。
+# 这里写死一层，Render 的环境变量没配全时也不会退回去启动内嵌库。
 ENV ASPNETCORE_URLS=http://+:8080 \
     ASPNETCORE_ENVIRONMENT=Production \
+    Mongo__UseEmbedded=false \
     Mongo__UsageLimits__StateFile=/tmp/mongo-usage.json \
     Assets__Directory=/tmp/assets
 

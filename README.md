@@ -94,6 +94,10 @@ node scripts/seed.mjs
    - `Verification__ApiKey`：外部验证服务的 Key
 3. `Mongo__Database`、`Verification__BaseUrl` 已写在 `render.yaml` 里，可按需修改。
 
+不用 Blueprint、手动 New → Web Service 建服务也可以：Dockerfile 已经把 `ASPNETCORE_ENVIRONMENT=Production`、`Mongo__UseEmbedded=false`、`/tmp` 下的可写路径都定好了，`appsettings.Production.json` 补了生产默认值，所以同样只需要填 `Mongo__ConnectionString` 和 `Verification__ApiKey` 两个环境变量。
+
+`Mongo__UseEmbedded` 必须是 `false`：运行镜像以非 root 用户跑、`/app` 不可写，也没有 mongod 可执行文件。漏配这一项，启动时会抛 `Access to the path '/app/data' is denied`，容器反复重启。
+
 注意事项：
 
 - 免费层没有持久化磁盘：上传的图片（`/tmp/assets`）和每日用量计数（`/tmp/mongo-usage.json`）在重新部署后会清空，业务数据都在 MongoDB 里。
