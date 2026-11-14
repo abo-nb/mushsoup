@@ -1,0 +1,26 @@
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Node
+**/node_modules/
+**/dist/
+**/.vite/
+
+# 运行时数据（内嵌 mongod、上传的图片）
+backend/src/Host/data/
+data/
+
+# 本地密钥与构建出来的前端静态文件
+backend/src/Host/appsettings.Local.json
+backend/src/Host/wwwroot/
+
+# 编辑器
+.vs/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

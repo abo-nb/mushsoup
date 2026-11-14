@@ -1,0 +1,13 @@
+* text=auto
+
+# 部署与脚本文件固定 LF，避免 Windows 检出后 Dockerfile 续行出错
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+render.yaml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.mjs text eol=lf
+
+# Windows 批处理保持 CRLF
+*.bat text eol=crlf

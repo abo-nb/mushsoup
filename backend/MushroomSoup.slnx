@@ -1,0 +1,33 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Host/Host.csproj" />
+  </Folder>
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj" />
+    <Project Path="src/BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="src/Modules/Assets.Contracts/Assets.Contracts.csproj" />
+    <Project Path="src/Modules/Assets/Assets.csproj" />
+    <Project Path="src/Modules/Banks.Contracts/Banks.Contracts.csproj" />
+    <Project Path="src/Modules/Banks/Banks.csproj" />
+    <Project Path="src/Modules/Classes.Contracts/Classes.Contracts.csproj" />
+    <Project Path="src/Modules/Classes/Classes.csproj" />
+    <Project Path="src/Modules/Identity.Contracts/Identity.Contracts.csproj" />
+    <Project Path="src/Modules/Identity/Identity.csproj" />
+    <Project Path="src/Modules/Leaderboard.Contracts/Leaderboard.Contracts.csproj" />
+    <Project Path="src/Modules/Leaderboard/Leaderboard.csproj" />
+    <Project Path="src/Modules/Notes.Contracts/Notes.Contracts.csproj" />
+    <Project Path="src/Modules/Notes/Notes.csproj" />
+    <Project Path="src/Modules/Practice.Contracts/Practice.Contracts.csproj" />
+    <Project Path="src/Modules/Practice/Practice.csproj" />
+    <Project Path="src/Modules/Questions.Contracts/Questions.Contracts.csproj" />
+    <Project Path="src/Modules/Questions/Questions.csproj" />
+    <Project Path="src/Modules/Scheduling.Contracts/Scheduling.Contracts.csproj" />
+    <Project Path="src/Modules/Scheduling/Scheduling.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Architecture.Tests/Architecture.Tests.csproj" />
+    <Project Path="tests/Questions.Tests/Questions.Tests.csproj" />
+  </Folder>
+</Solution>

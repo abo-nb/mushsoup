@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+#  Render Blueprint：MushroomSoup（前端 + 后端同一个 Web Service）
+#
+#  为什么用 Docker：Render 没有原生 .NET 运行时，Dockerfile 会先构建
+#  前端，再把 dist 放进后端 wwwroot，由 ASP.NET Core 同源提供页面和 /api。
+#
+#  ⚠️ 两个 sync: false 的变量需要在 Render 后台填写，不会进 Git：
+#    - Mongo__ConnectionString：MongoDB 连接串（含凭据）
+#    - Verification__ApiKey：外部 Discord 验证服务的 Key
+#
+#  ⚠️ 免费层没有持久化磁盘：上传的图片和每日用量计数放在 /tmp，
+#     重新部署后会清空；业务数据都在 MongoDB 里。
+# ─────────────────────────────────────────────────────────────
+services:
+  - type: web
+    name: mushsoup
+    runtime: docker
+    repo: https://github.com/abo-nb/mushsoup.git
+    region: singapore
+    plan: free
+
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+
+    envVars:
+      # ── 端口 ──────────────────────────────────────────────
+      # Dockerfile 里 ASPNETCORE_URLS 固定监听 8080，这里让 Render 也走 8080。
+      - key: PORT
+        value: "8080"
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+      # ── 数据库（必填，在 Render 后台填连接串）──────────────
+      - key: Mongo__UseEmbedded
+        value: "false"
+      - key: Mongo__Database
+        value: soupdb
+      - key: Mongo__IgnoreIndexErrors
+        value: "true"
+      - key: Mongo__ConnectionString
+        sync: false
+
+      # ── 外部验证服务 ──────────────────────────────────────
+      - key: Verification__BaseUrl
+        value: https://ialine2dc.onrender.com
+      - key: Verification__ApiKey
+        sync: false
+
+      # ── 容器内可写路径（免费层无持久化磁盘）───────────────
+      - key: Mongo__UsageLimits__StateFile
+        value: /tmp/mongo-usage.json
+      - key: Assets__Directory
+        value: /tmp/assets

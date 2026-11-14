@@ -1,0 +1,5267 @@
+{
+  "formatVersion": 1,
+  "title": "企業管理概論　完整講義",
+  "subtitle": "整合版：可取代課本的濃縮講義。CH1–CH6 全部知識點、圖表、易錯辨析與人物對照，按教材章節順序編排。後續章節直接往後接。",
+  "tags": [
+    "企管",
+    "生產要素四大類",
+    "企業管理矩陣",
+    "效率 vs 效果",
+    "Katz 三技能",
+    "Mintzberg 十角色",
+    "五大學派",
+    "東方管理",
+    "環境三層",
+    "景氣兩類指標",
+    "市場結構四型",
+    "機械式 vs 有機式",
+    "倫理四大原則",
+    "CSR 四層",
+    "決策十項謬誤",
+    "有限理性"
+  ],
+  "visibility": "public",
+  "year": "高一",
+  "semester": "上",
+  "notice": {
+    "tone": "tip",
+    "text": "**本講義已用教材 PPT（Ch01–Ch05）逐章核對**（2026-11-04）。凡與投影片原文不符之處，已用**紅色「校正」**框標出，並說明「該寫什麼、不要寫什麼」。  \n原則：**考選擇題用理解，考簡答題寫課本原句。**"
+  },
+  "sections": [
+    {
+      "id": "ch1",
+      "label": "CH 01",
+      "title": "認識融合生活的企業",
+      "subtitle": "企業是什麼 → 企業功能與管理 → 企業的重要性",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "企業的定義",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "一群人",
+                "取得並運用生產要素",
+                "產出產品或服務",
+                "滿足消費者需求",
+                "追求利潤"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "四個零件：人、要素、產出、利潤。少一個就不完整——考簡答時四段都要寫到。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "生產要素：四大類（教材原文）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "課本原文：「經濟學家稱這些投入為生產要素，並將生產要素分為**四大類**」。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "要素",
+                "內涵",
+                "手搖飲例子"
+              ],
+              "widths": [
+                130,
+                null,
+                180
+              ],
+              "rows": [
+                [
+                  "自然資源",
+                  "土地、礦產、水源",
+                  "店面與水電"
+                ],
+                [
+                  "人力資源",
+                  "勞動力與技能",
+                  "工讀生"
+                ],
+                [
+                  "資本設備",
+                  "**人造的**生產工具、資金",
+                  "封口機與加盟金"
+                ],
+                [
+                  "**企業家精神**",
+                  "組合其他要素、承擔風險（entrepreneurship，亦稱創業精神）",
+                  "敢押身家開店"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**唯一「主動」的要素**是企業家精神——它負責組合其餘三項並承擔成敗。其餘三項都是被動資源。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這裡有一處必須校正**：我先前講「五項（含資訊）」是**錯的**。課本明確寫**四大類**。  \n「資訊」出現在另一張圖（圖 2.1 的**投入資源**：人力、財務、原物料、科技、資訊），那是**資源**清單，**不是生產要素**。  \n考「生產要素有幾項」→ 答 **4**；考「投入資源有哪些」→ 才是那五項。這兩組不要混。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "產出：產品與服務",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "有形產品",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "摸得到、可儲存、可分割  \n先製造，後銷售"
+                    }
+                  ]
+                },
+                {
+                  "title": "無形服務",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "摸不到、不可儲存、生產與消費同時  \n無法先做好放著"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "非營利組織",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "不以利潤為最終目的，盈餘**不分配**給成員，而回流於組織使命。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "",
+                "企業",
+                "非營利組織"
+              ],
+              "widths": [
+                120,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "首要目標",
+                  "利潤",
+                  "使命／服務"
+                ],
+                [
+                  "盈餘",
+                  "分配給股東",
+                  "不分配，回流使命"
+                ],
+                [
+                  "資金來源",
+                  "銷售收入",
+                  "捐贈、補助、部分收費"
+                ],
+                [
+                  "績效衡量",
+                  "獲利",
+                  "使命達成度"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**必踩的坑**：非營利 **≠** 不賺錢。醫院、私立學校照樣收費、照樣有盈餘，關鍵差別在**盈餘的去向**。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "企業功能 6　×　管理功能 4　＝　企業管理矩陣",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "企業功能（橫）：產、銷、人、研、財、資　　管理功能（縱）：規劃、組織、領導、控制"
+            },
+            {
+              "type": "table",
+              "variant": "matrix",
+              "headers": [
+                "生產",
+                "行銷",
+                "人力資源",
+                "研究發展",
+                "財務",
+                "資訊"
+              ],
+              "widths": [
+                64,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "rows": [
+                {
+                  "header": "規劃",
+                  "cells": [
+                    "產能與排程規劃",
+                    "年度行銷計畫",
+                    "人力需求預測",
+                    "技術藍圖",
+                    "預算編製",
+                    "系統建置藍圖"
+                  ]
+                },
+                {
+                  "header": "組織",
+                  "cells": [
+                    "生產線編組",
+                    "區域／產品編制",
+                    "職務設計與編制",
+                    "專案團隊編組",
+                    "財務部門分工",
+                    "IT 部門與權限"
+                  ]
+                },
+                {
+                  "header": "領導",
+                  "cells": [
+                    "現場督導與激勵",
+                    "業務團隊激勵",
+                    "訓練與員工關係",
+                    "研發人員激勵",
+                    "財務團隊帶領",
+                    "使用者訓練"
+                  ]
+                },
+                {
+                  "header": "控制",
+                  "cells": [
+                    "品質與良率管制",
+                    "業績與費用檢討",
+                    "績效考核",
+                    "進度與預算稽核",
+                    "差異分析",
+                    "系統安全稽核"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**4 × 6 ＝ 24 格**，每格是一項具體管理工作。題目同時出現兩組詞（規劃／組織／領導／控制 ＋ 產／銷／人／研／財／資），就是在考矩陣。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**思想源頭**：這個「管理功能 × 企業功能」的區分，最早來自費堯（見 CH3）。他把企業活動分成六大類，管理只是其中一類，但貫穿其餘五類。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "規劃的目的",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                "指出方向",
+                "降低變革的衝擊",
+                "提供控制標準",
+                "減少資源浪費與重複",
+                "協調各部門"
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**陷阱**：「符合管理程序」**不是**規劃的目的——那是手段，是話術選項。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "服務四特性",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "特性",
+                "意思",
+                "例子"
+              ],
+              "widths": [
+                150,
+                null,
+                180
+              ],
+              "rows": [
+                [
+                  "無形性",
+                  "摸不到、無法事先檢驗",
+                  "心理諮商"
+                ],
+                [
+                  "不可分割性",
+                  "生產與消費同時發生",
+                  "剪髮"
+                ],
+                [
+                  "易變性（異質性）",
+                  "每次品質不一",
+                  "同設計師剪兩次"
+                ],
+                [
+                  "易逝性",
+                  "不能庫存，過了時點即損失",
+                  "空機位、空房"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**陷阱**：「可分割性」是**產品**的特性。航空公司超賣機位，正是為了對沖服務的**易逝性**。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "控制四步",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "建立績效標準",
+                "衡量實際績效",
+                "比較實際與標準",
+                "採取改正行動"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "順序不可顛倒：**沒有標準，就無從比較**。這也是為什麼「建立標準」必須排第一。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "組織型態（考題常涉及）",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "型態",
+                "劃分依據",
+                "判題特徵"
+              ],
+              "widths": [
+                130,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "功能別",
+                  "依專業分工",
+                  "只有行銷部、生產部、人資部"
+                ],
+                [
+                  "產品別",
+                  "依產品線",
+                  "每個產品線自成一體，**沒有功能部門**"
+                ],
+                [
+                  "區域別",
+                  "依地理",
+                  "北區、南區、海外事業部"
+                ],
+                [
+                  "顧客別",
+                  "依客群",
+                  "企業客戶 vs 個人客戶"
+                ],
+                [
+                  "專案組織",
+                  "依任務臨時編組",
+                  "專案結束即解散"
+                ],
+                [
+                  "**矩陣組織**",
+                  "功能別 ＋ 專案別",
+                  "**功能部門仍在，另有專案經理橫向協調**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷法**：看到「公司設有行銷、生產、人資等部門」＋「另設產品專案經理跨部門協調」＝矩陣。若只有產品線、沒有功能部門，才是產品別。\n\n**矩陣的代價**：員工有兩個老闆，容易產生角色衝突與權責不清。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "企業的重要性與學習理由",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "現代企業的重要性（3）",
+                "為何要了解企業（4）"
+              ],
+              "widths": [
+                190,
+                null
+              ],
+              "rows": [
+                [
+                  "提供工作、學校與實現創意的場所",
+                  "提升個人生活技能"
+                ],
+                [
+                  "不斷擴大社會服務的疆界",
+                  "有助個人職涯發展"
+                ],
+                [
+                  "有助於提升人類物質文明",
+                  "能適應未來在企業的工作"
+                ],
+                [
+                  "",
+                  "增加未來成功的可能性"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**背法**：**3 個社會層面、4 個個人層面**。先記數字，再往裡填，考場不會漏點。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "label": "CH 02",
+      "title": "典範改變中的管理學",
+      "subtitle": "管理是什麼 → 管理者類型 → 工作與技能 → 變動環境議題",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "管理的定義（照課本原文背）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "quote",
+              "text": "運用**管理功能**與**資源**，進行**目標設定與達成**的過程。"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "運用管理功能與資源",
+                "目標設定",
+                "目標達成"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "另有一句補充定義：「以兼具**效果**與**效率**的方式達成組織目標」。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**校正一處**：我先前把「**透過他人**完成工作」當成課本定義的核心，**課本原文沒有這四個字**。那是 Robbins 等原文書的說法。  \n考「管理的定義」時，寫**「運用管理功能與資源，進行目標設定與達成的過程」**，不要寫「透過他人」。  \n但「透過他人」**拿來判斷**「這是不是管理活動」仍然好用（工程師自己寫程式＝作業，帶三個人寫＝管理），只是它不是本書的定義句。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "效率 vs 效果（課本用「效果」，即 effectiveness）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "",
+                "效率 efficiency",
+                "效果 effectiveness"
+              ],
+              "widths": [
+                110,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "定義（課本原文）",
+                  "達成特定目標時，組織**資源的使用率**",
+                  "組織達成特定目標的**程度**"
+                ],
+                [
+                  "白話",
+                  "把事**做對**（Do the things right）",
+                  "**做對**的事（Do the right things）"
+                ],
+                [
+                  "關注",
+                  "手段、資源耗用",
+                  "目的、目標達成"
+                ],
+                [
+                  "怎麼算",
+                  "投入產出比（**課本未給公式**）",
+                  "目標達成程度（無法計算）"
+                ],
+                [
+                  "關鍵字",
+                  "成本最低、數量最少、減少浪費、改良製程",
+                  "目標恰當、方向正確、換產品換市場"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**最高頻陷阱**：選項出現「**效果＝產出÷投入**」必錯——那是**效率**的概念。  \n  \n經典情境：**用最低成本生產沒人要的產品 → 高效率、低效果。**"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**注意**：課本只用「**效果**」與「**效率**」，**沒有**給「產出÷投入」這個公式，定義寫的是「**資源的使用率**」。所以簡答題請寫課本那句；「產出÷投入」拿來**理解**可以，拿來**作答**會被扣分。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話**：效率永遠救不了效果。方向錯了，效率越高虧得越快。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "管理者的類型：垂直差異",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "層級",
+                "主要任務",
+                "時間視野",
+                "最需要技能"
+              ],
+              "widths": [
+                130,
+                null,
+                110,
+                110
+              ],
+              "rows": [
+                [
+                  "高階管理者",
+                  "定方向、策略、對外代表",
+                  "長（3–5 年以上）",
+                  "概念技能"
+                ],
+                [
+                  "中階管理者",
+                  "承上啟下、部門協調",
+                  "中（1–3 年）",
+                  "為人處事技能"
+                ],
+                [
+                  "基層管理者",
+                  "督導日常作業、執行",
+                  "短（日／週）",
+                  "技術技能"
+                ]
+              ]
+            },
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 256\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\"><title>管理者層級與技能配比</title><desc>高階、中階、基層管理者對概念技能、為人處事技能、技術技能的需求變化</desc><text x=\"40\" y=\"26\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\">層級</text><text x=\"320\" y=\"26\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\">技能需求</text><polygon points=\"140,60 220,60 240,110 120,110\" fill=\"#0C447C\" stroke=\"#85B7EB\" stroke-width=\"0.5\"/><polygon points=\"120,110 240,110 260,160 100,160\" fill=\"#0C447C\" stroke=\"#85B7EB\" stroke-width=\"0.5\"/><polygon points=\"100,160 260,160 280,210 80,210\" fill=\"#0C447C\" stroke=\"#85B7EB\" stroke-width=\"0.5\"/><text x=\"180\" y=\"85\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#B5D4F4\" text-anchor=\"middle\" dominant-baseline=\"central\">高階管理者</text><text x=\"180\" y=\"135\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#B5D4F4\" text-anchor=\"middle\" dominant-baseline=\"central\">中階管理者</text><text x=\"180\" y=\"185\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#B5D4F4\" text-anchor=\"middle\" dominant-baseline=\"central\">基層管理者</text><text x=\"320\" y=\"48\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\">概念技能</text><text x=\"410\" y=\"48\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\">為人處事</text><text x=\"500\" y=\"48\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\">技術</text><rect x=\"320\" y=\"66\" width=\"80\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"410\" y=\"66\" width=\"55\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"500\" y=\"66\" width=\"30\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"320\" y=\"116\" width=\"55\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"410\" y=\"116\" width=\"80\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"500\" y=\"116\" width=\"55\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"320\" y=\"166\" width=\"30\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"410\" y=\"166\" width=\"55\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><rect x=\"500\" y=\"166\" width=\"80\" height=\"10\" rx=\"2\" fill=\"#0F6E56\" stroke=\"#5DCAA5\" stroke-width=\"0.5\"/><text x=\"320\" y=\"200\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\">條長代表該層級對該技能的需求強度</text></svg>",
+              "caption": "管理者層級與技能配比"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話**：越高越抽象，越低越具體。**為人處事技能是唯一三層都同等重要的**——考「哪項技能對所有層級都重要」，答案就是它。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "管理者的類型：水平差異",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "功能別",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "行銷、生產、財務、人力資源、研發  \n即 CH1 矩陣的橫軸"
+                    }
+                  ]
+                },
+                {
+                  "title": "直線 vs 幕僚",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "直線：**有指揮權**，直接達成目標（廠長）  \n幕僚：**無指揮權**，只提供建議（法務、人資）"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷法**：能不能直接對一線下命令。能＝直線；只能「建議你這樣做」＝幕僚。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Katz 三項管理技能",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "技能",
+                "內涵",
+                "誰最需要"
+              ],
+              "widths": [
+                150,
+                null,
+                110
+              ],
+              "rows": [
+                [
+                  "概念技能",
+                  "看清整體、**釐清因果、分析診斷問題**、長期宏觀定位",
+                  "高階"
+                ],
+                [
+                  "為人處事技能",
+                  "溝通、協調、激勵、團隊",
+                  "**三層都需要**"
+                ],
+                [
+                  "技術技能",
+                  "專業知識與操作能力",
+                  "基層"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "Mintzberg 管理者十角色（3 ＋ 3 ＋ 4）",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "grid",
+              "columns": 3,
+              "items": [
+                {
+                  "title": "人際角色　3",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "**頭臉人物**  \n*對外代表、剪綵、簽約*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**領導者**  \n*帶領、激勵、指揮部屬*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**聯絡人**  \n*對外建立關係網絡*"
+                    }
+                  ]
+                },
+                {
+                  "title": "資訊角色　3",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "**監聽者**  \n*蒐集內外部資訊*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**傳播者**  \n*把資訊傳給組織內部*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**發言人**  \n*對外發布資訊*"
+                    }
+                  ]
+                },
+                {
+                  "title": "決策角色　4",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "**企業家**  \n*發掘機會、推動變革*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**問題解決者**  \n*處理突發衝突與危機*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**資源分配者**  \n*分配人力、資金、時間*"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "**談判者**  \n*與內外部協商條件*"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**三個最常錯**：①「發言人」屬**資訊**角色（雖然名字像在見人）；②「聯絡人」屬**人際**（雖然名字像在傳訊息）；③「談判者」最容易被整個漏掉。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷法**：問「這個動作的對象是什麼」——對**人**（關係）→ 人際；對**消息** → 資訊；對**選擇** → 決策。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "角色理論四概念",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "概念",
+                "定義",
+                "白話"
+              ],
+              "widths": [
+                130,
+                null,
+                190
+              ],
+              "rows": [
+                [
+                  "角色知覺",
+                  "個人對角色應有行為的認知",
+                  "我怎麼理解這個角色"
+                ],
+                [
+                  "角色認同",
+                  "對角色的接受與內化程度",
+                  "我認不認這個角色"
+                ],
+                [
+                  "角色模糊",
+                  "角色期望**不明確**",
+                  "沒人告訴我該做什麼"
+                ],
+                [
+                  "角色衝突",
+                  "**不同人對同一角色有不同期望**",
+                  "**老闆要我衝業績、員工要我減壓**"
+                ],
+                [
+                  "角色扮演",
+                  "實際表現出來的行為",
+                  "我實際怎麼做"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**分辨**：期望「**不清楚**」→ 模糊；期望「**互相矛盾**」→ 衝突。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "變動環境下的管理議題",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "議題",
+                "核心"
+              ],
+              "widths": [
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "多元文化的尊重與認同",
+                  "全球化下的跨文化管理、多元團隊"
+                ],
+                [
+                  "創新與創業精神的開展",
+                  "組織內創業、破壞式創新"
+                ],
+                [
+                  "後現代管理的典範發展",
+                  "典範不再唯一，走向多元與去中心"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "典範與典範轉移"
+            },
+            {
+              "type": "paragraph",
+              "text": "**典範（paradigm）＝ 一群人共同接受、用來理解世界的假設與信念。**關鍵詞是「假設」——它被換掉不是被證明錯了，而是大家不再相信它。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "層次",
+                "動作",
+                "例子",
+                "是典範轉移嗎"
+              ],
+              "widths": [
+                100,
+                null,
+                null,
+                100
+              ],
+              "rows": [
+                [
+                  "換人",
+                  "更換領導者",
+                  "換執行長",
+                  "否"
+                ],
+                [
+                  "換做法",
+                  "改產品、改結構",
+                  "產品改版、部門重組",
+                  "否"
+                ],
+                [
+                  "**換標準**",
+                  "**什麼才算成功變了**",
+                  "**製造導向 → 服務導向**",
+                  "是"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷法**：問「這個新做法失敗時，大家會說『執行不好』還是『這個思路本身不成立』？」前者是典範內調整，後者才是典範轉移。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**不是「推翻」**：典範轉移不是「新典範證明舊典範錯誤」，而是舊典範**不再夠用**。就像相對論沒有讓牛頓力學變成錯的，只是重新劃定了它的適用範圍。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "label": "CH 03",
+      "title": "西方遇見東方：管理理論的演進與融合",
+      "subtitle": "西方五大學派 → 華人管理思想",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "學派總表（先背這張）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "學派",
+                "代表人物",
+                "核心主張",
+                "關鍵詞"
+              ],
+              "widths": [
+                105,
+                95,
+                null,
+                150
+              ],
+              "rows": [
+                [
+                  "科學管理",
+                  "泰勒 Taylor",
+                  "用科學方法找出「唯一最佳方法」",
+                  "動作研究、甘特圖、經濟人"
+                ],
+                [
+                  "管理程序  \n（行政管理）",
+                  "費堯 Fayol",
+                  "從高層設計嚴謹的組織架構與原則",
+                  "五功能、十四原則"
+                ],
+                [
+                  "官僚組織",
+                  "韋伯 Weber",
+                  "以理性合法權威取代個人權威",
+                  "五特徵、不講人情"
+                ],
+                [
+                  "人群關係",
+                  "梅奧 Mayo",
+                  "員工是社會人，受社會心理因素影響",
+                  "霍桑實驗、非正式組織"
+                ],
+                [
+                  "管理科學  \n（計量學派）",
+                  "",
+                  "以計量與系統方法解決管理問題",
+                  "數學模式、電腦、決策"
+                ],
+                [
+                  "系統理論",
+                  "Churchman 邱契門",
+                  "組織是開放系統，與環境互動",
+                  "投入→處理→輸出→回饋"
+                ],
+                [
+                  "**權變理論**",
+                  "",
+                  "沒有最佳解法，一切視情境而定",
+                  "It depends"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**兩個必記的對應**：**梅奧（Mayo）屬人群關係學派**，不是管理科學學派。  \n**教材核對**：課本標題用「**行政管理學派**」（投影片 p5 原文），「管理程序學派」是部分考題與他書的用法，**指同一個學派**——答題優先用「行政管理學派」。"
+            },
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 190\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>西方管理思想演進時間軸</title>\n<desc>從 1911 年泰勒科學管理到 1960 年代權變理論的六個階段</desc>\n<defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" stroke=\"context-stroke\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></marker></defs>\n<text x=\"40\" y=\"28\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\">古典學派</text>\n<text x=\"330\" y=\"28\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\">行為與現代學派</text>\n<path d=\"M50 94 L628 94\" fill=\"none\" stroke=\"#444441\" stroke-width=\"1\" marker-end=\"url(#ar)\"/>\n<circle cx=\"70\" cy=\"94\" r=\"5\" fill=\"#85B7EB\"/>\n<text x=\"70\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1911</text>\n<text x=\"70\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">科學管理</text>\n<text x=\"70\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">泰勒</text>\n<circle cx=\"178\" cy=\"94\" r=\"5\" fill=\"#85B7EB\"/>\n<text x=\"178\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1916</text>\n<text x=\"178\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">行政管理</text>\n<text x=\"178\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">費堯</text>\n<circle cx=\"286\" cy=\"94\" r=\"5\" fill=\"#85B7EB\"/>\n<text x=\"286\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1920s</text>\n<text x=\"286\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">官僚組織</text>\n<text x=\"286\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">韋伯</text>\n<circle cx=\"394\" cy=\"94\" r=\"5\" fill=\"#5DCAA5\"/>\n<text x=\"394\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1930s</text>\n<text x=\"394\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">人群關係</text>\n<text x=\"394\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">梅奧</text>\n<circle cx=\"502\" cy=\"94\" r=\"5\" fill=\"#5DCAA5\"/>\n<text x=\"502\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1950s</text>\n<text x=\"502\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">管理科學</text>\n<text x=\"502\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">計量學派</text>\n<circle cx=\"610\" cy=\"94\" r=\"5\" fill=\"#5DCAA5\"/>\n<text x=\"610\" y=\"78\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\">1960s</text>\n<text x=\"610\" y=\"120\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#e9e9ec\" text-anchor=\"middle\">權變理論</text>\n<text x=\"610\" y=\"142\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9b9ba4\" text-anchor=\"middle\">看情況</text>\n</svg>"
+            },
+            {
+              "type": "paragraph",
+              "text": "泰勒管手 → 費堯管腦 → 韋伯管骨架 → 梅奧發現心 → 計量靠數據 → 權變說看情況",
+              "size": "small"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "泰勒：科學管理（1911《科學管理原理》）",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "核心：管理是科學，不是經驗。任何工作都存在「**唯一最佳方法**」。",
+              "size": "normal"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "四項原則，每條都在治一個病"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "原則",
+                "要治的病"
+              ],
+              "widths": [
+                40,
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "以科學方法取代經驗法則",
+                  "工人各憑手感做事，方法不統一、無標準"
+                ],
+                [
+                  "2",
+                  "科學遴選與訓練員工",
+                  "人崗不匹配，用錯人、也沒訓練"
+                ],
+                [
+                  "3",
+                  "與工人合作，確保按科學原則執行",
+                  "方法訂得再好，工人不配合就落空"
+                ],
+                [
+                  "4",
+                  "管理層與工人均分工作與責任",
+                  "過去責任全壓在工人身上"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**第 2 條常錯**：泰勒主張由**管理層**科學選人、訓練人，**不是讓工人自己挑**——「工人自選」正是他認為的問題本身。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "甘特圖 Gantt chart"
+            },
+            {
+              "type": "paragraph",
+              "text": "**Henry Gantt**（泰勒的追隨者）提出。**縱軸＝活動，橫軸＝時間**，長條表示工期。",
+              "size": "normal"
+            },
+            {
+              "type": "paragraph",
+              "text": "它解決的是「一堆工序怎麼排」的問題——泰勒管**作業層**（一個動作怎麼做最快），甘特管**計劃層**（一堆動作怎麼排最順）。是第一個可視化的進度控制工具。",
+              "size": "normal"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "人性假設與批評"
+            },
+            {
+              "type": "paragraph",
+              "text": "假設人是**經濟人**（工作只為錢）。批評：把人訓練成機器、忽略疲勞與心理需求、勞資對立。",
+              "size": "normal"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "費堯：管理程序（行政管理）學派",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "管理五功能"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "規劃",
+                "組織",
+                "指揮",
+                "協調",
+                "控制"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "現代四功能是把「指揮」與「協調」整併為「**領導**」。",
+              "size": "small"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "十四項原則（常考其中幾項）"
+            },
+            {
+              "type": "paragraph",
+              "text": "分工、權責相符、紀律、命令統一、方向統一、個人利益次於整體利益、公平、員工穩定、主動性…",
+              "size": "small"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "真正的原創：區分「企業活動」與「管理功能」"
+            },
+            {
+              "type": "paragraph",
+              "text": "費堯把企業全部活動分成**六大類**：技術、商業、財務、安全、會計、**管理**。",
+              "size": "normal"
+            },
+            {
+              "type": "paragraph",
+              "text": "管理只是其中**一類**，但**貫穿其餘五類**——生產要管理、銷售要管理、財務也要管理。這正是 CH1 那張「企業功能 × 管理功能」矩陣的思想源頭。",
+              "size": "normal"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**與泰勒的分野**：泰勒**由下往上**（車間工人的動作）；費堯**由上往下**（整個組織的管理職能）。所以說費堯的原則「針對基層作業」，是錯的。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "韋伯：官僚型組織",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "以**理性合法權威**取代世襲與個人魅力，讓組織可預測、可計算。",
+              "size": "normal"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "五大特徵",
+                "白話"
+              ],
+              "widths": [
+                40,
+                190,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "清楚的事業分工",
+                  "每個人只管一塊"
+                ],
+                [
+                  "2",
+                  "清楚的**權力體系**（課本原文用「權力」，不是「權責」）",
+                  "誰能指揮誰、層層節制"
+                ],
+                [
+                  "3",
+                  "正式的規則和程序",
+                  "一切照規定走"
+                ],
+                [
+                  "4",
+                  "**不講人情**",
+                  "排除徇私，只看規則"
+                ],
+                [
+                  "5",
+                  "用人唯才",
+                  "依能力任用，不靠關係"
+                ]
+              ]
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "優點",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "公平、可預測、效率穩定、減少徇私"
+                    }
+                  ]
+                },
+                {
+                  "title": "缺點",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "僵化、反應慢、壓抑創新、官僚主義"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**「官僚」在管理學是中性詞**，指理性化的組織形式，不是罵人。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "你去**戶政事務所**辦文件：抽號碼牌、填固定表格、承辦人照規定審核、誰也不能插隊——這就是韋伯講的官僚制在運作。它讓人覺得慢，但保證了「**換一個承辦人，結果一樣**」，這正是它被發明出來要解決的問題。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "梅奧：人群關係學派（霍桑實驗 1924–1932）",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "**原始假設完全是泰勒式的**：研究照明亮度是否影響產量——想找到「最佳物理條件」。",
+              "size": "normal"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "階段",
+                "實驗",
+                "發現"
+              ],
+              "widths": [
+                50,
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "一",
+                  "照明實驗",
+                  "調亮產量升，**調暗也升**——物理條件解釋不通"
+                ],
+                [
+                  "二",
+                  "繼電器裝配實驗",
+                  "改休息與供餐，產量持續上升；真正起作用的是**被關注**與**群體氛圍**"
+                ],
+                [
+                  "三",
+                  "大規模訪談",
+                  "讓員工自由表達，**士氣上升**"
+                ],
+                [
+                  "四",
+                  "接線板佈線實驗",
+                  "發現**非正式組織**與群體規範，會集體限制產量"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "結論：課本只寫**兩項**（必背，別多寫）"
+            },
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                "**團體氣氛**（群體氛圍、同事關係）",
+                "工作人員感覺**受到重視**"
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**校正**：我先前講「社會人／非正式組織／士氣」三項，那是**標準管理學**的整理，**不是課本原文**。課本 p16 明寫「造成生產力提升的因素有**二**」。  \n答簡答題請寫這兩項；「社會人、非正式組織」可作為補充說明，但別當成書上的清單。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**課本沒有「霍桑效應」這個詞**。它是後人對這個實驗的命名，用來解釋「被觀察就改變行為」。知道就好，答題時當補充。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**反直覺但正確**：霍桑實驗的原始設計，**確實是基於科學管理的理念**。用舊典範的工具，挖出了舊典範的裂縫。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "想像你是廠長：把燈調亮，產量上升；再調暗，產量**還是上升**——你原本想找「最亮多少產量最高」，結果發現**亮度根本不是變數**。  \n真正的原因是那六個女工**知道自己被挑出來、被主管盯著看**，所以更賣力。這就是為什麼結論會是「團體氣氛」與「感覺受重視」這兩項。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "管理科學學派（計量學派，1950s）",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "五大特徵"
+              ],
+              "widths": [
+                40,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "將科學分析的方法用之於管理的問題"
+                ],
+                [
+                  "2",
+                  "以增進經理人的**決策能力**為目的"
+                ],
+                [
+                  "3",
+                  "特別重視有關**經濟效益**的規範"
+                ],
+                [
+                  "4",
+                  "倚賴**數學模式**解決問題"
+                ],
+                [
+                  "5",
+                  "使用**電腦與科技**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**局限**：難以處理人的因素與質性問題，模式常簡化現實。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "系統理論",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "第一套：系統怎麼運作（四元素）"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "投入",
+                "處理（轉換）",
+                "輸出",
+                "回饋"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "**回饋是關鍵**：它把輸出端的結果送回輸入端，讓系統能自我調節。CH1 學的「控制四步」，本質上就是一條回饋迴路。",
+              "size": "normal"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**陷阱**：基本元素是投入、處理、輸出、回饋，**沒有「再生」**。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "第二套：系統有什麼性質（Churchman 四特徵）"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "特徵",
+                "意思"
+              ],
+              "widths": [
+                40,
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "系統有目標",
+                  "目標是評估系統好壞的標準"
+                ],
+                [
+                  "2",
+                  "由元素／次系統組成",
+                  "系統可再拆，每個次系統自己也是系統"
+                ],
+                [
+                  "3",
+                  "存在於環境之中",
+                  "環境影響很大，但**系統無法控制環境**"
+                ],
+                [
+                  "**4**",
+                  "次系統相互依存",
+                  "牽一髮動全身，**不是各自獨立**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**最容易錯的一句話**：「各次系統彼此獨立」。這和系統理論的基本立場完全相反——系統理論存在的理由，正是反對把組織拆成互不相關的部門。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "兩個延伸詞"
+            },
+            {
+              "type": "paragraph",
+              "text": "**開放系統**：與環境交換資源、資訊、能量。**綜效（Synergy）**：整體大於部分之和。",
+              "size": "normal"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "權變理論（1960s–70s）",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "核心：**沒有放諸四海皆準的最佳方法**，一切視情境而定。",
+              "size": "normal"
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "關鍵詞",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "It depends（看情況）  \n「沒有最佳解法」"
+                    }
+                  ]
+                },
+                {
+                  "title": "主要權變變數",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "環境不確定性、組織規模  \n技術性質、人員特質"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**與其他學派的根本差異**：前面各派都在找「最佳方法」，只有權變說「**沒有最佳，只有適合**」。題幹出現「考慮情境」「沒有最佳解法」「隨環境調整」，答案就是它。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "東方管理思想：四種思想與適用情境",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "思想",
+                "靠什麼管",
+                "核心主張",
+                "適用情境"
+              ],
+              "widths": [
+                100,
+                90,
+                null,
+                150
+              ],
+              "rows": [
+                [
+                  "無為說  \n（老、莊）",
+                  "不干預",
+                  "順應自然、不多主張、充分授權",
+                  "員工成熟、環境多變"
+                ],
+                [
+                  "有為說",
+                  "主動介入",
+                  "積極管理、有所作為",
+                  "員工經驗不足、情況危急"
+                ],
+                [
+                  "儒家",
+                  "**德治**",
+                  "仁、禮、教化、以身作則",
+                  "重倫理與長期關係"
+                ],
+                [
+                  "法家",
+                  "**法治**",
+                  "制度、賞罰分明、權威",
+                  "需要紀律與明確規範"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "無為說：不是什麼都不做"
+            },
+            {
+              "type": "quote",
+              "text": "「道常無為而無不為。」",
+              "source": "《道德經》第三十七章"
+            },
+            {
+              "type": "quote",
+              "text": "「治大國若烹小鮮。」",
+              "source": "《道德經》第六十章"
+            },
+            {
+              "type": "paragraph",
+              "text": "「烹小鮮」是關鍵比喻：煎小魚不能一直翻，翻多了就碎。治理也是——**干預太多，反而把事情弄壞**。",
+              "size": "normal"
+            },
+            {
+              "type": "paragraph",
+              "text": "三層意思：**不妄為**（不做違反規律的事）、**順自然**（依事物本性而行）、**簡政**（減少繁苛規定、充分授權）。",
+              "size": "normal"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**無為 ≠ 不為**。老子講的是「無為而無不為」——正因為不妄加干預，事情反而都能成。選項出現「自我放逐、故做頹廢」這種消極避世，一定不是無為說。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**三者對照**：道家靠「不干預」，儒家靠「德行感化」，法家靠「制度賞罰」。三種不同的控制來源：自我調節、價值認同、外部規範。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "台灣的管理資本主義（課本原文三點）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "課本原文",
+                "說明"
+              ],
+              "widths": [
+                40,
+                180,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "**國家資本主義**在大型產業的發展過程中扮演非常重要的角色",
+                  "例：**台積電、中鋼**——由政府主導設立、扶植"
+                ],
+                [
+                  "2",
+                  "現代企業試圖將**零碎知識系統化**",
+                  "把師徒相傳的經驗變成可複製的知識"
+                ],
+                [
+                  "3",
+                  "**家族企業**的發展",
+                  "所有權與經營權高度重疊；**家族原則與企業原則交互作用**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**課本另有兩個關鍵詞**：**彈性化協力企業組合結構**（中小企業分工網絡，接單後互相支援）、**家族原則與企業原則交互作用**（用人看關係 vs 看能力的拉扯）。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**校正**：你手抄的「太短管理資本主義」、我先前猜的「**家族管理資本主義**」——**兩個都不對**。課本標題是「**台灣的管理資本主義**」，內容以**國家資本主義**為第一條，家族企業只是第三條。  \n考這題時，**「國家資本主義＋台積電、中鋼」是最容易被記住的得分點**。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "「關係」在組織內的運作（課本用正義的語言講）",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "課本不講「人情、面子」，而是用**兩種正義**來描述關係的作用：",
+              "size": "normal"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "正義類型",
+                "關係原則",
+                "意思"
+              ],
+              "widths": [
+                130,
+                130,
+                null
+              ],
+              "rows": [
+                [
+                  "程序正義",
+                  "**尊尊原則**",
+                  "依**地位高低**決定誰先、誰有發言權——尊重層級與輩分"
+                ],
+                [
+                  "**分配正義**",
+                  "**親親法則**",
+                  "依**親疏遠近**決定資源怎麼分——越近的分越多"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**這兩個詞是本書的特色，別組教材很少這樣寫。**「尊尊」管**程序**（怎麼進行），「親親」管**分配**（怎麼分）。記法：**尊＝位階，親＝距離**。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**我先前講的「差序格局、人情、面子、回報」**是社會學的通用描述（費孝通的概念），**不是這本課本的用詞**。理解可以用，答題請寫「尊尊原則／親親法則」。"
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "正面",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "信任成本低、協調快  \n資訊流通順暢  \n危機時動員力強"
+                    }
+                  ]
+                },
+                {
+                  "title": "負面",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "裙帶關係、用人唯親  \n外人難以融入  \n制度被關係架空"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "跨章預告：X／Y／Z 與品質三部曲",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "人名",
+                "主張",
+                "屬於"
+              ],
+              "widths": [
+                120,
+                null,
+                100
+              ],
+              "rows": [
+                [
+                  "McGregor  \n（麥葛瑞哥）",
+                  "**X 理論**：人性本懶，需強制管控  \n**Y 理論**：人性本善，可自我管理",
+                  "激勵理論"
+                ],
+                [
+                  "**Ouchi**  \n（大內）",
+                  "**Z 理論**：日本式管理——終身雇用、共識決策、緩慢升遷",
+                  "激勵／組織文化"
+                ],
+                [
+                  "Juran  \n（裘蘭）",
+                  "**品質三部曲**：品質計畫 → 品質控制 → 品質改進",
+                  "品質管理"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**唯一要記住**：**Z 理論是 Ouchi（大內）提的，不是 McGregor。**McGregor 只有 X 和 Y。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "label": "CH 04",
+      "title": "從變動的環境中開創新契機",
+      "subtitle": "總體環境 → 任務環境 → 全球環境 → 組織與環境互動",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "主線：環境是不能控制、但必須回應的力量",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "全章只有一個結構：**越外圈越間接、越難影響；越內圈越直接、越可互動。**所有「這是哪一類環境」的題目，都在考你能不能把一個例子放進正確的圈層。"
+            },
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 400\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>組織環境的三層結構</title>\n<desc>由外而內為全球環境、總體環境、任務環境，組織位於最內層。</desc>\n<rect x=\"40\" y=\"40\" width=\"600\" height=\"340\" rx=\"24\" fill=\"#26262d\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"64\" y=\"64\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#cfcfd6\" dominant-baseline=\"central\">全球環境</text>\n<rect x=\"64\" y=\"80\" width=\"132\" height=\"28\" rx=\"6\" fill=\"#2d2d34\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"130\" y=\"94\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">市場全球化</text>\n<rect x=\"204\" y=\"80\" width=\"132\" height=\"28\" rx=\"6\" fill=\"#2d2d34\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"270\" y=\"94\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">金融全球化</text>\n<rect x=\"344\" y=\"80\" width=\"132\" height=\"28\" rx=\"6\" fill=\"#2d2d34\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"410\" y=\"94\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">製造全球化</text>\n<rect x=\"484\" y=\"80\" width=\"132\" height=\"28\" rx=\"6\" fill=\"#2d2d34\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"550\" y=\"94\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">人力資源全球化</text>\n<rect x=\"72\" y=\"124\" width=\"536\" height=\"232\" rx=\"18\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"96\" y=\"148\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#AFA9EC\" dominant-baseline=\"central\">總體環境（間接影響）</text>\n<rect x=\"94\" y=\"162\" width=\"92\" height=\"26\" rx=\"6\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"140\" y=\"175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">科技</text>\n<rect x=\"194\" y=\"162\" width=\"92\" height=\"26\" rx=\"6\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"240\" y=\"175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">社會文化</text>\n<rect x=\"294\" y=\"162\" width=\"92\" height=\"26\" rx=\"6\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">人口統計</text>\n<rect x=\"394\" y=\"162\" width=\"92\" height=\"26\" rx=\"6\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"440\" y=\"175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">經濟</text>\n<rect x=\"494\" y=\"162\" width=\"92\" height=\"26\" rx=\"6\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"540\" y=\"175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">法律政策</text>\n<rect x=\"104\" y=\"204\" width=\"472\" height=\"152\" rx=\"14\" fill=\"#173430\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"128\" y=\"228\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#5DCAA5\" dominant-baseline=\"central\">任務環境（直接互動）</text>\n<rect x=\"128\" y=\"242\" width=\"100\" height=\"26\" rx=\"6\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"178\" y=\"255\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">顧客</text>\n<rect x=\"238\" y=\"242\" width=\"100\" height=\"26\" rx=\"6\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"288\" y=\"255\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">競爭者</text>\n<rect x=\"348\" y=\"242\" width=\"100\" height=\"26\" rx=\"6\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"398\" y=\"255\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">供應商</text>\n<rect x=\"458\" y=\"242\" width=\"100\" height=\"26\" rx=\"6\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"508\" y=\"255\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">人力資源市場</text>\n<rect x=\"240\" y=\"282\" width=\"200\" height=\"52\" rx=\"10\" fill=\"#1f4a42\" stroke=\"#5DCAA5\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"300\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">組織</text>\n<text x=\"340\" y=\"318\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">被環境包圍，但能選擇回應方式</text>\n</svg>"
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "判斷口訣：**能不能跟它打交道**——供應商可以談判，少子化不能談判"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "總體環境：五類（間接影響、幾乎無法控制）",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "類別",
+                "內容",
+                "對企業的影響"
+              ],
+              "widths": [
+                110,
+                null,
+                200
+              ],
+              "rows": [
+                [
+                  "科技",
+                  "技術水準、創新速度、自動化、資訊科技",
+                  "縮短產品生命週期、創造新業態、提升效率"
+                ],
+                [
+                  "社會文化",
+                  "價值觀、生活方式、次文化、消費習慣",
+                  "需求改變、產品訴求改變"
+                ],
+                [
+                  "人口統計",
+                  "年齡、性別、所得、教育、家庭結構、城鄉",
+                  "勞動供給、市場規模與結構"
+                ],
+                [
+                  "經濟",
+                  "景氣、失業率、通膨、利率、匯率",
+                  "成本、購買力、投資意願"
+                ],
+                [
+                  "法律政策",
+                  "勞動、環保、消保、公平交易、稅制、貿易",
+                  "直接改變成本結構、強制遵守"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "科技環境：三種「死法」"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "影響",
+                "企業會怎麼死"
+              ],
+              "widths": [
+                180,
+                null
+              ],
+              "rows": [
+                [
+                  "縮短產品生命週期",
+                  "產品還在賺就已經過時，被迫持續投入研發"
+                ],
+                [
+                  "創造新的經營形式",
+                  "別人用平台、訂閱、外送重定義產業，你的舊模式被繞開"
+                ],
+                [
+                  "提升企業效率",
+                  "對手用自動化把成本壓到你的七折"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**易錯陷阱**：科技**降低**進入障礙，結果是競爭**增加**，不是減少。門檻變低＝加入者變多。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "智慧手機一出現，**數位相機、MP3、導航機、手電筒**全被整併掉——這是「縮短產品生命週期」；外送平台讓餐廳不必有店面也能做生意——這是「創造新的經營形式」；超商導入自助結帳，同一班人力少一半——這是「提升企業效率」。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "社會文化環境：縱斷面 vs 橫斷面"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "",
+                "縱斷面（時間軸）",
+                "橫斷面（群體軸）"
+              ],
+              "widths": [
+                120,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "看什麼",
+                  "**同一群人**在不同時間的變化",
+                  "**同一時點**不同群體的並存"
+                ],
+                [
+                  "名稱",
+                  "與時變遷的文化",
+                  "多元並陳的次文化"
+                ],
+                [
+                  "例子",
+                  "環保意識、性別平權、現金→行動支付",
+                  "世代差異、地域、族群、宗教"
+                ],
+                [
+                  "管理意涵",
+                  "要**預測趨勢**",
+                  "要**分眾對待**（多元共融）"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷口訣**：問自己「這是**同一群人變了**，還是**不同群人同時存在**？」前者縱斷面，後者橫斷面。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**教材核對**：投影片**沒有出現「縱斷面／橫斷面」這六個字**，原文是「同一個社會的文化或價值觀會**隨著時間**而發生變化」「社會愈來愈接受**次文化多元並陳**的現象」。  \n但你手抄的目錄有這兩個詞 → 應該是**教科書正文**的用語。**保留，照背。**"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "手搖飲十年前流行「**全糖**」，現在「微糖、無糖」當道——同一群人、不同時間，這是**縱斷面**。同一條街上，傳統早餐店與健身餐盒店**同時存在**、各有各的客人——這是**橫斷面**。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "人口統計：少子化與高齡化要分開記"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "現象",
+                "對企業的影響"
+              ],
+              "widths": [
+                110,
+                null
+              ],
+              "rows": [
+                [
+                  "少子化",
+                  "勞動力供給減少（搶才、薪資上漲、自動化誘因上升）、內需市場縮小"
+                ],
+                [
+                  "高齡化",
+                  "銀髮商機（長照、醫療、保健、旅遊）、勞動年齡延長、退休金與健保負擔"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "兩者合起來＝**人口紅利消失** → 勞動成本上升 ＋ 市場結構改變。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**教材核對**：投影片這節只有**表 4.1「老化指數統計表」**（民國 100–111 年，65 歲以上占比 **10.89% → 17.56%**，老化指數 **72.20 → 144.93**），**沒有「少子化」「高齡化」這兩個詞**。  \n但**表 4.1 本身就是考點**——你之前那道「哪個地區老化指數最高」的題，就是從這張表出的。**老化指數公式一定要會算。**"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "小學**減班、併校、私校退場**，是少子化在教育部門的樣子；同一時間醫院開**長照中心**、旅行社推**銀髮團**、藥局加賣保健食品，是高齡化的商機。同一股人口變化，一邊在萎縮、一邊在長大。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "經濟環境：景氣指標兩類",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "類型",
+                "時間關係",
+                "用途",
+                "代表指標"
+              ],
+              "widths": [
+                110,
+                100,
+                90,
+                null
+              ],
+              "rows": [
+                [
+                  "領先指標",
+                  "**先動**",
+                  "預測未來",
+                  "**七項**：製造業平均每月工時、新接訂單、海關出口值、股價指數、躉售物價、M1B、房屋建築申請面積"
+                ],
+                [
+                  "同時指標",
+                  "**同步動**",
+                  "確認現在",
+                  "**六項**：工業生產、製造業生產、製造業銷售值、平均每人每月薪資、票據交換金額、國內貨運量"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**校正（重要）**：課本只列**兩類**指標——**領先、同時**。**沒有「落後指標」**；失業率與通貨膨脹率在課本裡是**另列的兩項指標**，不屬於第三類。  \n所以考「景氣指標分為幾類」→ 答 **2 類**。  \n「落後指標（失業率、物價、存貨）」是**標準管理學／經濟學**的分法，拿來理解很好，但**不是這本書的分類**。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**但失業率的性質仍要會判斷**：景氣復甦時企業先增產、後增聘，失業率慢半拍才下降——所以它在**時間上**確實落後。若題目選項只有「領先／同時／落後」，失業率選**落後**；若問「課本列幾類」，答**兩類**。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "景氣對策信號（9–45 分，五種燈）"
+            },
+            {
+              "type": "chips",
+              "items": [
+                {
+                  "label": "紅燈",
+                  "note": "38–45　過熱",
+                  "tone": "red"
+                },
+                {
+                  "label": "黃紅燈",
+                  "note": "32–37　轉熱",
+                  "tone": "amber"
+                },
+                {
+                  "label": "綠燈",
+                  "note": "23–31　穩定",
+                  "tone": "green"
+                },
+                {
+                  "label": "黃藍燈",
+                  "note": "17–22　轉弱",
+                  "tone": "blue"
+                },
+                {
+                  "label": "藍燈",
+                  "note": "9–16　低迷",
+                  "tone": "navy"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "分數區間各版教材可能微調，**以課本為準**；「紅＝過熱、綠＝穩定、藍＝低迷」的順序不會變。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "藍燈（低迷）時：建商**延後推案**、企業**凍結徵才**、銀行**緊縮放款**；政府則降息、擴大公共支出——燈號不只是描述，它直接決定大家下一步動作。紅燈（過熱）時相反：央行升息、選擇性信用管制，踩剎車。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "失業與通膨"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "概念",
+                "要點"
+              ],
+              "widths": [
+                120,
+                null
+              ],
+              "rows": [
+                [
+                  "失業類型",
+                  "**摩擦性**（換工作）、**結構性**（技能不合）、**循環性**（景氣衰退）"
+                ],
+                [
+                  "通膨成因",
+                  "**需求拉動**（太多錢追太少貨）、**成本推動**（原物料、工資上漲）"
+                ],
+                [
+                  "通膨影響",
+                  "成本上升、購買力下降、利率上升、需求緊縮"
+                ],
+                [
+                  "**停滯性通膨**",
+                  "經濟停滯 ＋ 物價上漲，政策兩難（緊縮打經濟、寬鬆助通膨）"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "法律與政策環境",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "內容：勞動法規（勞基法、加班費）、環保法規、消費者保護、公平交易（反托拉斯）、稅制、金融監理、貿易政策、個資保護。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "特性",
+                "說明"
+              ],
+              "widths": [
+                120,
+                null
+              ],
+              "rows": [
+                [
+                  "強制性",
+                  "不遵守就罰，沒有選擇餘地"
+                ],
+                [
+                  "難以改變",
+                  "單一企業幾乎無法影響，只能配合或遊說"
+                ],
+                [
+                  "改成本結構",
+                  "加班費上調、碳費開徵 → 成本直接跳升"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "**辨識法**：看到「法規、罰則、稅、補助、政策」→ 法律與政策環境。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "任務環境：直接互動、可以點名",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "",
+                "總體環境",
+                "任務環境"
+              ],
+              "widths": [
+                110,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "影響方式",
+                  "間接",
+                  "**直接**"
+                ],
+                [
+                  "範圍",
+                  "所有組織共同面對",
+                  "特定組織／產業"
+                ],
+                [
+                  "對象",
+                  "模糊（一股趨勢）",
+                  "**能點名**"
+                ],
+                [
+                  "可控性",
+                  "幾乎不能影響",
+                  "可互動、談判、合作"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "競爭者：兩套分類，不要混"
+            },
+            {
+              "type": "paragraph",
+              "text": "**第一套｜競爭關係遠近**：**直接競爭**＝同類產品搶同一群顧客（可口可樂 vs 百事）；**間接競爭**＝不同產品滿足同一需求（高鐵 vs 飛機 vs 視訊會議）。"
+            },
+            {
+              "type": "paragraph",
+              "text": "**第二套｜市場結構**（家數 × 產品是否同質）："
+            },
+            {
+              "type": "table",
+              "headers": [
+                "結構",
+                "家數",
+                "產品",
+                "定價權",
+                "台灣例子"
+              ],
+              "widths": [
+                110,
+                70,
+                110,
+                110,
+                null
+              ],
+              "rows": [
+                [
+                  "完全競爭",
+                  "很多",
+                  "**同質**",
+                  "無（價格接受者）",
+                  "稻米、農產品、外匯"
+                ],
+                [
+                  "獨佔性競爭",
+                  "很多",
+                  "**異質**（有差異）",
+                  "有一些",
+                  "手搖飲、特色餐飲、髮廊"
+                ],
+                [
+                  "寡占",
+                  "**少數**",
+                  "同質或異質",
+                  "大，但**相互牽制**",
+                  "**電信**、航空、水泥、汽油"
+                ],
+                [
+                  "**獨占**",
+                  "**一家**",
+                  "唯一、無替代",
+                  "最大",
+                  "**電力（台電）**、自來水、專利藥"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**本章最經典的陷阱**：**獨佔性競爭 ≠ 獨占**。前者「很多家、產品有差異」，後者「只有一家」。  \n另外：**電力＝獨占**（不是寡占）；**電信＝寡占**（不是獨占）。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**教材核對**：投影片 p26 只給**定義**（完全競爭「家數眾多、產品近乎同質」／獨佔性競爭「廠商數多，不過產品差異化」／寡佔「數目少，決策互相牽制」／獨佔「僅單一廠商，沒有近似替代品」），**沒有舉任何產業例子**。  \n表上的「台灣例子」是我補的通用例，用來幫你判斷。**答題以定義特徵判斷，不要死記例子**——尤其「稻米市場」嚴格說有政府收購與進口配額，並非標準的完全競爭。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "同一個夜市裡：五十家雞排攤賣幾乎一樣的東西、只能比價 → **完全競爭**；各家手搖飲有品牌與口味差異，貴五元還有人排隊 → **獨佔性競爭**；三家電信一降價全部跟進 → **寡占**；台電你別無選擇 → **獨占**。  \n判斷順序：**先數家數，再看產品有沒有差異**。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "寡占的形成原因"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "是原因",
+                "說明"
+              ],
+              "widths": [
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "規模經濟",
+                  "大廠單位成本低，小廠活不下去"
+                ],
+                [
+                  "投資規模／資本門檻",
+                  "沉澱成本高，新進者進不來"
+                ],
+                [
+                  "執照與法規",
+                  "特許行業（電信、金融）"
+                ],
+                [
+                  "關鍵資源、專利、通路",
+                  "少數廠商掌握上游"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "**不是原因**：「完全競爭後的必然結果」——兩者方向相反，競爭越完全越不可能形成寡占。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "供應商與人力資源市場"
+            },
+            {
+              "type": "paragraph",
+              "text": "**供應商**：議價能力、交期、品質、數量、**單一來源風險**（斷鏈）。供應商越少、越獨特 → 議價能力越強。"
+            },
+            {
+              "type": "paragraph",
+              "text": "**人力資源市場**：勞動供給數量與素質、薪資水準、技能落差、工會力量。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "中心衛星生產體系（課本習題考點）"
+            },
+            {
+              "type": "paragraph",
+              "text": "結構：**中心廠**（裝配／品牌／通路）＋ **衛星廠**（零件、代工）。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "誰",
+                "得到什麼"
+              ],
+              "widths": [
+                110,
+                null
+              ],
+              "rows": [
+                [
+                  "中心廠",
+                  "較低廉的原物料、**品質與交期可控**、供貨穩定、不必全額投資產能"
+                ],
+                [
+                  "衛星廠",
+                  "**穩定訂單**、**中心廠的技術與財務支援**、管理輔導"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**易錯**：技術與財務支援是**中心 → 衛星**的**單向**流動。選項若寫「中心廠獲得較多財務技術支援」，方向就反了。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "**巨大機械（捷安特）**接到歐洲一張大單，把車架、輪組、變速器、塗裝分別下給幾十家衛星廠，自己只做**設計、品牌與最後組裝**。  \n衛星廠換到的是「**一張穩定的長約**」，中心廠換到的是「**不必自己養全部產能**」——雙方各拿到自己最缺的東西。  \n反過來看：衛星廠的技術與資金是**中心廠輔導來的**，不是衛星廠去支援中心廠。這就是為什麼選項把方向寫反時要抓出來。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "全球環境：四種全球化",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "全球化",
+                "在動的東西",
+                "具體表現",
+                "主要風險"
+              ],
+              "widths": [
+                110,
+                90,
+                null,
+                130
+              ],
+              "rows": [
+                [
+                  "市場",
+                  "**顧客**",
+                  "需求趨同、全球品牌、單一市場",
+                  "低估在地差異"
+                ],
+                [
+                  "金融",
+                  "**錢**",
+                  "資金跨國流動、國際資本市場",
+                  "**匯率風險**、熱錢"
+                ],
+                [
+                  "製造",
+                  "**貨**",
+                  "全球供應鏈、成本套利、靠近市場",
+                  "斷鏈、政治風險"
+                ],
+                [
+                  "人力資源",
+                  "**人**",
+                  "跨國人才、外派、多元文化團隊",
+                  "文化衝突、管理複雜"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**辨識口訣**：**錢動＝金融、貨動＝製造、人動＝人資、顧客動＝市場。**看題幹強調的那個動作在移動什麼。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "同一家公司的四個動作：去**美國、日本設廠** → 製造全球化；派**台灣工程師**過去支援、在當地招募 → 人力資源全球化；**外資買它的股票**、匯率一動成本就變 → 金融全球化；同一支手機在台北、東京、柏林**同步上市、規格價格一致** → 市場全球化。"
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "**推力**：通訊與運輸成本下降、貿易自由化（WTO／FTA）、本國市場飽和、追求規模經濟、尋找低成本資源。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "組織與環境的互動：改變自己，還是改變環境",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "被動適應（改變自己）",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "**1. 跨界角色**：站在組織與環境交界，對外收資訊、對內傳遞（業務、採購、公關、市場調查、客服、法務）  \n**2. 強規劃與預測能力**：預測環境變化、情境規劃  \n**3. 發展彈性結構**：扁平化、專案團隊、外包、約聘、多能工  \n**4. 合併、併購與合資**：水平（同業）、垂直（上下游）、多角化（無關）"
+                    }
+                  ]
+                },
+                {
+                  "title": "主動影響（讓環境配合自己）",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "**1. 廣告及公共關係** → 改變**顧客**  \n**2. 政策性活動**（遊說、公聽會、利益團體）→ 改變**法規**  \n**3. 商會／同業公會** → 集體改變**產業環境**"
+                    },
+                    {
+                      "type": "paragraph",
+                      "size": "small",
+                      "text": "延伸：策略聯盟、契約、垂直整合"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷法**：問「這個動作是**讓自己配合環境**，還是**讓環境配合自己**？」前者被動，後者主動。  \n**跨界角色的判準是「直接接觸外部」**，不是職位高低——研發工程師、產線作業員不算。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**注意**：「切割部門成立子公司」**不在**課本列的被動適應四機制裡（屬組織重組）。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "疫情期間：餐廳改做外送、服飾廠把產線改成口罩、旅行社改賣國旅——全都是「**改自己**」，環境一點都沒變好。  \n反過來，食品公會聯合向政府爭取調降貨物稅、藥廠爭取健保給付、建商公會反對囤房稅——這些是「**讓規則配合自己**」，屬主動影響。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "機械式 vs 有機式組織（CH5 內容，但 CH4 習題已考）",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Burns 與 Stalker 提出的兩種理想型。判斷只有一句：**環境穩定用機械式，環境變動用有機式。**"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "構面",
+                "機械式",
+                "有機式"
+              ],
+              "widths": [
+                110,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "專業分工",
+                  "高（細分、固定）",
+                  "低（寬廣、跨職能）"
+                ],
+                [
+                  "**控制幅度**",
+                  "**窄**",
+                  "**寬**"
+                ],
+                [
+                  "層級數",
+                  "多（**高型組織**）",
+                  "少（**扁平**）"
+                ],
+                [
+                  "正式化",
+                  "高（規則、程序多）",
+                  "低"
+                ],
+                [
+                  "決策",
+                  "集中（集權）",
+                  "分散（分權）"
+                ],
+                [
+                  "溝通",
+                  "垂直、正式",
+                  "水平、非正式"
+                ],
+                [
+                  "適用環境",
+                  "**穩定、可預測**",
+                  "**變動、不確定**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**唯一會翻車的一格：控制幅度。**很多人憑直覺以為「管得細＝管得寬」，正好相反。  \n因果鏈：**幅度窄 → 層級多 → 高型組織**。  \n歸類：韋伯的**官僚組織**、**高型組織**都屬機械式；有機式＝扁平、專案團隊、網絡型。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**教材核對**：課本**有提到**機械式／有機式，但**沒有這張逐項對照表**。原文只有兩句：  \n「**有機式組織**（organic structure）有許多**工作團隊**……在**變動劇烈**環境中有較佳的表現」  \n「**機械式組織**（machine structure）整合性、條理性，以及**高度官僚化**的機器在運作的精密結構」  \n所以：**表格用來理解，簡答請寫上面兩句**。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "補充：習題考到但不在本章標題內",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "老化指數"
+            },
+            {
+              "type": "quote",
+              "text": "老化指數 ＝ 65 歲以上人口 ÷ 15 歲以下人口 × 100"
+            },
+            {
+              "type": "paragraph",
+              "text": "分子＝老年（記得把「66–75」與「75 以上」兩欄**相加**）；分母＝**幼年（15 歲以下）**，不是總人口。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "指標",
+                "公式",
+                "問的是"
+              ],
+              "widths": [
+                130,
+                null,
+                200
+              ],
+              "rows": [
+                [
+                  "老化指數",
+                  "老年 ÷ **幼年**",
+                  "老人比小孩多多少"
+                ],
+                [
+                  "扶老比",
+                  "老年 ÷ **工作年齡（15–64）**",
+                  "幾個年輕人養一個老人"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "RFID 的功效"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**教材核對**：投影片 p10 只有一句——「**沃瑪百貨運用 RFID 技術監控貨物流通資訊系統**」，歸在「流程再造、降低成本」的例子裡，**沒有列任何功效清單**。  \n所以那道「何者不是 RFID 功效」的題，**無法用投影片判定**，只能靠推論（我判「加速裝箱」為非，你也判 b，雙方一致）。**建議直接問老師或看教科書正文。**"
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                "整板貨物一次讀取 → **加速收貨、盤點、通關**",
+                "即時掌握流向 → **監控配送**（課本明寫的一句）",
+                "標籤觸發警報 → **防盜**",
+                "減少人工盤點與缺貨 → **降低供應鏈成本**"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "**推論上不能做的**：加快「**裝箱**」這種物理打包動作——識別技術管資訊，不管動作。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "現代商業的特質"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "特質",
+                "題幹會出現什麼"
+              ],
+              "widths": [
+                120,
+                null
+              ],
+              "rows": [
+                [
+                  "資本大眾化",
+                  "向大眾募資、股票上市、**所有權與經營權分離**、股東眾多"
+                ],
+                [
+                  "經營國際化",
+                  "海外設廠、跨國併購、海外營收占比、海外存託憑證"
+                ],
+                [
+                  "決策民主化",
+                  "參與式決策、分權、員工提案"
+                ],
+                [
+                  "商業自動化",
+                  "資訊系統、電子商務、無人化"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**判斷通則**：這類題常有兩個線索並存（例如同時出現「海外存託憑證」與「所有權經營權分離」）。**看題幹最後落腳在哪一句**——落腳在「管理權與所有權分離」＝資本大眾化。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "跨章連結",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "CH2 規劃「降低變革衝擊」",
+                "為了應付環境不確定性",
+                "CH3 權變理論「視情境而定」",
+                "情境＝環境"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                "**CH3 系統理論**的「開放系統」＝組織被環境包住，本章就是它的展開。",
+                "**CH1 六企業功能**正好對應任務環境的各個對象：行銷對顧客、採購對供應商、人資對人力市場。",
+                "**後續策略章**：Porter 五力＝把任務環境結構化（現有競爭者、潛在新進入者、替代品、供應商議價、顧客議價）。"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch5",
+      "label": "CH 05",
+      "title": "企業倫理與社會責任的實踐",
+      "subtitle": "倫理議題 → 利害關係人 → 社會責任",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "主線：倫理不是「做好事」，是兩個都對的選項撞在一起",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "整章只有一條鏈，四個環節依序回答四個問題：**怎麼判斷對錯**（四大原則）→ **對誰負責**（利害關係人）→ **負責到什麼程度**（四層責任）→ **怎麼落到組織裡**（四做法＋八步驟）。"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "四大原則",
+                "主要／次要利害關係人",
+                "CSR 四層",
+                "四做法＋八步驟"
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**倫理兩難的判準只有一句：兩個選項都站得住腳。**如果一邊明顯違法、明顯傷人，那不是兩難，是「要不要違規」。考題給你兩難情境時，正確答案通常不是「哪一邊比較賺」，而是「有沒有一個能同時交代得過去的做法」。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "倫理、企業倫理、倫理兩難",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "概念",
+                "教材原文定義"
+              ],
+              "widths": [
+                130,
+                null
+              ],
+              "rows": [
+                [
+                  "倫理",
+                  "社會對行為對錯的**道德判斷**"
+                ],
+                [
+                  "企業倫理",
+                  "企業行為處世的**對錯信念**，或遵循的**道德原則與標準**"
+                ],
+                [
+                  "倫理兩難",
+                  "在不同的道德選擇之下，面對可能的**利益衝突**，而產生難以抉擇的困難"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "三個詞是**由外而內**：社會怎麼判斷（倫理）→ 企業信什麼、守什麼（企業倫理）→ 企業實際卡住的那一刻（兩難）。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "麥當勞是教材的標準兩難案例，因為它同時被五方拉扯：**消費者的健康**（薯條用什麼油）、**投資者的利益**（成本不能上升）、**供應商的生存**（換供應商就斷人活路）、**員工的生計**（門市不能收）、**全球環境的保護**（包裝與碳排）。**五個訴求都正當，這才是兩難。**"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "反過來看「不肖茶商把進口茶混充冠軍茶」——這是**違法**，不是兩難。它沒有兩個正當選項，只有「守法和不守法」。**判斷題目時先問：這件事有沒有觸法？觸法就不是倫理題。**"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "倫理道德的四大原則（本章最高頻考點）",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "原則",
+                "一句話判準",
+                "決策者自問"
+              ],
+              "widths": [
+                110,
+                null,
+                190
+              ],
+              "rows": [
+                [
+                  "功利主義",
+                  "為**最多數人**提供**最大效用**",
+                  "總好處是不是最大？"
+                ],
+                [
+                  "基本權利",
+                  "每個人有**不可被犧牲**的基本權利",
+                  "有沒有人的權利被侵害？"
+                ],
+                [
+                  "公平正義",
+                  "好處與壞處依**公平正義的程序**分配給所有人",
+                  "分配公平嗎？程序公平嗎？"
+                ],
+                [
+                  "均衡務實",
+                  "**三者同時考量**，補足各自不足",
+                  "如果我是受影響的一方，我會怎麼反應？"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "前三個原則的弱點（教材明列，考題最愛）"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "原則",
+                "教材指出的問題"
+              ],
+              "widths": [
+                110,
+                null
+              ],
+              "rows": [
+                [
+                  "功利主義",
+                  "以**結果**為重，可能把「有損他人權益的過程」合理化；決策者拿不到全部資訊，成本與利益也難計算，**用起來並不容易**"
+                ],
+                [
+                  "基本權利",
+                  "會撞上**個人權利 vs 社會福祉**的衝突：為了治安要資料，為了隱私不給"
+                ],
+                [
+                  "公平正義",
+                  "**齊頭式平等**降低個人冒險精神（國營事業按年資升遷，新人不想衝）；只考慮**客觀數字**的平等，忽略**主觀感受**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**第四個原則的性質和前三個人不一樣。**前三個是「判準」，第四個是「使用判準的方法」——它不是另一個標準，而是要求你**三個都看一遍**。所以題目問「衡量最大效用的是哪個原則」不會選它；問「四大原則」時它一定要算進去。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**三個必定考的對應，背錯就整題錯。**  \n① 「最多數人的最大效用」＝ **功利主義**（不是公平正義）  \n② 「依**事先設定的規則與標準**」＝ **程序正義**（不是分配正義）  \n③ 「依**付出與績效**，不受種族性別影響」＝ **分配正義**（不是程序正義）"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**小心兩組「四」互串。****倫理四大原則**＝功利、基本權利、公平正義、均衡務實；**CSR 四層**＝經濟、法律、道德、自由意志。考題最愛把後者塞進前者的選項裡——選項一出現「**法律原則**」「**自由意志原則**」，那就是這個陷阱。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "台北圓環與北門高架橋的拆遷是**功利主義**：拆掉少數住戶，換多數人的交通效益。**基本權利**的版本是 Google 拒絕美國司法部索取特定使用者資料——治安是公共利益，但隱私是基本權利，不能因為「多數人想要治安」就交出。**公平正義**的版本是國營事業按年資升遷：規則很清楚（程序沒問題），但結果讓新人不服（分配有問題）。**同一個故事換一個問法，答案就換一個原則**——這就是這章選擇題的陷阱結構。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "應用題：同一個情境，四個原則會怎麼答"
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "情境：醫生篩檢出病人罹患絕症，該誠實告知，還是語帶保留以免刺激情緒？"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "原則",
+                "它會給的答案",
+                "判準"
+              ],
+              "widths": [
+                110,
+                null,
+                190
+              ],
+              "rows": [
+                [
+                  "功利主義",
+                  "看**結果**：告知或保留，哪一種對病人與家屬的**總傷害最小**",
+                  "算總效用，**不能只算病人一個人的好處**，也不能不問家屬"
+                ],
+                [
+                  "基本權利",
+                  "病人有**知情權與自主權**，應誠實告知，由病人自己決定",
+                  "權利不能因為「為你好」被犧牲"
+                ],
+                [
+                  "公平正義",
+                  "問題不在告知與否，而在醫療資源與風險**怎麼分配**",
+                  "正義處理「分配」，不處理「要不要騙」"
+                ],
+                [
+                  "均衡務實",
+                  "三方面都問一遍：如果我是病人，我希望被怎麼對待？",
+                  "補足前三者的不足，不是第四個判準"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**看到「善意欺騙」四個字，先排除。**沒有任何一個原則會鼓勵欺騙——隱瞞病情直接侵害**知情權**，是基本權利的反面。選項把它掛在「正義觀」底下，就是利用你對「正義＝做好事」的模糊印象。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "倫理與法律：法律是地板，不是天花板",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "法律：最低底線",
+                "合法 ≠ 合倫理",
+                "法律未全，靠倫理補"
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "命題",
+                "教材怎麼說"
+              ],
+              "widths": [
+                190,
+                null
+              ],
+              "rows": [
+                [
+                  "法律的地位",
+                  "企業遵循原則的**最低底線**（例如法律對員工設定工資保障）"
+                ],
+                [
+                  "合法就好嗎",
+                  "**不一定**。法律的制定**落後於倫理**，法律也**或有未全**"
+                ],
+                [
+                  "法律沒規定時",
+                  "靠**社會觀感**與**自發性的公益活動**，主動承擔更高標準的倫理責任"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**兩個反向敘述直接判錯**：①「符合法律就符合倫理」；②「倫理是最低標準」。**最低的是法律，倫理永遠在上面一層。**"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "某些地區雇用童工**並不違法**，但多數消費者認為**不合宜**。這就是「合法但不合倫理」的標準案例：法律只擋住最壞的行為，擋不住「雖然合法但社會不接受」的那一段。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "利害關係人：先分主要／次要，再談責任",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "**定義**：在企業內外，受企業活動影響其利害的**個人或團體**。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "層級",
+                "對象",
+                "與企業的關係"
+              ],
+              "widths": [
+                100,
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "主要",
+                  "投資者、消費者、員工",
+                  "**直接**交易或僱傭：出資、付錢、出力。能單獨向企業主張權利"
+                ],
+                [
+                  "次要",
+                  "工會、政府機構、社會大眾",
+                  "**間接**：透過集體、政策或輿論影響企業"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話判準**：這群人**能不能直接跟企業算帳**？股東可以告、消費者可以求償、員工可以爭議 → 主要。工會要透過協商、政府要透過法規、社會大眾要透過輿論 → 次要。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**三組最常互換的答案**：**員工是主要，工會是次要**（都跟勞工有關，但一個是個人、一個是組織）；**政府機構是次要**（權力很大，但仍是間接）；**投資者不是「次要」**（出資者永遠是主要）。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "投資者：三種人，拿的東西不一樣",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "類型",
+                "教材定義",
+                "關鍵字"
+              ],
+              "widths": [
+                140,
+                null,
+                130
+              ],
+              "rows": [
+                [
+                  "一般投資人",
+                  "透過投資企業股票，成為企業主要資金來源的人（例如股市中的股民）",
+                  "散戶、被動"
+                ],
+                [
+                  "創業投資人",
+                  "將資金投資於**具有高成長潛力**的企業、小型集團，或退休基金，以獲得其**部分所有權**",
+                  "機構、基金、成長期"
+                ],
+                [
+                  "天使投資人",
+                  "擁有**雄厚資金的個人**，以**現金換取公司相對等值的所有權**",
+                  "個人、早期、自有資金"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "**企業對投資者的責任**：在經濟上給予回饋、讓投資者獲得**適當報酬**；並且**誠實、負責**，確保投資人的心血不會白流。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**天使投資人不是捐款人。**他給現金，換的是**相對等值的所有權**。選項若寫「天使投資人以捐款支持新創、不取得股權」，直接判錯。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "同一家新創的三輪資金：**天使**是隔壁事業有成的長輩拿自己的錢投第一筆；**創投**是基金管理公司拿別人的錢投第二輪；**一般投資人**是公司上市後在股市買股票的人。**錢的來源不同、階段不同、拿到的東西都是股權。**"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "消費者四要：安全、溝通、選擇、尊重",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "要",
+                "教材定義",
+                "教材例子"
+              ],
+              "widths": [
+                80,
+                null,
+                180
+              ],
+              "rows": [
+                [
+                  "安全",
+                  "正常使用產品的狀況下，可以**安心不受損害**",
+                  "自助餐不用私宰肉、選 CAS 優良肉品；咖啡不用有毒的 6 號杯蓋"
+                ],
+                [
+                  "溝通",
+                  "**主動告知**產品或服務的實際狀況，並對疑問**提出回應**",
+                  "包裝標示原料與營養成分（含反式脂肪）、提供申訴方式"
+                ],
+                [
+                  "選擇",
+                  "保障消費者有**多類**產品與服務，在**具競爭力的價格**下選擇",
+                  "門號可攜，讓費率有更多選擇"
+                ],
+                [
+                  "尊重",
+                  "消費者必須獲得企業的**尊重**及**申訴的權利**",
+                  "以客為尊"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**記法：四個「不」。**不被傷害（安全）、不被隱瞞（溝通）、不被綁死（選擇）、不被輕視（尊重）。四個字按順序就是**安、說、選、敬**。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**顧客導向 ≠ 顧客說什麼就做什麼。**教材的定義是「了解顧客的**欲望與需求**，並且**設計**能滿足這些需求與欲望的產品或服務」。顧客要更快的馬，廠商給的是車——這是設計，不是聽話。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "員工：期望 3 項、企業責任 4 項",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "grid",
+              "columns": 2,
+              "items": [
+                {
+                  "title": "員工對企業的期望（3）",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "① 一份**有意義**的工作  \n② 與**付出或績效相當**的報酬  \n③ 能在企業內**安身立命**，並圓滿完成工作"
+                    }
+                  ]
+                },
+                {
+                  "title": "企業對員工的責任（4）",
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "text": "① 提供**安全**的工作環境  \n② **合理**的薪資架構及升遷管道  \n③ 儘量讓工作**有意義**  \n④ 投資於員工**訓練與發展**"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "第 ③ 項的做法，教材給了三個工具：**工作輪調**、**工作擴大化**、**工作豐富化**。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**教材只列名稱、沒給定義，這裡補上（屬理解用，非本書原文）：**  \n**工作擴大化**＝橫向加量，做更多**同性質**的工作。**工作豐富化**＝縱向加責，給更多**自主、挑戰與回饋**。一個加「量」，一個加「權」。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "加油站員工原本只加油；叫他**順便擦車窗、補貨**，是擴大化（事情變多，但還是聽指令）。**授權他自己決定當日贈品、排班與客訴處理**，是豐富化（有決定權、要負責）。**加錢不一定有感，加權通常有感。**"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**3 與 4 不要對調。**「期望」是員工要的（3 項），「責任」是企業該做的（4 項）。題目若問「企業對員工的責任有幾項」，答案 4；把「安身立命」算進企業責任就是錯。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "次要利害關係人：三種間接力量",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "對象",
+                "教材重點",
+                "例子"
+              ],
+              "widths": [
+                110,
+                null,
+                190
+              ],
+              "rows": [
+                [
+                  "工會",
+                  "員工表達**薪資、工時、工作條件**意見的組織；**歐美力量很大**，台灣以國營事業或大型企業的工會為主",
+                  "中華電信工會"
+                ],
+                [
+                  "政府機構",
+                  "政策對營運影響很大；大型企業或產業工會會**遊說**，影響政策走向",
+                  "環保政策 vs 高汙染工業"
+                ],
+                [
+                  "社會大眾",
+                  "期望企業扮演好**社會公民**；企業要尊重社會並回饋，**取之於社會、用之於社會**",
+                  "富邦金控 ESG 四大策略；中鋼把製程餘熱輸出給鄰近公司"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**台美對比是考點**：歐美工會力量大，**台灣工會相對弱**、且集中在國營事業與大型企業。選項寫「台灣工會普及於中小企業、影響力強大」是錯的。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "CSR 四層：由下往上，不是由上往下",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 400\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>企業社會責任的四層結構</title>\n<desc>由下而上為經濟責任、法律責任、道德責任、自由意志責任；下兩層構成社會義務。</desc>\n<text x=\"340\" y=\"24\" font-family=\"sans-serif\" font-size=\"14\" fill=\"#cfcfd6\" text-anchor=\"middle\" dominant-baseline=\"central\">由下往上：越上面越自願，越下面越不能省</text>\n<rect x=\"230\" y=\"52\" width=\"220\" height=\"64\" rx=\"10\" fill=\"#3a3323\" stroke=\"#8a7248\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"76\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#FAC775\" text-anchor=\"middle\" dominant-baseline=\"central\">自由意志責任</text>\n<text x=\"340\" y=\"98\" font-family=\"sans-serif\" font-size=\"11.5\" fill=\"#c9b48a\" text-anchor=\"middle\" dominant-baseline=\"central\">自願奉獻 · 可做</text>\n<rect x=\"170\" y=\"124\" width=\"340\" height=\"64\" rx=\"10\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"148\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">道德責任</text>\n<text x=\"340\" y=\"170\" font-family=\"sans-serif\" font-size=\"11.5\" fill=\"#9d97cf\" text-anchor=\"middle\" dominant-baseline=\"central\">符合社會期望 · 超出法律 · 該做</text>\n<rect x=\"110\" y=\"196\" width=\"460\" height=\"64\" rx=\"10\" fill=\"#23303d\" stroke=\"#4a6a8a\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"220\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#85B7EB\" text-anchor=\"middle\" dominant-baseline=\"central\">法律責任</text>\n<text x=\"340\" y=\"242\" font-family=\"sans-serif\" font-size=\"11.5\" fill=\"#7d9cba\" text-anchor=\"middle\" dominant-baseline=\"central\">在法令規範下營運 · 必做</text>\n<rect x=\"50\" y=\"268\" width=\"580\" height=\"64\" rx=\"10\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"340\" y=\"290\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"500\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">經濟責任</text>\n<text x=\"340\" y=\"312\" font-family=\"sans-serif\" font-size=\"11.5\" fill=\"#6fae9b\" text-anchor=\"middle\" dominant-baseline=\"central\">提供價值、利潤、薪資、合理價格 · 必做的地基</text>\n<text x=\"340\" y=\"356\" font-family=\"sans-serif\" font-size=\"12.5\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">社會義務 ＝ 經濟 ＋ 法律（最低要求）</text>\n<text x=\"340\" y=\"378\" font-family=\"sans-serif\" font-size=\"12.5\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">社會責任 ＝ 四層全包（含道德與自由意志）</text>\n</svg>"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "層",
+                "教材內容",
+                "教材例子"
+              ],
+              "widths": [
+                110,
+                null,
+                150
+              ],
+              "rows": [
+                [
+                  "經濟",
+                  "提供有價值的商品與服務；提供利潤報酬給所有權人與股東；提供薪資給員工；消費者付出的價格**合理公平**",
+                  ""
+                ],
+                [
+                  "法律",
+                  "在法令規章規範下營運；**合法的行為是最低的道德標準**，不違法不等於合宜；法律並非靜止，企業須與時俱進；全球化要注意**國外法規**",
+                  "某些地區僱用童工不違法，但是否合宜？"
+                ],
+                [
+                  "道德",
+                  "符合社會期望，做出符合社會基本價值的行為；盡到**超乎法律規定以外**的責任",
+                  "3C 產業的資源回收計畫"
+                ],
+                [
+                  "自由意志",
+                  "在經濟、法律、道德責任之外，透過**自己的判斷與選擇**，做出**自願性**的奉獻",
+                  "思科獲選 2021 美國最適宜工作公司；華航疫情期間減薪減班，但**達到不裁員**、並肩負疫苗與物資輸送"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**最關鍵的定義題：社會義務 ≠ 社會責任。**  \n教材原文：「**社會義務**：企業基本上至少要達成**經濟以及法律**的責任。」  \n所以「社會義務包含道德責任」是錯的；「只做到經濟與法律，就是盡了社會責任」也是錯的——那只是**及格**，不是**盡責**。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**順序陷阱**：經濟責任在最底層，**不是最低級**，而是「沒有它，上面三層都不成立」。一家不賺錢的公司談倫理，最後的結果通常是裁員與倒閉——傷害的還是員工與供應商。**但反過來也不成立**：會賺錢不代表盡了社會責任。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "社會責任涵蓋哪些議題（課本正文列舉，PPT 未列）"
+            },
+            {
+              "type": "paragraph",
+              "text": "員工關係、公益事業、定價、資源節約、產品品質與安全、**在較不重視人權的國家設廠營運**。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**這六項的共同點，就是考點。**它們全都是**管理者要做的決策**——要不要漲價、要不要捐、要不要把廠設在那個國家——而不是員工在工作時會遇到的狀況。所以題目問「這些是什麼的例子」，答案指向「**管理者需要面對社會責任的決策**」，不是「員工在工作時遭遇社會責任議題」。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**注意最後一項**：把公司設在較不重視人權的國家，**可能完全合法**（當地法律允許），但會撞上道德責任。這正是「合法 ≠ 合倫理」在投資決策上的版本。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "倫理文化四做法：讓倫理從口號變成動作",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "① 知覺",
+                "② 訓練",
+                "③ 行動",
+                "④ 示範"
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "做法",
+                "具體動作",
+                "教材例子"
+              ],
+              "widths": [
+                120,
+                null,
+                170
+              ],
+              "rows": [
+                [
+                  "1 讓員工知覺",
+                  "建立**道德倫理章程**，作為員工遇到倫理問題時的依循根據",
+                  "王品憲法、王品「龜毛家族 29 戒」列出金錢細則，避免中飽私囊或瓜田李下"
+                ],
+                [
+                  "2 教育訓練",
+                  "課程加入企業倫理訓練，教導面對倫理問題時該有的**理性態度**與**解決程序**",
+                  ""
+                ],
+                [
+                  "3 化為行動",
+                  "**獎懲機制**（獎勵符合道德、懲罰不符道德）；設定**明確合理**的工作目標；設立**申訴熱線**；對易生道德危機的工作設**稽核機制**",
+                  "台達電設 EICC、綠色產品暨供應鏈管理、綠色營運三個委員會；全聯員工自掏腰包衝業績引爭議"
+                ],
+                [
+                  "4 以身作則",
+                  "領導者的道德標準**由上而下**傳遞，影響整體道德環境；領導者行為與組織要求不符，會造成員工**認知衝突**",
+                  "江振誠認為任何領域與品牌都該思考永續"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**倫理領導的定義要背準**：領導者**做出符合倫理的決策，以及倫理的行為**。是「**領導者自己做**」，不是「領導者要求員工守倫理」。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**② 與 ③ 最容易混，用一個字分：**②是**上課**（改變員工的認知與判斷能力），③是**制度**（改變誘因與監督）。所以看到「**機制、熱線、獎懲、稽核、目標設定**」一律歸 ③；看到「**課程、教導、訓練**」才歸 ②。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "四步其實是四個心理關卡：**知道**（章程寫清楚）→ **會做**（訓練教程序）→ **願意做**（獎懲讓它划算）→ **看著做**（主管自己先做）。少任何一環，前面的都會被抵銷：只有章程沒有獎懲，員工會覺得「寫好看的」；只有獎懲沒有示範，員工會覺得「上樑不正」。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "圖 5.1：社會責任管理系統的八個步驟",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 600\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>企業社會責任管理系統的建立八步驟</title>\n<desc>一到五步為決心、小組、宣示、蒐集法規、擬定計畫；中間三項支撐為教育訓練、與利害關係人溝通、調整組織架構；六到八步為執行、檢討稽核、維護改善。</desc>\n<rect x=\"140\" y=\"16\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#1f4a42\" stroke=\"#5DCAA5\" stroke-width=\"1.2\"/>\n<text x=\"164\" y=\"38\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">1</text>\n<text x=\"340\" y=\"38\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">企業高階管理者的決心</text>\n<rect x=\"140\" y=\"76\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"98\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">2</text>\n<text x=\"340\" y=\"98\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">成立專案小組</text>\n<rect x=\"140\" y=\"136\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"158\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">3</text>\n<text x=\"340\" y=\"158\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">宣示社會責任政策與目標</text>\n<rect x=\"140\" y=\"196\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"218\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">4</text>\n<text x=\"340\" y=\"218\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">蒐集相關法規與國際公約</text>\n<rect x=\"140\" y=\"256\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"278\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">5</text>\n<text x=\"340\" y=\"278\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">擬定可行計畫</text>\n<rect x=\"30\" y=\"322\" width=\"196\" height=\"44\" rx=\"9\" fill=\"#2a2a31\" stroke=\"#4a4a55\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"128\" y=\"344\" font-family=\"sans-serif\" font-size=\"12.5\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">教育訓練</text>\n<rect x=\"242\" y=\"322\" width=\"196\" height=\"44\" rx=\"9\" fill=\"#2a2a31\" stroke=\"#4a4a55\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"340\" y=\"344\" font-family=\"sans-serif\" font-size=\"12.5\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">與主要利害關係人溝通</text>\n<rect x=\"454\" y=\"322\" width=\"196\" height=\"44\" rx=\"9\" fill=\"#2a2a31\" stroke=\"#4a4a55\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"552\" y=\"344\" font-family=\"sans-serif\" font-size=\"12.5\" fill=\"#b9b9c2\" text-anchor=\"middle\" dominant-baseline=\"central\">審視與調整組織架構</text>\n<rect x=\"140\" y=\"382\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"404\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">6</text>\n<text x=\"340\" y=\"404\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">執行計畫</text>\n<rect x=\"140\" y=\"442\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#232329\" stroke=\"#3a3a42\" stroke-width=\"1\"/>\n<text x=\"164\" y=\"464\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#5DCAA5\" dominant-baseline=\"central\">7</text>\n<text x=\"340\" y=\"464\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#e9e9ec\" text-anchor=\"middle\" dominant-baseline=\"central\">定期檢討修正與引進外部稽核</text>\n<rect x=\"140\" y=\"502\" width=\"400\" height=\"44\" rx=\"9\" fill=\"#3a3323\" stroke=\"#8a7248\" stroke-width=\"1.2\"/>\n<text x=\"164\" y=\"524\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#FAC775\" dominant-baseline=\"central\">8</text>\n<text x=\"340\" y=\"524\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#FAC775\" text-anchor=\"middle\" dominant-baseline=\"central\">制定維護與改善</text>\n<path d=\"M340 60 L340 74\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 120 L340 134\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 180 L340 194\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 240 L340 254\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 300 L340 320\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 366 L340 380\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 426 L340 440\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<path d=\"M340 486 L340 500\" stroke=\"#4a4a55\" stroke-width=\"1.4\"/>\n<text x=\"340\" y=\"576\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\" dominant-baseline=\"central\">中間三塊是「執行時的支撐」，不是第 5.5 步，也不算在八步裡</text>\n</svg>"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**記法：決心 → 小組 → 宣示 → 查法規 → 寫計畫 → 執行 → 檢討稽核 → 維護改善。**前五步都在「準備」，第六步才開始做。所以問「第一步是什麼」，答案永遠是**高階管理者的決心**——沒有老闆點頭，後面全部不會發生。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**兩個位置最容易被改掉**：① 第一步是**決心**，不是「成立專案小組」；② 最後一步是**制定維護與改善**，不是「定期檢討」。檢討是第 7 步，改善是第 8 步——**檢討完要留下制度，否則明年重來一遍。**"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "跨章連結：這章其實是 CH4 的延長線",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "CH4 的概念",
+                "接到 CH5 的哪裡"
+              ],
+              "widths": [
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "法律政策環境",
+                  "＝ CSR 的**法律責任**。環境章講「法律會改變成本結構」，這章講「法律只是最低底線」"
+                ],
+                [
+                  "任務環境（顧客、供應商）",
+                  "＝ **利害關係人**的細分。環境章問「誰在旁邊」，這章問「我欠誰什麼」"
+                ],
+                [
+                  "主動影響環境",
+                  "＝ **CSR**。公益活動、ESG、遊說，都是企業主動塑造環境的手法"
+                ],
+                [
+                  "機械式 vs 有機式",
+                  "倫理文化要落地，靠的是**有機式**：授權、暢通申訴、容許員工反映問題。機械式的層層請示會讓倫理問題被壓住"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**考題喜歡跨這兩章出**：例如「企業主動捐款賑災，屬於哪一類環境互動？」——答案是**主動影響環境**（CH4），同時也是**自由意志責任**（CH5）。兩個答案都對，看題目問的是「環境互動」還是「社會責任層次」。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch6",
+      "label": "CH 06",
+      "title": "問題與決策",
+      "subtitle": "決策類型 → 個人模式 → 組織決策 → 資訊系統",
+      "blocks": [
+        {
+          "type": "callout",
+          "tone": "note",
+          "text": "**本章沒有教材投影片**，內容依手抄大綱重建。凡屬推斷或標準管理學補充，一律標灰框「待核對」；定義與「幾項」以課本為準。**章名也請你確認一次**（我暫用「問題與決策」）。"
+        },
+        {
+          "type": "card",
+          "title": "主線：決策是在資訊永遠不夠的情況下做選擇",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "所以這章的重點不是「怎麼選對」，而是**人為什麼會走偏**、**組織怎麼把偏見擋下來**。四個環節依序是：決策有幾種 → 人怎麼想 → 組織怎麼跑 → 用什麼系統支援。"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "問題",
+                "資訊不完整",
+                "決策類型",
+                "決策者假設",
+                "組織三階段",
+                "資訊系統"
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話記全章**：**例行性決策靠規則，非例行性決策靠判斷；經濟人假設你可以算完，行政人承認你算不完。**後面所有分類，都是這兩組對照的延伸。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "制定決策：先分清「這是哪一種決策」",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "課本在「制定決策」底下沒有列步驟，直接進決策類型——所以**這章不考「決策八步驟」**，別把別本書的架構搬進來。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "比較",
+                "例行性決策",
+                "非例行性決策"
+              ],
+              "widths": [
+                110,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "特徵",
+                  "重複出現、結構清楚、有前例",
+                  "新的、無前例、不確定性高"
+                ],
+                [
+                  "依據",
+                  "標準作業程序、規則、政策",
+                  "判斷、創意、經驗"
+                ],
+                [
+                  "例子",
+                  "每月發薪、請假審批、庫存補貨",
+                  "要不要併購、要不要進新市場、危機處理"
+                ],
+                [
+                  "**通常誰決定**",
+                  "**基層**",
+                  "**高層**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**最常考的一句**：決策類型對應**層級**——例行性在基層，非例行性在高層。選項寫「基層主管負責非例行性決策」直接判錯。  \n但兩者不是二選一，是**連續譜**：像「要不要調整既有供應商的合約條件」就落在中間。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "資訊不完整：三個來源，別混",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "來源",
+                "意思",
+                "判斷句"
+              ],
+              "widths": [
+                150,
+                null,
+                210
+              ],
+              "rows": [
+                [
+                  "風險",
+                  "結果有多種，**機率可以估**",
+                  "「依過去資料，成功率約六成」"
+                ],
+                [
+                  "不確定性",
+                  "結果有多種，**機率估不出來**",
+                  "「沒人做過，不知道會怎樣」"
+                ],
+                [
+                  "**資訊模糊性**",
+                  "連**要什麼、問題是什麼**都說不清",
+                  "「大家對目標的理解都不一樣」"
+                ],
+                [
+                  "時間限制與資訊成本",
+                  "蒐集資訊要時間與錢，**收到完美不划算**",
+                  "「再調查三個月，機會就沒了」"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**風險 vs 不確定性，只差一個字：能不能說出機率。**精算師算得出車禍機率，那是風險；「新科技會不會取代我們這個產業」，那是不確定性。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**模糊性和不確定性不同層。**不確定性是「結果算不出來」，但你知道自己在決定什麼；模糊性是**連問題本身都沒定義清楚**。後者更麻煩，因為你連要評估什麼都不知道。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "決策中常見的十項認知謬誤",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "考法不是背名稱，是**給一段情境問這是哪一種**。所以第三欄才是重點，第二欄只是索引。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "#",
+                "課本用語",
+                "情境長什麼樣"
+              ],
+              "widths": [
+                36,
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "1",
+                  "先有結論再找證據",
+                  "已經決定要買某台車，之後只看它的好評、跳過反推"
+                ],
+                [
+                  "2",
+                  "標準不一致",
+                  "同一件事，評自己寬鬆、評別人嚴格"
+                ],
+                [
+                  "3",
+                  "過於保守",
+                  "明明該換，還是維持現狀「這樣也還行」"
+                ],
+                [
+                  "4",
+                  "便利性的偏誤",
+                  "最近空難新聞多，就高估搭飛機的風險"
+                ],
+                [
+                  "5",
+                  "先入為主的偏誤",
+                  "第一個報價定住了後面所有判斷"
+                ],
+                [
+                  "6",
+                  "穿鑿附會",
+                  "用三家店的經驗推斷全市場；把隨機看成規律"
+                ],
+                [
+                  "7",
+                  "選擇性認知",
+                  "只看得到支持自己的資訊，反面資料自動略過"
+                ],
+                [
+                  "8",
+                  "歸因效果",
+                  "成功是我厲害，失敗是環境不好"
+                ],
+                [
+                  "9",
+                  "過於樂觀、一廂情願",
+                  "計畫默認一切順利，沒留緩衝"
+                ],
+                [
+                  "**10**",
+                  "加碼投注",
+                  "已投入很多，明知不對還繼續投"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**三個最容易互串的，一句話分開**：  \n④ 便利性＝因為**想得到**，所以覺得常發生  \n⑤ 先入為主＝因為**先聽到**，所以後面都被它拉著  \n⑥ 穿鑿附會＝因為**看起來像**，所以覺得是同一類"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**第 10 項「加碼投注」最常考**，因為它有固定劇情：虧損專案、已經花了兩億、主管說「再撐一下就會回本」。看到「**已經投入這麼多**」＋「**繼續投入**」，就是它。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**待核對**：第 2 項「標準不一致」與第 8 項「歸因效果」的中文寫法各家不同（標準管理學多作「框架效應」「自利偏誤／基本歸因錯誤」）。**答題請用課本用語**，我暫不替你改名。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "個人的決策模式：經濟人 vs 行政人",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "",
+                "經濟人 economic man",
+                "行政人 administrative man"
+              ],
+              "widths": [
+                120,
+                null,
+                null
+              ],
+              "rows": [
+                [
+                  "人性假設",
+                  "完全理性，追求最大利益",
+                  "**有限理性**，追求可接受"
+                ],
+                [
+                  "資訊",
+                  "完整、免費、即時",
+                  "不完整，取得要成本"
+                ],
+                [
+                  "方案",
+                  "**列出所有**可行方案",
+                  "只搜尋一部分"
+                ],
+                [
+                  "標準",
+                  "**最佳**方案（maximizing）",
+                  "**滿意水準**（satisficing）"
+                ],
+                [
+                  "何時停",
+                  "算到最優點才停",
+                  "找到第一個「夠好」的就停"
+                ],
+                [
+                  "**性質**",
+                  "**應然**：應該怎麼做",
+                  "**實然**：實際怎麼做"
+                ]
+              ]
+            },
+            {
+              "type": "flow",
+              "items": [
+                "擬定目標",
+                "列出所有方案與結果",
+                "依目標評比",
+                "選最佳方案"
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "上述流程＝**經濟人**的完整理性模型"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這張圖的歸屬，你要翻書確認。**文字裡有「**所有**方案」和「**最佳**方案」，這兩個詞只屬經濟人；但你的手抄把它縮排在「行政人」底下。兩種可能：  \n① 圖的標題是「決策的程序」→ 它是**通用流程**，行政人每步打折；  \n② 圖的標題是「經濟人的決策模式」→ 只是抄寫時層級錯位。  \n**看圖上方那行小標題就能定案**，這兩種考法不同。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話分界**：經濟人問「**還有沒有更好的**」；行政人問「**這個夠不夠好**」。  \n例子：買筆電時，經濟人列完所有型號算加權分數，花三週；行政人設「14 吋、三萬內、跑得動」，**第一台符合的就買**，花一個下午。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "帕金森定律：會議時間與議題重要性成反比"
+            },
+            {
+              "type": "paragraph",
+              "text": "課本在行政人下面用的是帕金森的「**瑣碎定律**」：組織開會時，**議題花費的討論時間往往和它的重要性成反比**——大事幾分鐘通過，小事吵上一小時。"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "議題",
+                "討論時間",
+                "為什麼"
+              ],
+              "widths": [
+                150,
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "重大議題（核電廠預算、併購案）",
+                  "**很短**",
+                  "金額巨大、專業門檻高，多數人**不懂**，怕說錯 → 快速通過"
+                ],
+                [
+                  "**瑣碎議題**（車棚油漆顏色、茶水間品牌）",
+                  "**很長**",
+                  "人人有經驗、**都懂**，而且爭論沒有風險 → 時間膨脹"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**機制只有一句**：**懂的人少，就不敢發言；懂的人多，就都想發言。**所以會議時間不是按「重要性」分配，是按「**參與門檻**」分配。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**別跟帕金森的主命題混。**帕金森最出名的是「**工作會膨脹到填滿可用的時間**」，但**本書這一章用的是「瑣碎定律」那一條**。考題若問帕金森定律在這裡的意思，答**「討論時間與議題重要性成反比」**，不要答成「工作膨脹」。  \n英文原名：Parkinson's Law of Triviality；俗稱「**自行車棚效應**」（bikeshedding）。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**為什麼放在「行政人」底下**：行政人的決策受**時間與注意力**限制，而會議把有限的時間錯配給最不重要的事。這正是「**滿意**」的代價——不是每個議題都值得花同樣的力氣，但組織往往**反過來分配**。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**兩個必錯點**：① **有限理性 ≠ 不理性**，選項寫「憑直覺、不做事前分析」判錯；② **滿意水準 ≠ 降低標準擺爛**，它是在限制下**主動設定**的可接受門檻。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "組織的決策：三階段 ＋ 支持性活動",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 340\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>組織決策的三階段與支持性活動</title>\n<desc>認定、發展、汰擇三個階段，下方為貫穿全程的支持性活動。</desc>\n<text x=\"340\" y=\"26\" font-family=\"sans-serif\" font-size=\"13.5\" fill=\"#cfcfd6\" text-anchor=\"middle\" dominant-baseline=\"central\">組織決策的一般模式</text>\n<rect x=\"40\" y=\"48\" width=\"180\" height=\"132\" rx=\"10\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"130\" y=\"72\" font-family=\"sans-serif\" font-size=\"13.5\" font-weight=\"500\" fill=\"#9FE1CB\" text-anchor=\"middle\" dominant-baseline=\"central\">認定階段</text>\n<text x=\"130\" y=\"98\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#cfe6dd\" text-anchor=\"middle\" dominant-baseline=\"central\">決策的辨識</text>\n<text x=\"130\" y=\"122\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#cfe6dd\" text-anchor=\"middle\" dominant-baseline=\"central\">診斷問題</text>\n<text x=\"130\" y=\"146\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#cfe6dd\" text-anchor=\"middle\" dominant-baseline=\"central\">界定範圍</text>\n<rect x=\"260\" y=\"48\" width=\"180\" height=\"132\" rx=\"10\" fill=\"#23303d\" stroke=\"#4a6a8a\" stroke-width=\"1\"/>\n<text x=\"350\" y=\"72\" font-family=\"sans-serif\" font-size=\"13.5\" font-weight=\"500\" fill=\"#85B7EB\" text-anchor=\"middle\" dominant-baseline=\"central\">發展階段</text>\n<text x=\"350\" y=\"98\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#cfe0ee\" text-anchor=\"middle\" dominant-baseline=\"central\">搜尋方案</text>\n<text x=\"350\" y=\"122\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#cfe0ee\" text-anchor=\"middle\" dominant-baseline=\"central\">設計方案</text>\n<rect x=\"480\" y=\"48\" width=\"180\" height=\"132\" rx=\"10\" fill=\"#3a3323\" stroke=\"#8a7248\" stroke-width=\"1\"/>\n<text x=\"570\" y=\"72\" font-family=\"sans-serif\" font-size=\"13.5\" font-weight=\"500\" fill=\"#FAC775\" text-anchor=\"middle\" dominant-baseline=\"central\">汰擇階段</text>\n<text x=\"570\" y=\"98\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#e8d9bd\" text-anchor=\"middle\" dominant-baseline=\"central\">篩選方案</text>\n<text x=\"570\" y=\"122\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#e8d9bd\" text-anchor=\"middle\" dominant-baseline=\"central\">評估與選擇</text>\n<text x=\"570\" y=\"146\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#e8d9bd\" text-anchor=\"middle\" dominant-baseline=\"central\">核准認可</text>\n<path d=\"M224 114 L250 114\" stroke=\"#6a6a75\" stroke-width=\"1.4\"/>\n<path d=\"M246 109 L256 114 L246 119 Z\" fill=\"#6a6a75\"/>\n<path d=\"M444 114 L470 114\" stroke=\"#6a6a75\" stroke-width=\"1.4\"/>\n<path d=\"M466 109 L476 114 L466 119 Z\" fill=\"#6a6a75\"/>\n<rect x=\"40\" y=\"200\" width=\"600\" height=\"76\" rx=\"10\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\" stroke-dasharray=\"5 4\"/>\n<text x=\"340\" y=\"222\" font-family=\"sans-serif\" font-size=\"13\" font-weight=\"500\" fill=\"#C9C4F0\" text-anchor=\"middle\" dominant-baseline=\"central\">支持性活動（貫穿三階段，不是第四階段）</text>\n<text x=\"200\" y=\"252\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d6d2f2\" text-anchor=\"middle\" dominant-baseline=\"central\">決策控制活動</text>\n<text x=\"340\" y=\"252\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d6d2f2\" text-anchor=\"middle\" dominant-baseline=\"central\">決策溝通活動</text>\n<text x=\"480\" y=\"252\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d6d2f2\" text-anchor=\"middle\" dominant-baseline=\"central\">政治性活動</text>\n<text x=\"340\" y=\"308\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#9b9ba4\" text-anchor=\"middle\" dominant-baseline=\"central\">認定＝有沒有事 → 是什麼事 → 算哪一攤　｜　發展＝先找現成，再自己做</text>\n</svg>"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "階段",
+                "例行活動",
+                "白話"
+              ],
+              "widths": [
+                120,
+                null,
+                200
+              ],
+              "rows": [
+                [
+                  "認定",
+                  "決策的辨識 → 診斷問題 → 界定範圍",
+                  "有沒有事 → 是什麼事 → 算哪一攤"
+                ],
+                [
+                  "發展",
+                  "搜尋方案 → 設計方案",
+                  "先找現成的，找不到才自己做"
+                ],
+                [
+                  "汰擇",
+                  "篩選方案 → 評估與選擇 → 核准認可",
+                  "先粗篩、再細比、最後送批"
+                ],
+                [
+                  "**支持**",
+                  "決策控制、決策溝通、政治性活動",
+                  "控進度、通消息、搞定人"
+                ]
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "發展階段：搜尋方案的四種方式"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "方式",
+                "做法",
+                "例子"
+              ],
+              "widths": [
+                130,
+                null,
+                200
+              ],
+              "rows": [
+                [
+                  "從記憶中搜尋",
+                  "翻組織**過去的經驗**與既有方案",
+                  "「以前遇過類似狀況，照上次那樣做」"
+                ],
+                [
+                  "**被動式搜尋**",
+                  "**不主動找**，等方案自己出現",
+                  "職缺掛著等履歷上門；等供應商來報價"
+                ],
+                [
+                  "誘捕式搜尋",
+                  "**設下陷阱**，讓方案自動上門",
+                  "登徵才廣告、公開招標、辦設計競賽"
+                ],
+                [
+                  "主動式搜尋",
+                  "**自己出去找**",
+                  "派獵人頭、主動拜訪潛在供應商"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**四種只差「誰在動」**：往回看＝記憶；完全不動＝被動；**設餌等人上門**＝誘捕；自己出門＝主動。  \n判斷題幹的關鍵：**有沒有「設餌」**。只是「等適當人選出現」是被動；「登報徵才等人來」才是誘捕。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "支持性活動的細項"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "活動",
+                "包含",
+                "做什麼"
+              ],
+              "widths": [
+                130,
+                null,
+                190
+              ],
+              "rows": [
+                [
+                  "決策控制",
+                  "決策的**規劃**、**轉換**",
+                  "事前規劃資源與進度；事後把決定轉成行動"
+                ],
+                [
+                  "決策溝通",
+                  "**探索、調查、散布**",
+                  "找線索、蒐集資訊、把決定傳出去"
+                ],
+                [
+                  "**政治性活動**",
+                  "協商、結盟、爭取支持",
+                  "在重大決策中搞定關鍵人"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**考題最愛在這一格動手**：**「評估與選擇」不屬於支持性活動**，它屬**汰擇階段**。選項若把它列進支持性活動，就是答案。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**三個順序陷阱，考題就愛在這裡動手**：  \n① 這模式是**三階段＋支持性活動**，不是**四階段**——支持性活動貫穿全程；  \n② 汰擇的「**篩選**」是**快速淘汰不合門檻**的，「**評估與選擇**」才是深入比較，順序不可換；  \n③ 發展階段**先搜尋、後設計**——先看外面有沒有現成的，沒有才自己開發。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**組織決策與個人決策最大的差別，是最後一步「核准認可」。**個人選完就結束；組織選完還要往上送批，這一關會讓方案被改、被退、被拖——所以「評估與選擇」不等於「定案」。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**這套三階段模式出自 Mintzberg**（也是 CH2 十角色的那位）。同一個人的兩套東西，別搞混：**十角色**講管理者在做什麼，**三階段**講組織怎麼做決策。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "增進參加決策的方式",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "一、英特爾決策模式（三階段，各有說話規則）"
+            },
+            {
+              "type": "flow",
+              "items": [
+                "① 大鳴大放",
+                "② 明確的決策",
+                "③ 全員全力支持"
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "階段",
+                "規則"
+              ],
+              "widths": [
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "大鳴大放",
+                  "**鼓勵公開辯論**，任何人可質疑，把問題吵清楚"
+                ],
+                [
+                  "明確的決策",
+                  "由**明確的人**（通常是最高主管）拍板，不能含糊"
+                ],
+                [
+                  "**全員全力支持**",
+                  "一旦決定，所有人都要支持，**不能再扯後腿**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這模式的重點是「前後規則相反」**：第一階段**鼓勵衝突**，第三階段**禁止衝突**。選項若寫「決定後仍可繼續公開反對、不必配合」，判錯——那是把第一階段的規則套到第三階段。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "開會時大家把方案罵到體無完膚（①），主管聽完說「就做 B，我負責」（②），散會後所有人回去動員自己部門推 B，不再私下抱怨（③）。**吵在決定前，服從在決定後**——這是它跟「表面和諧」的差別。"
+            },
+            {
+              "type": "heading",
+              "level": 4,
+              "text": "二、群體決策三種方式"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "方法",
+                "做法",
+                "辨識關鍵"
+              ],
+              "widths": [
+                120,
+                null,
+                170
+              ],
+              "rows": [
+                [
+                  "焦點團體法",
+                  "找**一群目標對象**坐下來，由主持人引導討論，了解想法與感受",
+                  "**見面**、團體互動、探索需求"
+                ],
+                [
+                  "腦力激盪術",
+                  "團體自由產生構想，遵守三原則：**拒絕批評、歡迎自由聯想、以量孕質**",
+                  "**見面**、不批評、要量"
+                ],
+                [
+                  "**德菲法**",
+                  "以**匿名問卷**多回合徵詢專家意見，每回合回饋彙整，直到意見收斂",
+                  "**不見面**、匿名、多輪"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**德菲法只有一個辨識句：看不見彼此。**題目出現「專家分散各國、不能見面、要避免權威壓力」就是它。反過來，只要「坐下來討論」就**不是**德菲法。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**待核對**：腦力激盪的原則，你的手抄是三項。標準管理學常列**四項**（多了「組合與改進他人構想」）。**若課本只列三項，答題就寫三項**；多寫反而可能被判離題。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "運用資訊系統協助決策",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "figure",
+              "svg": "<svg class=\"svgbox\" viewBox=\"0 0 680 300\" width=\"100%\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\">\n<title>資訊系統的四個層級</title>\n<desc>由上而下為高階決策系統、決策支援系統、資訊報告系統、作業資訊系統。</desc>\n<rect x=\"185\" y=\"16\" width=\"310\" height=\"56\" rx=\"9\" fill=\"#3a3323\" stroke=\"#8a7248\" stroke-width=\"1\"/>\n<text x=\"203\" y=\"36\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#FAC775\" dominant-baseline=\"central\">高階決策系統 ESS</text>\n<text x=\"483\" y=\"52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#c9b48a\" text-anchor=\"end\" dominant-baseline=\"central\">高層 · 非結構化</text>\n<rect x=\"140\" y=\"80\" width=\"400\" height=\"56\" rx=\"9\" fill=\"#2f2a45\" stroke=\"#6b64a8\" stroke-width=\"1\"/>\n<text x=\"158\" y=\"100\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#C9C4F0\" dominant-baseline=\"central\">決策支援系統 DSS</text>\n<text x=\"528\" y=\"116\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#9d97cf\" text-anchor=\"end\" dominant-baseline=\"central\">半結構化 · 可試算</text>\n<rect x=\"95\" y=\"144\" width=\"490\" height=\"56\" rx=\"9\" fill=\"#23303d\" stroke=\"#4a6a8a\" stroke-width=\"1\"/>\n<text x=\"113\" y=\"164\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#85B7EB\" dominant-baseline=\"central\">資訊報告系統 IRS</text>\n<text x=\"573\" y=\"180\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#7d9cba\" text-anchor=\"end\" dominant-baseline=\"central\">中階 · 定期報表</text>\n<rect x=\"50\" y=\"208\" width=\"580\" height=\"56\" rx=\"9\" fill=\"#1f4a42\" stroke=\"#3d7a68\" stroke-width=\"1\"/>\n<text x=\"68\" y=\"228\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#9FE1CB\" dominant-baseline=\"central\">作業資訊系統（TPS · PCS · OAS）</text>\n<text x=\"618\" y=\"244\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#6fae9b\" text-anchor=\"end\" dominant-baseline=\"central\">基層 · 日常交易</text>\n</svg>"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "大類",
+                "子系統",
+                "做什麼"
+              ],
+              "widths": [
+                110,
+                null,
+                210
+              ],
+              "rows": [
+                [
+                  "作業資訊系統",
+                  "**交易處理系統 TPS**／**流程控制系統 PCS**／**辦公室自動化 OAS**",
+                  "記錄日常交易、監控實體流程、文書與溝通"
+                ],
+                [
+                  "**資訊管理系統**",
+                  "**資訊報告系統 IRS**／**決策支援系統 DSS**／**高階決策系統 ESS**",
+                  "定期報表、互動試算、高層關鍵指標"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**層級對應是這節唯一考點**：越往下**越記錄、越偏執行**（TPS 記帳）；越往上**越匯整、越偏判斷**（ESS 看趨勢）。中階用報表（IRS），要試算就用 DSS。"
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**接回本章第二節**：ESS 支援的正是**非例行性決策**，TPS 記錄的正是**例行性作業**。所以「決策類型 ↔ 系統層級」是同一條線的兩端，考題很愛把這兩塊併成一題。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "跨章連結與本章未證實清單",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "接到哪裡",
+                "怎麼接"
+              ],
+              "widths": [
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "CH2 管理功能",
+                  "決策是**規劃**的核心動作——先決定做什麼，才有計畫"
+                ],
+                [
+                  "CH2 Mintzberg",
+                  "十角色（管理者做什麼）／組織決策三階段（組織怎麼決定），**同一個人、兩套東西**"
+                ],
+                [
+                  "CH4 科技環境",
+                  "資訊系統是科技環境的一環；科技**降低資訊成本**，等於減少「資訊不完整」這一項"
+                ],
+                [
+                  "**CH5 倫理**",
+                  "倫理兩難本身就是一種決策情境；**四大原則＝四種決策判準**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**本章還有三處「待核對」，拿到課本請優先確認**：  \n① 章名（我暫用「問題與決策」）；② 第二節那張流程圖的歸屬（經濟人 vs 通用流程）；③ 腦力激盪是三項還是四項原則。  \n（帕金森定律已確認：本書指「會議討論時間與議題重要性成反比」。）"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "people",
+      "label": "附錄 A",
+      "title": "人物總表",
+      "subtitle": "各章人名與理論，一次認完",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "人物 — 學派 — 一句話",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "人物",
+                "學派／貢獻",
+                "一句話主張"
+              ],
+              "widths": [
+                150,
+                170,
+                null
+              ],
+              "rows": [
+                [
+                  "泰勒 Taylor",
+                  "科學管理",
+                  "用科學方法找唯一最佳方法；經濟人"
+                ],
+                [
+                  "甘特 Gantt",
+                  "科學管理（工具）",
+                  "甘特圖：縱軸活動、橫軸時間"
+                ],
+                [
+                  "費堯 Fayol",
+                  "管理程序／行政管理",
+                  "管理五功能、十四原則；區分管理與企業功能"
+                ],
+                [
+                  "韋伯 Weber",
+                  "官僚組織",
+                  "理性合法權威、五特徵、不講人情"
+                ],
+                [
+                  "梅奧 Mayo",
+                  "人群關係",
+                  "霍桑實驗；社會人、非正式組織"
+                ],
+                [
+                  "Churchman 邱契門",
+                  "系統理論",
+                  "系統四特徵；次系統相互依存"
+                ],
+                [
+                  "Burns & Stalker  \n伯恩斯與史托克",
+                  "組織結構",
+                  "機械式（環境穩定）vs 有機式（環境變動）"
+                ],
+                [
+                  "Katz",
+                  "管理技能",
+                  "概念、為人處事、技術三技能"
+                ],
+                [
+                  "Mintzberg 明茲伯格",
+                  "管理者角色／組織決策",
+                  "十角色（人際 3、資訊 3、決策 4）；組織決策**三階段＋支持性活動**"
+                ],
+                [
+                  "Simon 賽蒙",
+                  "決策理論",
+                  "**有限理性**、**滿意水準**；行政人模式的代表"
+                ],
+                [
+                  "Osborn 奧斯本",
+                  "群體決策",
+                  "腦力激盪術：拒絕批評、自由聯想、以量孕質"
+                ],
+                [
+                  "**Grove 葛洛夫**",
+                  "組織決策",
+                  "英特爾決策模式：大鳴大放 → 明確決策 → 全員支持"
+                ],
+                [
+                  "**Parkinson 帕金森**",
+                  "組織病象",
+                  "帕金森定律：工作膨脹到填滿可用的時間"
+                ],
+                [
+                  "**McGregor 麥葛瑞哥**",
+                  "激勵理論",
+                  "X 理論／Y 理論（人性假設）"
+                ],
+                [
+                  "**Ouchi 大內**",
+                  "激勵／組織文化",
+                  "Z 理論（日本式管理）"
+                ],
+                [
+                  "Juran 裘蘭",
+                  "品質管理",
+                  "品質三部曲：計畫、控制、改進"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "note",
+              "text": "**CH5 没有人名可背。**企業倫理那一章，教材從頭到尾**沒有標任何理論的提出者**——四大原則、CSR 四層、利害關係人分類，全部只給內容、不給人。出現的名字都是**案例裡的經營者與企業**（江振誠、王品、台達電、華航、富邦、中鋼），不是理論家。  \n**所以這章只考分類與清單，不考「誰提出什麼」。**若考卷硬要配對，只有一組要記：**CSR 四層常被歸給 Carroll**——但這是外部知識，**本書沒寫，簡答題不要主動寫**。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "errors",
+      "label": "附錄 B",
+      "title": "易錯清單",
+      "subtitle": "考前掃這一頁",
+      "blocks": [
+        {
+          "type": "summary",
+          "title": "五十三條高頻陷阱",
+          "blocks": [
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                "**生產要素是四大類**（自然資源、人力資源、資本設備、企業家精神），不是五類。資訊屬「投入資源」，不屬生產要素。",
+                "**企業家精神**是唯一主動的要素，其餘三項都是被動資源。",
+                "**可分割性**是產品的特性，不是服務的。服務是無形、不可分割、易變、易逝。",
+                "「**符合管理程序**」不是規劃的目的，是話術選項。",
+                "控制四步：**立標準 → 衡量 → 比較 → 改正**，不可顛倒。",
+                "矩陣組織判準：**功能部門還在 ＋ 有專案經理橫向協調**。只有產品線、無功能部門＝產品別。",
+                "**效果 ≠ 產出÷投入**。課本定義效率為「**資源的使用率**」、效果為「**目標達成的程度**」，**沒有給公式**。",
+                "「**透過他人**」是 Robbins 的說法，**不是本書定義**。本書定義＝「運用管理功能與資源，進行目標設定與達成的過程」。",
+                "**為人處事技能**是三項技能中唯一跨層級都重要的。",
+                "**發言人**屬資訊角色；**聯絡人**屬人際角色；**談判者**不能漏（十角色＝3＋3＋4）。",
+                "角色理論：期望「**不清楚**」→ 模糊；期望「**矛盾**」→ 衝突。",
+                "典範轉移是**換標準**，不是換人、換產品、換結構。",
+                "**梅奧＝人群關係學派**，不是管理科學學派。計量學派沒有單一代表人物。",
+                "**甘特圖：縱軸活動、橫軸時間。**",
+                "**泰勒由下往上**（基層動作）、**費堯由上往下**（高層職能）。",
+                "泰勒主張**科學選工**，不是讓工人自己選工作與訓練方式。",
+                "霍桑實驗的原始設計**基於科學管理理念**，但結論否定了它。",
+                "系統四元素：**投入、處理、輸出、回饋**——沒有「再生」。",
+                "Churchman 四特徵中，次系統是**相互依存**，不是彼此獨立。",
+                "「考慮情境、沒有最佳解法」→ **權變理論**。",
+                "**Z 理論是 Ouchi（大內）**；McGregor 只有 X 與 Y。無為說≠不為。",
+                "任務 vs 總體：**能點名、能打交道的是任務環境**。供應商漲價＝任務；央行升息＝總體。",
+                "景氣指標**課本只列兩類**：領先（七項）、同時（六項）。**沒有「落後指標」**；失業率、通膨率是另列的兩項。**失業率在時間上落後**，選項有「落後」時可選。",
+                "**台灣的管理資本主義**第一條是「**國家資本主義**」（台積電、中鋼），不是家族資本主義。",
+                "霍桑實驗結論**課本只寫兩項**：團體氣氛、感覺受重視。韋伯第 2 項是「清楚的**權力**體系」。",
+                "燈號：**紅＝過熱、綠＝穩定、藍＝低迷**；黃紅轉熱、黃藍轉弱。",
+                "**獨佔性競爭（很多家、產品異質）≠ 獨占（只有一家）**；電力＝獨占，電信＝寡占。",
+                "**機械式的控制幅度是窄的**（窄幅度→多層級→高型組織）；有機式才是寬幅度、扁平。",
+                "全球化辨識：**錢＝金融、貨＝製造、人＝人資、顧客＝市場**。科技降低進入障礙→競爭**增加**。",
+                "**最低標準是法律，不是倫理。**「符合法律即符合倫理」「倫理是最低底線」兩個敘述都錯。",
+                "「**最多數人的最大效用**」＝**功利主義**。不要配給公平正義，也不要配給基本權利。",
+                "**分配正義**＝依付出與績效（不看種族性別）；**程序正義**＝依事先設定的規則與標準。兩者互換是最常見的錯。",
+                "**均衡務實是第四個原則**，不是第五個；它的作用是把前三個「一起用」，本身不是新判準。",
+                "利害關係人：**員工＝主要、工會＝次要、政府機構＝次要**。這三組最常被對調。",
+                "**天使投資人**是個人拿自有資金**換取所有權**，不是捐款；**創投**是機構／基金，投資高成長潛力企業。",
+                "消費者四要＝**安全、溝通、選擇、尊重**。不是「價格、品質、服務、便利」。",
+                "員工**期望 3 項、企業責任 4 項**，不可對調；「安身立命」屬**期望**，不屬企業責任。",
+                "**工作擴大化**＝橫向加量（同性質工作變多）；**工作豐富化**＝縱向加責（自主與挑戰變多）。",
+                "CSR 四層由下而上：**經濟 → 法律 → 道德 → 自由意志**。**社會義務只含前兩層**，不等於社會責任。",
+                "倫理文化四做法：**知覺 → 訓練 → 行動 → 以身作則**。**倫理領導是領導者自己做**，不是要求員工。",
+                "圖 5.1：第一步＝**高階管理者的決心**，最後一步＝**制定維護與改善**（檢討是第 7 步）。",
+                "**例行性決策配基層、非例行性配高層。**「基層負責非例行性決策」是錯的。",
+                "**風險**＝機率可估；**不確定性**＝機率估不出來。只差「能不能說出機率」。",
+                "「**列出所有可行方案**」「選**最佳**方案」只屬**經濟人**；行政人只搜尋一部分、求滿意。",
+                "**有限理性 ≠ 不理性**；**滿意水準 ≠ 降低標準擺爛**。後者是主動設定的可接受門檻。",
+                "組織決策是**三階段＋支持性活動**，**不是四階段**；支持性活動貫穿全程。",
+                "汰擇階段：**篩選**是快速淘汰（粗篩），**評估與選擇**才是深入比較；順序不可換。",
+                "發展階段：**先搜尋**（找現成的）**再設計**（自己做）；順序不可換。",
+                "英特爾模式：第一階段**鼓勵衝突**（大鳴大放），第三階段**禁止衝突**（全員支持）。",
+                "**德菲法＝匿名＋多輪＋不見面**；焦點團體與腦力激盪都要見面。",
+                "資訊系統層級：**TPS／PCS／OAS 給基層**，IRS 中階報表，DSS 半結構化試算，**ESS 給高層**。",
+                "腦力激盪本書列**三原則**：拒絕批評、歡迎自由聯想、以量孕質。**答題寫三項**。",
+                "**帕金森定律（本書用法）＝會議討論時間與議題重要性成反比**——大事快速通過、小事吵很久。不要答成「工作膨脹到填滿時間」（那是另一條）。"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "譯名對照",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "本書用詞",
+                "常見他書用詞",
+                "英文"
+              ],
+              "widths": [
+                180,
+                null,
+                150
+              ],
+              "rows": [
+                [
+                  "效果",
+                  "效能",
+                  "effectiveness"
+                ],
+                [
+                  "概念技能",
+                  "概念化能力",
+                  "conceptual skill"
+                ],
+                [
+                  "為人處事技能",
+                  "人際關係能力",
+                  "human skill"
+                ],
+                [
+                  "技術技能",
+                  "技術能力",
+                  "technical skill"
+                ],
+                [
+                  "行政管理學派",
+                  "管理程序學派（部分考題用）",
+                  "administrative management"
+                ],
+                [
+                  "官僚型組織／科層制",
+                  "科層體制",
+                  "bureaucracy"
+                ],
+                [
+                  "獨佔性競爭",
+                  "壟斷性競爭",
+                  "monopolistic competition"
+                ],
+                [
+                  "機械式組織",
+                  "科層式／官僚式組織",
+                  "mechanistic"
+                ],
+                [
+                  "有機式組織",
+                  "有機型組織",
+                  "organic"
+                ],
+                [
+                  "年老化指數",
+                  "老化指數／老年人口指數",
+                  "aging index"
+                ],
+                [
+                  "利害關係人",
+                  "利益相關者／利益關係人",
+                  "stakeholder"
+                ],
+                [
+                  "企業社會責任",
+                  "企業公民責任",
+                  "corporate social responsibility"
+                ],
+                [
+                  "功利主義",
+                  "效益主義",
+                  "utilitarianism"
+                ],
+                [
+                  "創業投資人",
+                  "風險投資／創投",
+                  "venture capitalist"
+                ],
+                [
+                  "自由意志責任",
+                  "慈善責任／自願責任",
+                  "discretionary responsibility"
+                ],
+                [
+                  "社會義務",
+                  "社會責任的底線",
+                  "social obligation"
+                ],
+                [
+                  "行政人",
+                  "管理人／行政模式",
+                  "administrative man"
+                ],
+                [
+                  "有限理性",
+                  "侷限理性",
+                  "bounded rationality"
+                ],
+                [
+                  "滿意水準",
+                  "滿意化／足夠好",
+                  "satisficing"
+                ],
+                [
+                  "決策支援系統",
+                  "決策支持系統",
+                  "decision support system"
+                ],
+                [
+                  "高階決策系統",
+                  "主管資訊系統／執行資訊系統",
+                  "executive support system"
+                ],
+                [
+                  "腦力激盪術",
+                  "頭腦風暴",
+                  "brainstorming"
+                ],
+                [
+                  "德菲法",
+                  "德爾菲法／德爾斐法",
+                  "Delphi technique"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "size": "small",
+              "text": "答題一律用**本書用詞**，閱卷看的是課本術語。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cards",
+      "label": "附錄 C",
+      "title": "快速重點小卡",
+      "subtitle": "考前 10 分鐘，只掃這一頁",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "size": "small",
+          "text": "用法：**遮住右邊，只看標題回想內容**。想不起來的回前面對應章節，不要在這裡硬背。"
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 01",
+          "title": "企業是什麼",
+          "items": [
+            {
+              "title": "生產要素",
+              "text": "**四大類**：自然資源、人力資源、**資本設備**、企業家精神",
+              "tone": "teal"
+            },
+            {
+              "title": "企業管理矩陣",
+              "text": "企業功能 **6**（產銷人研財資）× 管理功能 **4**（規組領控）",
+              "tone": "teal"
+            },
+            {
+              "title": "非營利組織",
+              "text": "盈餘**不分配**、回流使命。**≠ 不賺錢**",
+              "tone": "teal"
+            },
+            {
+              "title": "控制四步",
+              "text": "立標準 → 衡量 → 比較 → 改正（順序不可換）",
+              "tone": "teal"
+            }
+          ]
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 02",
+          "title": "管理是什麼",
+          "items": [
+            {
+              "title": "管理定義",
+              "text": "運用**管理功能與資源**，進行**目標設定與達成**的過程",
+              "tone": "blue"
+            },
+            {
+              "title": "效率",
+              "text": "**資源的使用率**；把事做對",
+              "tone": "blue"
+            },
+            {
+              "title": "效果",
+              "text": "**目標達成的程度**；做對的事",
+              "tone": "blue"
+            },
+            {
+              "title": "三技能",
+              "text": "概念化／人際關係／技術。**人際關係三層都要**",
+              "tone": "blue"
+            },
+            {
+              "title": "十角色",
+              "text": "人際 **3**、資訊 **3**、決策 **4**（興業家、談判者別漏）",
+              "tone": "blue"
+            },
+            {
+              "title": "典範轉移",
+              "text": "換的是「**什麼算成功**」，不是換人、換產品",
+              "tone": "blue"
+            }
+          ]
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 03",
+          "title": "理論演進 · 誰做了什麼",
+          "items": [
+            {
+              "title": "泰勒 Taylor",
+              "text": "**拿碼錶進車間**，把每個動作拆開、刪掉多餘的、定出標準工時，再配差別計件工資。主張「**唯一最佳方法**」；人性假設＝**經濟人**。",
+              "tone": "purple"
+            },
+            {
+              "title": "甘特 Gantt",
+              "text": "**畫出甘特圖**：縱軸活動、橫軸時間，把一堆工作排上進度表。泰勒管「一個動作怎麼做」，甘特管「一堆動作怎麼排」。",
+              "tone": "purple"
+            },
+            {
+              "title": "費堯 Fayol",
+              "text": "**坐在總經理室看整個組織**，把企業活動分成六大類，指出管理只是其中一類卻**貫穿其餘五類**；提出五功能＋十四原則。**由上往下**。",
+              "tone": "purple"
+            },
+            {
+              "title": "韋伯 Weber",
+              "text": "**設計一套不靠人的組織**：用規則與層級取代世襲、魅力、恩寵，讓「換了誰，結果都一樣」。五特徵，第 2 項是清楚的**權力**體系。",
+              "tone": "purple"
+            },
+            {
+              "title": "梅奧 Mayo",
+              "text": "**做霍桑實驗**：調亮產量升、調暗**也升**，證明亮度根本不是變數。結論**兩項**：團體氣氛、感覺受重視。",
+              "tone": "purple"
+            },
+            {
+              "title": "邱契門 Churchman",
+              "text": "**歸納系統的四種特徵**：有目標、由次系統組成、存在於環境中、次系統**相互依存**。",
+              "tone": "purple"
+            },
+            {
+              "title": "泰勒 vs 費堯",
+              "text": "泰勒**由下往上**（從車間動作出發）；費堯**由上往下**（從高層職能出發）。一個研究手，一個研究腦。",
+              "tone": "purple"
+            },
+            {
+              "title": "權變",
+              "text": "**沒有代表人物**。主張沒有放諸四海皆準的方法，要看環境、規模、技術、人員特質。",
+              "tone": "purple"
+            },
+            {
+              "title": "台灣的管理資本主義",
+              "text": "首條＝**國家資本主義**（政府主導設立**台積電、中鋼**）；另有零碎知識系統化、家族企業。",
+              "tone": "purple"
+            },
+            {
+              "title": "關係",
+              "text": "程序正義／**尊尊**（依地位高低）；分配正義／**親親**（依親疏遠近）。",
+              "tone": "purple"
+            }
+          ]
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 04",
+          "title": "環境",
+          "items": [
+            {
+              "title": "環境三層",
+              "text": "全球 → 總體（**間接**）→ 任務（**直接**）→ 組織",
+              "tone": "amber"
+            },
+            {
+              "title": "科技三影響",
+              "text": "縮短生命週期、新經營形式、提升效率",
+              "tone": "amber"
+            },
+            {
+              "title": "縱斷 vs 橫斷",
+              "text": "**時間軸**（同一群人變了）vs **群體軸**（不同群人並存）",
+              "tone": "amber"
+            },
+            {
+              "title": "老化指數",
+              "text": "65 歲以上 ÷ **15 歲以下** × 100",
+              "tone": "amber"
+            },
+            {
+              "title": "景氣兩類",
+              "text": "領先 **7** 項（股價、訂單、M1B）／同時 **6** 項（生產、薪資、貨運）",
+              "tone": "amber"
+            },
+            {
+              "title": "五色燈",
+              "text": "紅過熱、黃紅活絡、綠穩定、黃藍欠佳、**藍衰退**",
+              "tone": "amber"
+            },
+            {
+              "title": "市場四型",
+              "text": "完全（同質）／獨佔性（異質）／寡占（少數）／獨占（一家）",
+              "tone": "amber"
+            },
+            {
+              "title": "全球化",
+              "text": "**錢**金融、**貨**製造、**人**人資、**顧客**市場",
+              "tone": "amber"
+            },
+            {
+              "title": "被動 4",
+              "text": "跨界角色、預測規劃、彈性結構、併購合資",
+              "tone": "amber"
+            },
+            {
+              "title": "主動 3",
+              "text": "廣告公關、政策性活動、商會",
+              "tone": "amber"
+            },
+            {
+              "title": "機械 vs 有機",
+              "text": "控制幅度：機械**窄**、有機**寬**；窄→多層級→高型",
+              "tone": "amber"
+            }
+          ]
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 05",
+          "title": "倫理與社會責任",
+          "items": [
+            {
+              "title": "企業倫理",
+              "text": "企業行為處世的**對錯信念**，或遵循的道德原則與標準。判斷的是「該不該」，不是「違不違法」。",
+              "tone": "red"
+            },
+            {
+              "title": "倫理兩難",
+              "text": "兩個選項**都正當**、都有人受損，才叫兩難。**一邊明顯違法＝不是兩難**，是選擇。",
+              "tone": "red"
+            },
+            {
+              "title": "四大原則",
+              "text": "**功利**（最多數人最大效用）／**基本權利**（不可犧牲）／**公平正義**（分配＋程序）／**均衡務實**（三個一起用）",
+              "tone": "red"
+            },
+            {
+              "title": "分配 vs 程序",
+              "text": "分配＝按**付出與績效**（不看種族性別）；程序＝按**事先設定的規則**。最常被互換。",
+              "tone": "red"
+            },
+            {
+              "title": "倫理 vs 法律",
+              "text": "**法律是地板**。合法不一定合倫理；法律**落後於倫理**、也**或有未全**。",
+              "tone": "red"
+            },
+            {
+              "title": "利害關係人",
+              "text": "主要 3：**投資者、消費者、員工**；次要 3：**工會、政府、社會大眾**",
+              "tone": "red"
+            },
+            {
+              "title": "投資者 3 類",
+              "text": "一般（股民）／**創投**（機構、成長期）／**天使**（個人、自有資金、**換股權不是捐款**）",
+              "tone": "red"
+            },
+            {
+              "title": "消費者四要",
+              "text": "**安全、溝通、選擇、尊重**——不被傷害、不被隱瞞、不被綁死、不被輕視",
+              "tone": "red"
+            },
+            {
+              "title": "員工 3 / 4",
+              "text": "**期望 3**：意義、報酬、安身立命。／**企業責任 4**：安全環境、薪資升遷、工作意義、訓練發展",
+              "tone": "red"
+            },
+            {
+              "title": "擴大 vs 豐富",
+              "text": "**擴大**＝橫向加量（同性質工作變多）；**豐富**＝縱向加責（給自主與挑戰）",
+              "tone": "red"
+            },
+            {
+              "title": "CSR 四層",
+              "text": "**經濟 → 法律 → 道德 → 自由意志**；**社會義務＝前兩層**，不等於社會責任",
+              "tone": "red"
+            },
+            {
+              "title": "四做法",
+              "text": "**知覺**（章程）→ **訓練** → **行動**（獎懲稽核）→ **以身作則**",
+              "tone": "red"
+            },
+            {
+              "title": "圖 5.1 八步",
+              "text": "決心→小組→宣示→查法規→計畫→執行→**檢討稽核**→**維護改善**；中間三支撐不算步驟",
+              "tone": "red"
+            }
+          ]
+        },
+        {
+          "type": "quickGroup",
+          "label": "CH 06",
+          "title": "決策",
+          "items": [
+            {
+              "title": "決策兩型",
+              "text": "例行＝重複、有 SOP、**基層**；非例行＝新、無前例、**高層**",
+              "tone": "green"
+            },
+            {
+              "title": "風險 vs 不確定",
+              "text": "差一個字：**能不能說出機率**。能估＝風險，估不出＝不確定",
+              "tone": "green"
+            },
+            {
+              "title": "模糊性",
+              "text": "連**問題是什麼**都說不清；比不確定性更前面一層",
+              "tone": "green"
+            },
+            {
+              "title": "十項謬誤",
+              "text": "找證據／雙標／保守／**想得到**／**先聽到**／**看起來像**／只看想看的／成功歸己／太樂觀／**加碼**",
+              "tone": "green"
+            },
+            {
+              "title": "加碼投注",
+              "text": "「已經花兩億了，再撐一下」——**投入越多越不肯停**",
+              "tone": "green"
+            },
+            {
+              "title": "經濟人",
+              "text": "**所有**方案、**最佳**解、算到最優才停。這是**應然**",
+              "tone": "green"
+            },
+            {
+              "title": "行政人",
+              "text": "**有限理性**＋**滿意水準**：夠好就停。這是**實然**（Simon）",
+              "tone": "green"
+            },
+            {
+              "title": "三階段",
+              "text": "認定 → 發展 → 汰擇；**支持性活動貫穿全程，不是第四階段**",
+              "tone": "green"
+            },
+            {
+              "title": "汰擇順序",
+              "text": "**篩選**（粗篩）→ **評估與選擇**（細比）→ **核准認可**（送批）",
+              "tone": "green"
+            },
+            {
+              "title": "英特爾模式",
+              "text": "**大鳴大放**（鼓勵衝突）→ **明確決策** → **全員支持**（禁止衝突）",
+              "tone": "green"
+            },
+            {
+              "title": "群體三法",
+              "text": "焦點團體（見面）／腦力激盪（見面、**不批評**）／德菲法（**匿名、多輪、不見面**）",
+              "tone": "green"
+            },
+            {
+              "title": "資訊系統",
+              "text": "TPS·PCS·OAS → IRS → DSS → **ESS**；**下記錄、上判斷**",
+              "tone": "green"
+            },
+            {
+              "title": "帕金森定律",
+              "text": "會議**討論時間與議題重要性成反比**：大事沒人敢講、小事人人都有意見",
+              "tone": "green"
+            }
+          ]
+        },
+        {
+          "type": "summary",
+          "title": "最後三句",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "① 選擇題靠**關鍵詞分類**，簡答題靠**課本原句**——兩套要分開練。"
+            },
+            {
+              "type": "paragraph",
+              "text": "② 本書的「幾項」多數比一般教材少：生產要素 **4**、景氣指標 **2**、霍桑結論 **2**。看到「五項」「三類」先懷疑。**但第五章相反**——四原則、四要、四責任、四做法，全是四個。"
+            },
+            {
+              "type": "paragraph",
+              "text": "③ 跨章題是常態：習題約 **2–3 成**來自其他章。答不出來先問「這考的是哪一章的框架」。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "extra",
+      "label": "附錄 D",
+      "title": "跨章習題速查",
+      "subtitle": "還沒教到的章，先把名詞認熟",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "為什麼要有這一頁",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "本書習題是**按「框架」抽樣**，不按章切——所以每章都會冒出後面章節的題（CH4 考過機械式組織，CH5 就冒出策略層級與 BCG）。這裡只收**最常被抽到的三組策略管理概念**，當預習用。",
+              "size": "normal"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這一頁全部是標準管理學的架構，尚未與課本核對。**本書前幾章已多次證明它與標準版有出入（生產要素四類、景氣指標兩類、霍桑結論兩項）。**等正式教到策略那一章，一律以課本原文為準。**"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "一、策略的三個層級",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "層級",
+                "管什麼",
+                "典型問題"
+              ],
+              "widths": [
+                130,
+                null,
+                210
+              ],
+              "rows": [
+                [
+                  "公司層級",
+                  "整個**事業組合**：要進入哪些產業、買或賣哪個事業",
+                  "「我們該不該跨足餐飲？」"
+                ],
+                [
+                  "**事業部層級**",
+                  "單一產業**怎麼競爭**",
+                  "「在這個市場用低成本還是差異化？」"
+                ],
+                [
+                  "功能層級",
+                  "各部門**怎麼支援**事業策略",
+                  "「行銷、生產、人資怎麼配合？」"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**一句話判斷**：問「**在哪個產業打仗**」＝公司層級；問「**在這個產業怎麼贏**」＝事業部層級；問「**部門怎麼配合**」＝功能層級。  \n所以「**競爭策略**」屬**事業部層級**——它談的是在同一個產業裡怎麼贏。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "二、BCG 模式：四個象限與對應策略",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "象限",
+                "市場成長",
+                "相對占有率",
+                "現金",
+                "策略"
+              ],
+              "widths": [
+                110,
+                110,
+                110,
+                null,
+                150
+              ],
+              "rows": [
+                [
+                  "明星 Star",
+                  "高",
+                  "高",
+                  "打平",
+                  "**建立**（投資）"
+                ],
+                [
+                  "金牛 Cash cow",
+                  "低",
+                  "高",
+                  "**產生**現金",
+                  "**維持**（擠奶）"
+                ],
+                [
+                  "**問題 Question**",
+                  "高",
+                  "低",
+                  "消耗現金",
+                  "建立**或**撤退"
+                ],
+                [
+                  "**狗 Dog**",
+                  "低",
+                  "低",
+                  "打平或微利",
+                  "**收割或撤資**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**「收割」（harvest）最典型的對象是狗事業**：減少投資、把能拿的現金拿走、準備退出。**金牛對應的是「維持」，不是收割**——金牛還有獲利，抽乾它是殺雞取卵。  \n（若你的課本把「收割」定義成「金牛的擠奶」，那題會改選金牛；兩種寫法都有人用，**以課本為主**。）"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "三、Ansoff 矩陣：產品 × 市場",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "table",
+              "variant": "matrix",
+              "headers": [
+                "現有產品",
+                "新產品"
+              ],
+              "widths": [
+                120,
+                null,
+                null
+              ],
+              "rows": [
+                {
+                  "header": "現有市場",
+                  "cells": [
+                    "**市場滲透**  \n買更多、買更頻繁",
+                    "**產品發展**  \n給舊客人新產品"
+                  ]
+                },
+                {
+                  "header": "新市場",
+                  "cells": [
+                    "**市場發展**  \n把舊產品賣到新地方",
+                    "**多角化**  \n新產品＋新市場"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**四格只差在「動的是產品還是市場」。**「鼓勵現有顧客**增加使用次數與時機**」——客人沒變、產品沒變，只是用得更兇 → **市場滲透**。"
+            },
+            {
+              "type": "callout",
+              "tone": "example",
+              "label": "例",
+              "text": "牙膏廠說「每次擠一公分就夠」是市場滲透（同批人用更多）；把牙膏賣到東南亞是市場發展；推出漱口水是產品發展；買下一家飲料公司是多角化。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "四、團體決策：偏移與迷思",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "概念",
+                "一句話",
+                "後果"
+              ],
+              "widths": [
+                130,
+                null,
+                170
+              ],
+              "rows": [
+                [
+                  "**團體偏移**",
+                  "團體決策比成員**個人**決策更**極端**——可能更冒險，也可能更保守，方向取決於團體原本的傾向",
+                  "決策「更敢」或「更縮」"
+                ],
+                [
+                  "團體迷思",
+                  "為了維持和諧，成員**壓抑異議、自我審查**，沒人敢說真話",
+                  "決策品質差、沒人反對"
+                ],
+                [
+                  "團體凝聚力",
+                  "成員互相吸引、想留在團體的程度",
+                  "不是病，但**太強會助長迷思**"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**最常混的兩個，一句話分開**：**偏移＝變極端**（更冒險或更保守）；**迷思＝不敢講**（表面一致）。題目出現「比個人決策更冒險／更保守」就是偏移；出現「壓抑異議、以為大家都同意」就是迷思。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**團體偏移不等於「團體一定更冒險」。**它可能往保守走——原本保守的團體，討論後會**更保守**。所以選項若寫「團體決策必然比個人冒險」，判錯。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "五、團體決策的四種技術",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "技術",
+                "做法",
+                "辨識關鍵"
+              ],
+              "widths": [
+                130,
+                null,
+                170
+              ],
+              "rows": [
+                [
+                  "名目團體術",
+                  "成員**先各自寫下意見**，再逐一口頭報告、投票排序；**不充分討論**",
+                  "先寫後說、名義上的團體"
+                ],
+                [
+                  "腦力激盪術",
+                  "團體自由產生構想，**拒絕批評**、歡迎自由聯想、以量孕質",
+                  "要量、不評價"
+                ],
+                [
+                  "**德菲法**",
+                  "**匿名**問卷、**多回合**回饋，直到意見收斂",
+                  "不見面、無權威壓力"
+                ],
+                [
+                  "焦點團體法",
+                  "由**主持人**引導小團體討論，了解想法與感受",
+                  "有主持人、深入探索"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**焦點團體的主持人：引導，但不表態、不加入討論內容。**他要做的是「讓每個人都講到、不讓強勢者壟斷、把話題拉回主題」；**一旦主持人開始表達自己的看法，就會污染結果**。選項若寫「主持人加入討論、分享個人意見」，判錯。"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**四個技術用「見不見面 × 有沒有主持人」分**：德菲法**不見面**；其餘三個見面。焦點團體**有主持人引導**；名目團體術**先寫後說**；腦力激盪**只管產生、不管評價**。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "六、規劃的基本程序（五步）",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "flow",
+              "items": [
+                "分析情況",
+                "設定目標",
+                "列出替代方案",
+                "評估方案",
+                "選擇並執行"
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**順序的核心在第一步**：**先看清現況，才知道目標該定在哪**。跳過「分析情況」直接設定目標，就是憑空喊數字。個人做生涯規劃也一樣——先盤點自己的能力與市場，再定目標。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**常見的錯誤順序**：① 先設定目標再分析情況；② 把「列出方案」放在「分析情況」之前。兩者都會讓計畫建立在猜測上。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa",
+      "label": "附錄 E",
+      "title": "問答大綱",
+      "subtitle": "四題各給一句，可直接寫進答案卷",
+      "blocks": [
+        {
+          "type": "card",
+          "title": "使用方式",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "以下四題依**大綱**整理，每題給**一句可直接寫在答案卷上的句子**。句子的措辭用課本用語，**不是逐字原文**——若課本有正式定義，以課本為準。",
+              "size": "normal"
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**答題三步**：① 先寫這裡的定義句；② 補**一個具體例子**；③ 用一句「所以……」收束。三句成一段，比列五個關鍵詞得分高。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "CH1 大標題 大綱",
+          "tone": "teal",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "大標題",
+                "可寫的一句"
+              ],
+              "widths": [
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "企業是什麼",
+                  "企業是**運用生產要素、從事生產與銷售活動，以滿足顧客需求並獲取利潤**的組織；生產要素分為自然資源、人力資源、資本設備、企業家精神**四大類**。"
+                ],
+                [
+                  "企業功能與管理",
+                  "企業功能分為生產、銷售、人力資源、研發、財務、資訊**六項**，管理功能分為規劃、組織、領導、控制**四項**，兩者交織成企業管理矩陣。"
+                ],
+                [
+                  "**企業的重要性**",
+                  "企業**提供就業與所得、滿足消費需求、促進經濟發展**，是現代經濟體系的核心單位。"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這題只有一個字會出錯**：生產要素是**四大類**。寫成「五項（多資訊）」就錯——資訊屬「投入資源」，不屬生產要素。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "CH2 大標題 大綱",
+          "tone": "blue",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "大標題",
+                "可寫的一句"
+              ],
+              "widths": [
+                150,
+                null
+              ],
+              "rows": [
+                [
+                  "管理是什麼",
+                  "管理是**運用管理功能與資源，進行目標設定與達成的過程**；**效率**是資源的使用率，**效果**是目標達成的程度。"
+                ],
+                [
+                  "管理者類型",
+                  "管理者依垂直層級分為**高層、中層、基層**，依水平分工分為**直線**（直接達成組織目標）與**幕僚**（提供支援與建議）。"
+                ],
+                [
+                  "**工作與技能**",
+                  "管理者的工作可用 Mintzberg **十種角色**說明（人際三、資訊三、決策四），所需技能為**概念、為人處事、技術**三類，其中**為人處事技能在各層級都重要**。"
+                ],
+                [
+                  "變動環境議題",
+                  "當代管理者須面對**全球化、多元化、科技變革、倫理與社會責任**等變動環境的議題。"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**這題的定義句不要寫「透過他人」**——那是另一本書的說法。寫「運用管理功能與資源，進行目標設定與達成的過程」。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "CH4 總體環境 大綱",
+          "tone": "amber",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "**總述句**（先寫這句，再分五類）：**總體環境是企業難以直接控制、對組織產生間接影響的外部力量**，包含科技、社會文化、人口統計、經濟、法律政策五類；**任務環境則是直接影響、可以互動的對象**。",
+              "size": "normal"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "類別",
+                "可寫的一句"
+              ],
+              "widths": [
+                120,
+                null
+              ],
+              "rows": [
+                [
+                  "科技",
+                  "科技變遷會**縮短產品生命週期、創造新的經營形式、提升企業效率**。"
+                ],
+                [
+                  "社會文化",
+                  "社會文化的**縱斷面**變化來自同一群體價值觀的變遷，**橫斷面**差異則來自多元並存的次文化。"
+                ],
+                [
+                  "人口統計",
+                  "**少子化**使勞動供給減少與內需縮小，**高齡化**帶來銀髮商機與扶養負擔，兩者共同改變市場規模與結構。"
+                ],
+                [
+                  "經濟",
+                  "景氣、失業、通膨、利率與匯率決定企業的**成本與購買力**，可用**領先與同時指標**及景氣燈號觀察。"
+                ],
+                [
+                  "**法律政策**",
+                  "法律政策**直接改變企業的成本結構**，企業必須強制遵守。"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**這題的加分句**：**「總體環境間接、難以控制；任務環境直接、可以互動」**。寫在開頭或結尾，整段就有骨架。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**不要寫「落後指標」**——課本只列**領先七項、同時六項**兩類。多寫一類會被當成記錯。"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "title": "CH5 企業的利害關係人 大綱",
+          "tone": "purple",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "**定義句**：**利害關係人是指在企業內外，受企業活動影響其利害的個人或團體**；依與企業關係的遠近，分為主要與次要兩類。",
+              "size": "normal"
+            },
+            {
+              "type": "table",
+              "headers": [
+                "對象",
+                "可寫的一句"
+              ],
+              "widths": [
+                120,
+                null
+              ],
+              "rows": [
+                [
+                  "主要：投資者",
+                  "企業應在經濟上給予**適當報酬**，並以**誠實負責**確保投資人的心血不白流。"
+                ],
+                [
+                  "主要：消費者",
+                  "企業應滿足消費者的**安全、溝通、選擇、尊重**四項要求。"
+                ],
+                [
+                  "主要：員工",
+                  "企業應提供**安全的工作環境、合理的薪資與升遷、有意義的工作、訓練與發展**。"
+                ],
+                [
+                  "**次要：工會**",
+                  "工會是員工表達**薪資、工時、工作條件**意見的組織，企業應與其協商。"
+                ],
+                [
+                  "**次要：政府機構**",
+                  "政府政策直接影響企業營運，企業必須**遵守法規**並可透過遊說影響政策。"
+                ],
+                [
+                  "**次要：社會大眾**",
+                  "企業應扮演**社會公民**的角色，**取之於社會、用之於社會**。"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "tone": "tip",
+              "text": "**這題的加分句**：**「能不能直接向企業主張權利」**——股東可告、消費者能求償、員工能爭議，故為主要；工會須協商、政府須立法、大眾須輿論，故為次要。"
+            },
+            {
+              "type": "callout",
+              "tone": "warn",
+              "text": "**只有一個地方會寫錯**：**員工是主要，工會是次要**。兩者都跟勞工有關，但一個是個人、一個是組織。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

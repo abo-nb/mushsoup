@@ -1,0 +1,23 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile
+render.yaml
+
+**/bin
+**/obj
+**/node_modules
+frontend/dist
+
+# 运行时数据与本地密钥，不进入构建上下文
+backend/src/Host/data
+backend/src/Host/wwwroot
+backend/src/Host/appsettings.Local.json
+
+.vs
+.idea
+.vscode
+*.user
+*.suo
+.DS_Store
+Thumbs.db
