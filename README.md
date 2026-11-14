@@ -98,8 +98,20 @@ node scripts/seed.mjs
 
 - 免费层没有持久化磁盘：上传的图片（`/tmp/assets`）和每日用量计数（`/tmp/mongo-usage.json`）在重新部署后会清空，业务数据都在 MongoDB 里。
 - 应用层有每日读写额度保护（默认 5 万读 / 2 万写，按文档数，见 `Mongo:UsageLimits`），超限会返回 429，避免把上游免费额度用穿。
-- 免费 Web Service 闲置约 15 分钟会休眠，首次访问需要等冷启动。
+- 免费 Web Service 闲置约 15 分钟会休眠，首次访问需要等冷启动。仓库里的 `.github/workflows/keep-alive.yml` 每 10 分钟请求一次 `/api/health` 保活，见下一节。
 - 容器以非 root 运行，且 Data Protection 密钥不持久化；重新部署后现有登录会话会失效，需要重新登录。
+
+### 保活
+
+`.github/workflows/keep-alive.yml` 用 GitHub Actions 的定时任务每 10 分钟打一次 `/api/health`（不碰数据库，不占 Mongo 读写额度）。默认地址是 `https://mushsoup.onrender.com`，服务名不同就在仓库 Settings → Secrets and variables → Actions → Variables 里加 `KEEP_ALIVE_URL` 覆盖。
+
+几点要知道：
+
+- 公开仓库的 Actions 不计费；计划任务在 GitHub 负载高峰时可能延迟几分钟，10 分钟的间隔对 15 分钟休眠阈值留了余量。
+- 长时间没有任何提交时，GitHub 会停用计划任务（公开仓库 60 天），收到停用邮件后点一次启用即可。
+- 免费层每月 750 实例小时。全天保持在唤醒约 744 小时，几乎用满；想留余量就把 cron 改成本地时间白天才跑，例如 `*/10 23-15 * * *`（UTC，对应北京时间 07:00–23:59，约 520 小时/月）。
+- 超过 750 小时后免费服务会被暂停到次月，所以别在多处重复保活。
+- 不想让它一直醒着，直接在仓库 Actions 页面禁用这个 workflow 即可，回到按需冷启动。
 
 ## 认证
 

@@ -1,0 +1,48 @@
+name: keep-alive
+
+# Render 免费 Web Service 闲置约 15 分钟会休眠，每 10 分钟打一次
+# /api/health 让它保持唤醒。这个接口不碰数据库，不消耗 Mongo 读写额度。
+#
+# 如需换成别的地址：仓库 Settings → Secrets and variables → Actions →
+# Variables 新建 KEEP_ALIVE_URL，值为不带结尾斜杠的站点根地址。
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: keep-alive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Ping /api/health
+        env:
+          TARGET: ${{ vars.KEEP_ALIVE_URL || 'https://mushsoup.onrender.com' }}
+        run: |
+          url="${TARGET%/}/api/health"
+          echo "keep-alive: $url"
+
+          : > /tmp/body
+          code="$(curl -s -o /tmp/body -w '%{http_code}' \
+            --max-time 90 --retry 2 --retry-delay 15 --retry-all-errors \
+            "$url" || true)"
+          echo "status: ${code:-<无响应>}"
+          head -c 300 /tmp/body 2>/dev/null || true
+          echo
+
+          case "${code:-000}" in
+            200) exit 0 ;;
+            404)
+              echo "::warning::服务还没创建（404），Render 部署完成后这个任务会自动生效"
+              exit 0
+              ;;
+            *)
+              echo "::error::保活请求失败，HTTP ${code:-无响应}"
+              exit 1
+              ;;
+          esac
