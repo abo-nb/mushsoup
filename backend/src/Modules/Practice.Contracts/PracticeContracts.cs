@@ -33,7 +33,16 @@ public sealed record SessionDto(
     DateTime? FinishedAt,
     SessionStatsDto Stats);
 
-public sealed record NextCardResponse(SessionDto Session, CardDto? Card, int Index);
+/// <summary>
+/// 一张待答的卡。CorrectKeys 与 Explanation 随卡下发，前端可以本地判分；
+/// 这不是考试，省掉一次往返比藏答案重要。
+/// </summary>
+public sealed record NextCardResponse(
+    SessionDto Session,
+    CardDto? Card,
+    int Index,
+    IReadOnlyList<string> CorrectKeys,
+    string Explanation);
 
 public sealed record SubmitAnswerRequest(
     string QuestionId,
@@ -54,7 +63,8 @@ public sealed record AnswerFeedbackDto(
     int Index,
     bool Finished,
     SessionStatsDto Stats,
-    SessionDto Session);
+    SessionDto Session,
+    NextCardResponse? Next);
 
 /// <summary>Chapters 是选中的章节路径列表；每条路径都是题目 chapterPath 的前缀即命中（选大章覆盖其下小章）。</summary>
 public sealed record StartSessionRequest(

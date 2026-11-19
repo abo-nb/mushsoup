@@ -21,10 +21,52 @@ internal static class ImportPromptBuilder
 
 ## 整体结构
 
-- 推荐顶层写成对象 `{ "formatVersion": 1, "questions": [ ... ] }`；也接受直接输出一个题目数组，但对象形式便于携带版本号，优先用它。
-- `formatVersion`：整数，固定写 `1`。写其他值会按 1 解析并给出警告；不写或不是整数时按 1 处理。
-- `questions`：必填数组，每项是一道题（必须是 JSON 对象）；缺失或不是数组会直接报错，数组里的非对象项会按单题报错。
-- 顶层对象和题目对象里的未知字段会被忽略，不报错。
+顶层是一个对象，三个部分都可以单独出现，至少写一个：
+
+```json
+{
+  "formatVersion": 2,
+  "bank": { "…": "题库设置，可选" },
+  "pools": [ { "…": "选项池，可选" } ],
+  "questions": [ { "…": "题目，可选" } ]
+}
+```
+
+- `formatVersion`：整数，写 `2` 才能使用 `bank` 和 `pools`；写 `1` 或省略时只导入题目，设置部分会被忽略并给出警告。其他值按 2 解析并警告。
+- 只调整题库设置或选项池时，可以不写 `questions`；只出题时可以不写 `bank` / `pools`。也兼容直接输出一个题目数组。
+- `bank`、`pools`、`questions` 里没写到的内容保持原样，不会清空已有题目或已有选项池。
+- 顶层对象、`bank`、`pools` 每项、题目对象里不认识的字段会被忽略，不报错。
+
+## 题库设置（bank）
+
+只写想改的字段，没写的保持原样。修改题库设置需要是题库创建者，编辑者只能改选项池和题目。
+
+- `name`（字符串，1–80 字）：题库名称。
+- `description`（字符串）：简介，写 `""` 表示清空。
+- `visibility`（字符串）：`public` 公开 / `private` 私有。改成 `public` 时题库必须有至少一个标签（见下面 `tags`）。
+- `tags`（字符串数组）：**整组替换**，最多 20 个、每个不超过 30 字；写空数组会清空标签，公开题库不能为空。
+- `year`（字符串，≤20 字）：学年，如 `2026`、`高一`。
+- `semester`（字符串）：`上`、`下` 或 `""`。
+- `defaultShuffleOptions`（布尔）：题库默认选项乱序。
+- `requireReview`（布尔）：新题是否需要审核后再发布。
+
+## 选项池（pools）
+
+按名称匹配：同名池已存在就调整它，不存在就新建。每个池：
+
+- `name`（必填，字符串，1–60 字）：池名称，同一次导入里不能重复。
+- `description`（字符串，可选）：简介，写 `""` 表示清空。
+- `entries`（必填，数组）：池里的干扰项。每项可以写字符串 `"选项内容"`，也可以写 `{ "text": "选项内容", "tags": ["整数"] }`。`text` 去空白后 1–200 字，同一池内重复文本只保留一条。`tags` 只在新建条目时写入。
+- `mode`（可选，字符串，默认 `merge`）：
+  - `merge`：保留池里已有的条目，补充新条目；列表里出现、但当前被停用的条目会重新启用。
+  - `replace`：把池的可用条目变成这一份列表——列表里的启用/补入，不在列表里的**停用**（不删除，避免破坏引用关系）。
+- `delete`（可选，布尔，默认 `false`）：`true` 表示删除这个池；还有题目引用它时会报错。删除时其它字段可以省略。
+
+规则与选项池页面一致：
+
+- 池子调整后可用条目数必须满足引用它的题目：至少「最大干扰项数 + 1」条，不够会报错。
+- 本批题目可以直接引用同一次导入里新建的池（按 `name` 匹配），不需要分两次导入。
+- 池内文本与题目自身选项文本相同的条目在组卡时会被排除，`count` 要留出余量。
 
 ## 题目字段
 
@@ -62,6 +104,7 @@ internal static class ImportPromptBuilder
 ## 导入行为
 
 - 流程是先校验、出预览，再确认导入。报错的题不会导入；只有警告的题照常导入。
+- 预览会列出将要修改的题库设置和选项池；确认导入时先应用设置与选项池，再写入题目。设置校验失败会整批中止，不会留下半套数据。
 - 重复题：题干与选项文本规范化后（忽略空白、标点、全角半角、大小写差异，选项顺序无关）与题库已有题或本批前面的题相同，默认跳过；导入页可勾选「重复题也导入」强制导入。
 - 以下情况会给警告，但不会阻止导入：
   - 同一批里至少 5 道单选时，超过 60% 的答案落在同一个位置；
@@ -83,7 +126,7 @@ internal static class ImportPromptBuilder
 
 ```json
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "questions": [
     {
       "clientId": "q1",
@@ -111,7 +154,7 @@ internal static class ImportPromptBuilder
 
 ```json
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "questions": [
     {
       "clientId": "q2",
@@ -138,7 +181,7 @@ internal static class ImportPromptBuilder
 
 ```json
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "questions": [
     {
       "type": "single",
@@ -159,7 +202,7 @@ internal static class ImportPromptBuilder
 
 ```json
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "questions": [
     {
       "type": "multiple",
@@ -178,7 +221,46 @@ internal static class ImportPromptBuilder
 }
 ```
 
-示例里的 `pool_xxxxxx` 只是占位，必须换成「可用选项池」里列出的 id；没有可用的池就删掉 `pool` 字段，按普通题写。示例里的标签和章节用于演示写法，实际以「可用标签」「可用章节」为准。
+### 一次性调整题库设置、选项池和题目
+
+```json
+{
+  "formatVersion": 2,
+  "bank": {
+    "name": "高一数学 · 函数（2026 上）",
+    "description": "函数、导数与图像专题",
+    "visibility": "public",
+    "tags": ["数学"],
+    "year": "2026",
+    "semester": "上",
+    "defaultShuffleOptions": true
+  },
+  "pools": [
+    {
+      "name": "函数性质干扰项",
+      "description": "常见错误结论",
+      "mode": "merge",
+      "entries": ["$y=x^2$ 是奇函数", "$y=1/x$ 在 $x=0$ 处有定义", { "text": "$y=|x|$ 在 $x=0$ 处不可导", "tags": ["易错"] }]
+    }
+  ],
+  "questions": [
+    {
+      "type": "single",
+      "stem": "$y=x^2$ 的导数是（　）",
+      "options": ["$2x$"],
+      "answer": ["A"],
+      "pool": { "name": "函数性质干扰项", "count": 2 },
+      "tags": ["数学"],
+      "chapterPath": ["函数", "导数"],
+      "explanation": "幂函数求导：$(x^2)'=2x$。"
+    }
+  ]
+}
+```
+
+只改设置时可以只写 `bank`，只调池子时只写 `pools`——`questions` 为空不会影响已有题目。`mode` 要「完全按这份列表来」就写 `replace`，只想补条目就省略或写 `merge`。
+
+示例里的 `pool_xxxxxx` 只是占位，必须换成「可用选项池」里列出的 id；同一次导入里新建的池可以直接按 `name` 引用。没有可用的池就删掉 `pool` 字段，按普通题写。示例里的标签和章节用于演示写法，实际以「可用标签」「可用章节」为准。
 
 ## 可用标签
 

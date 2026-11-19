@@ -7,7 +7,7 @@ import { formatDate } from '../format'
 import { canonicalSubject, dedupeTags, subjectLabel } from '../subjects'
 
 export function NotesPage() {
-  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes })
+  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes, staleTime: 2 * 60_000 })
   const notes = notesQuery.data ?? []
 
   return (

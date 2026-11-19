@@ -10,6 +10,21 @@ internal static class BankEndpoints
 {
     public static void MapBankEndpoints(this IEndpointRouteBuilder app)
     {
+        // 游客入口：只暴露公开题库的基本信息，供短链接落地。
+        app.MapGet("/api/public/banks/{id}", async (
+            string id,
+            BankService banks,
+            CancellationToken cancellationToken) =>
+        {
+            var access = await banks.GetAccessAsync(id, "", null, cancellationToken);
+            if (access is null || !access.CanView || access.Bank.Visibility != BankVisibility.Public)
+            {
+                throw new NotFoundException("题库不存在");
+            }
+
+            return Results.Ok(access.Bank);
+        });
+
         var group = app.MapGroup("/api/banks").RequireAuthorization();
 
         group.MapGet("", async (ICurrentUser currentUser, BankService banks, CancellationToken cancellationToken) =>

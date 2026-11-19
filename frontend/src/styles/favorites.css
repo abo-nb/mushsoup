@@ -1,0 +1,189 @@
+/* 页面级微调：收藏入口与收藏页。全局 tokens 与通用组件在 styles.css。 */
+
+.favorite-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.favorite-hint {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.favorite-hint.is-error {
+  color: var(--danger);
+}
+
+.btn.is-favorited {
+  border-color: var(--primary-border);
+  background: var(--primary-soft);
+  color: var(--primary-active);
+}
+
+.btn.is-favorited:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.btn.is-favorited svg {
+  fill: currentColor;
+}
+
+/* ---------- 收藏页 ---------- */
+
+.favorite-card {
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+}
+
+.favorite-heading {
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+}
+
+.favorite-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.favorite-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.favorite-row:hover {
+  background: var(--row-hover);
+}
+
+.favorite-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text-subtle);
+}
+
+.favorite-main {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 2px;
+  min-width: 0;
+}
+
+.favorite-title {
+  color: var(--text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: var(--leading-sm);
+  overflow-wrap: anywhere;
+}
+
+.favorite-title:hover {
+  color: var(--primary);
+}
+
+.favorite-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-3);
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-sm);
+}
+
+@media (max-width: 640px) {
+  .favorite-row {
+    flex-wrap: wrap;
+  }
+
+  .favorite-row .btn {
+    min-height: 36px;
+    margin-left: auto;
+  }
+}
+
+/* ---------- 公开页卡片右下角的收藏星 ---------- */
+
+.card-favorite-wrap {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.card-favorite-wrap > .bank-card,
+.card-favorite-wrap > .note-list-card {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.card-favorite-wrap .bank-meta,
+.card-favorite-wrap .note-list-foot {
+  padding-right: 34px;
+}
+
+.card-favorite {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.card-favorite:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.card-favorite:active {
+  background: var(--surface-3);
+}
+
+.card-favorite.is-favorited {
+  color: var(--primary);
+}
+
+.card-favorite.is-favorited svg {
+  fill: currentColor;
+}
+
+.card-favorite:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media (max-width: 640px) {
+  .card-favorite {
+    width: 40px;
+    height: 40px;
+    right: 8px;
+    bottom: 6px;
+  }
+
+  .card-favorite-wrap .bank-meta,
+  .card-favorite-wrap .note-list-foot {
+    padding-right: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-favorite {
+    transition: none;
+  }
+}

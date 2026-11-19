@@ -584,6 +584,33 @@
   flex-shrink: 1;
 }
 
+/* 练习题数选择：与「开始练习」同一行，紧凑但可点。 */
+
+.practice-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.practice-count-label {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.select.practice-count-select {
+  width: auto;
+  height: 34px;
+  padding: 0 8px;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 640px) {
+  .select.practice-count-select {
+    min-height: 36px;
+  }
+}
+
 .more-menu {
   position: relative;
   display: inline-block;

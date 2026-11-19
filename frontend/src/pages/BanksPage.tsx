@@ -19,7 +19,7 @@ export function BanksPage() {
   const nameInputRef = useRef<HTMLInputElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
 
-  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks })
+  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks, staleTime: 60_000 })
   const myBanks = (banksQuery.data ?? []).filter(
     (bank) => bank.ownerId === user?.id || bank.memberIds.includes(user?.id ?? ''),
   )

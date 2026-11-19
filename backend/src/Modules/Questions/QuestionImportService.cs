@@ -9,7 +9,7 @@ using Questions.Contracts;
 
 namespace Questions;
 
-internal sealed class QuestionImportService(
+internal sealed partial class QuestionImportService(
     QuestionService questions,
     IBankDirectory banks,
     ICurrentUser currentUser,
@@ -17,7 +17,8 @@ internal sealed class QuestionImportService(
     ImportPlanCache plans,
     ImportJobStore jobs,
     IServiceScopeFactory scopeFactory,
-    QuestionPoolStore poolStore)
+    QuestionPoolStore poolStore,
+    QuestionCache cache)
 {
     private const int MaxQuestionsPerImport = 10000;
     private const int MaxPayloadBytes = 50 * 1024 * 1024;
@@ -57,7 +58,8 @@ internal sealed class QuestionImportService(
             plan.Candidates.Select(candidate => candidate.ToPreview()).ToList(),
             plan.BatchIssues,
             samples,
-            planId);
+            planId,
+            BuildSummary(plan));
     }
 
     public async Task<ImportResultDto> ImportAsync(string bankId, ImportRequest request, CancellationToken cancellationToken)
@@ -148,6 +150,9 @@ internal sealed class QuestionImportService(
         bool force,
         CancellationToken cancellationToken)
     {
+        // 先落题库设置和选项池：本批题目可能引用刚建好的池。
+        await ApplyPlanAsync(plan, bankId, userId, classId, cancellationToken);
+
         var batchId = Ids.New();
         var items = new List<ImportBatchItemDocument>(plan.Candidates.Count);
         var processed = 0;
@@ -330,6 +335,11 @@ internal sealed class QuestionImportService(
             .Set(x => x.UpdatedAt, DateTime.UtcNow);
 
         var result = await Questions.UpdateManyAsync(filter, update, cancellationToken: cancellationToken);
+        if (result.ModifiedCount > 0)
+        {
+            cache.Invalidate();
+        }
+
         batch.Pending = 0;
         await Batches.ReplaceOneAsync(x => x.Id == batch.Id, batch, cancellationToken: cancellationToken);
 
@@ -381,26 +391,20 @@ internal sealed class QuestionImportService(
         }
 
         var bankTags = await LoadBankTagsAsync(bankId, cancellationToken);
+        var bankPlan = BuildBankPlan(access, parsed.Bank);
+        if (bankPlan?.Request.Tags is { } plannedTags)
+        {
+            // 题目按「导入后的标签」校验，否则刚加的标签会被判成未知标签。
+            bankTags = [.. plannedTags];
+        }
+
         var existingHashes = await LoadHashesAsync(bankId, cancellationToken);
         var seenHashes = new Dictionary<string, int>(StringComparer.Ordinal);
 
         var poolDocs = await poolStore.GetPoolsAsync(bankId, cancellationToken);
-        var referencedPools = new Dictionary<string, OptionPoolDocument>(StringComparer.Ordinal);
-        foreach (var question in parsed.Questions)
-        {
-            if (ReadPoolReference(question) is { } reference &&
-                MatchPool(poolDocs, reference) is { } pool)
-            {
-                referencedPools.TryAdd(pool.Id, pool);
-            }
-        }
-
-        var poolEntries = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-        foreach (var pool in referencedPools.Values)
-        {
-            var entries = await poolStore.GetEntriesAsync(pool.Id, false, cancellationToken);
-            poolEntries[pool.Id] = entries.Select(entry => entry.Text).ToList();
-        }
+        var (poolPlans, effectivePools, poolEntries, poolIssues) =
+            await BuildPoolPlansAsync(bankId, parsed.Pools, poolDocs, cancellationToken);
+        batchIssues.AddRange(poolIssues);
 
         var candidates = new List<ImportCandidate>(parsed.Questions.Count);
         for (var index = 0; index < parsed.Questions.Count; index++)
@@ -410,7 +414,7 @@ internal sealed class QuestionImportService(
                 index,
                 bankTags,
                 existingHashes,
-                poolDocs,
+                effectivePools,
                 poolEntries);
             if (!candidate.HasError && candidate.ContentHash.Length > 0)
             {
@@ -433,7 +437,7 @@ internal sealed class QuestionImportService(
         }
 
         batchIssues.AddRange(CheckAnswerPositionBias(candidates));
-        return new CachedImportPlan(candidates, batchIssues);
+        return new CachedImportPlan(candidates, batchIssues, bankPlan, poolPlans);
     }
 
     private async Task<BankAccessDto> RequireAccessAsync(string bankId, string userId, CancellationToken cancellationToken)

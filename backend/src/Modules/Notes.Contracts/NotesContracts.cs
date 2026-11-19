@@ -51,4 +51,7 @@ public interface INoteDirectory
     Task<IReadOnlyDictionary<string, int>> CountOwnedByUsersAsync(
         IReadOnlyCollection<string> userIds,
         CancellationToken cancellationToken = default);
+
+    /// <summary>公开且未删除，用于短链接与游客访问的准入判断。</summary>
+    Task<bool> IsPublicAsync(string noteId, CancellationToken cancellationToken = default);
 }

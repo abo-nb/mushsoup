@@ -6,6 +6,7 @@ import { Icon } from '../components/Icon'
 import { ErrorNote } from '../components/Ui'
 import { SHUFFLE_HINTS, SHUFFLE_LABELS, SUBMIT_HINTS, SUBMIT_LABELS } from '../format'
 import { applyThemeMode, readThemeMode, type ThemeMode } from '../theme'
+import { useLanguage, type Lang } from '../i18n'
 
 const THEME_LABELS: Record<ThemeMode, string> = {
   light: '浅色',
@@ -19,8 +20,19 @@ const THEME_HINTS: Record<ThemeMode, string> = {
   system: '跟随操作系统的深浅色设置。',
 }
 
+const LANG_LABELS: Record<Lang, string> = {
+  hans: '简体中文',
+  hant: '繁體中文',
+}
+
+const LANG_HINTS: Record<Lang, string> = {
+  hans: '界面文字以简体字显示。',
+  hant: '界面文字以繁體字顯示。',
+}
+
 export function SettingsPage() {
   const { user, logout } = useAuth()
+  const { lang, setLang } = useLanguage()
   const queryClient = useQueryClient()
   const [themeMode, setThemeMode] = useState<ThemeMode>(readThemeMode)
   const [shuffle, setShuffle] = useState(user?.prefs.shuffleOptions ?? 'always')
@@ -103,6 +115,40 @@ export function SettingsPage() {
                 </span>
                 <span className="radio-card-check" aria-hidden="true">
                   {themeMode === value ? <Icon name="check" size={16} /> : null}
+                </span>
+              </label>
+            ))}
+          </div>
+        </section>
+
+        <section className="card card-pad settings-section">
+          <div className="settings-head">
+            <div>
+              <h2 className="section-title" id="lang-title">
+                语言
+              </h2>
+              <p className="muted settings-desc">
+                切换界面文字的字形，选项、题库内容和题目都会一起转换。仅影响这台设备。
+              </p>
+            </div>
+          </div>
+
+          <div className="radio-cards" role="radiogroup" aria-labelledby="lang-title">
+            {(Object.keys(LANG_LABELS) as Lang[]).map((value) => (
+              <label key={value} className={lang === value ? 'radio-card selected' : 'radio-card'}>
+                <input
+                  type="radio"
+                  name="lang"
+                  value={value}
+                  checked={lang === value}
+                  onChange={() => setLang(value)}
+                />
+                <span className="radio-card-text">
+                  <strong>{LANG_LABELS[value]}</strong>
+                  <small>{LANG_HINTS[value]}</small>
+                </span>
+                <span className="radio-card-check" aria-hidden="true">
+                  {lang === value ? <Icon name="check" size={16} /> : null}
                 </span>
               </label>
             ))}

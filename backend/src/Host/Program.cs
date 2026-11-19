@@ -14,8 +14,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OpenApi;
 using Notes;
 using Practice;
+using KeepAlive;
 using Questions;
 using Recents;
+using Favorites;
+using ShortLinks;
 using Scheduling;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +67,12 @@ builder.Services
     });
 
 builder.Services.AddAuthorization();
+
+// 自维持：醒着的时候定时请求自己的 /api/health，避免免费层休眠。
+if (builder.Configuration.GetValue("KeepAlive:Enabled", true))
+{
+    builder.Services.AddHostedService<KeepAliveService>();
+}
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<AppExceptionHandler>();
 builder.Services.AddOpenApi();
@@ -80,6 +89,8 @@ IModule[] modules =
     new NotesModule(),
     new LeaderboardModule(),
     new RecentsModule(),
+    new FavoritesModule(),
+    new ShortLinksModule(),
 ];
 
 foreach (var module in modules)

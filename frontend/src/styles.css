@@ -1972,6 +1972,21 @@ input[type="checkbox"] {
 
 /* Responsive */
 
+/* 760–900 之间挤一挤，保证七项导航不撑出横向滚动 */
+@media (max-width: 900px) and (min-width: 761px) {
+  .topbar-inner {
+    gap: 16px;
+  }
+
+  .main-nav {
+    gap: 14px;
+  }
+
+  .user-name {
+    max-width: 88px;
+  }
+}
+
 @media (max-width: 760px) {
   .topbar-inner {
     height: auto;

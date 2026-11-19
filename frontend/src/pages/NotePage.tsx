@@ -8,6 +8,8 @@ import { useAuth } from '../auth-context'
 import { Icon } from '../components/Icon'
 import { MarkdownView } from '../components/MarkdownView'
 import { NoteBlocks } from '../components/NoteBlocks'
+import { ShareButton } from '../components/ShareButton'
+import { FavoriteButton } from '../components/FavoriteButton'
 import { ErrorNote, Loading } from '../components/Ui'
 import { asBlocks, asString } from '../note-format'
 import { formatDate } from '../format'
@@ -120,13 +122,16 @@ function TocList({
 
 export function NotePage() {
   const { id } = useParams<{ id: string }>()
-  useRecordRecent('note', id)
+  const { user, isLoading: authLoading } = useAuth()
+  useRecordRecent('note', user ? id : undefined)
   const noteId = id ?? ''
-  const { user } = useAuth()
+  const isGuest = !user
   const noteQuery = useQuery({
-    queryKey: ['note', noteId],
-    queryFn: () => api.note(noteId),
-    enabled: Boolean(noteId),
+    queryKey: ['note', noteId, isGuest ? 'public' : 'member'],
+    queryFn: () => (isGuest ? api.publicNote(noteId) : api.note(noteId)),
+    enabled: Boolean(noteId) && !authLoading,
+    retry: false,
+    staleTime: 5 * 60_000,
   })
   const detailsRef = useRef<HTMLDetailsElement | null>(null)
 
@@ -209,9 +214,11 @@ export function NotePage() {
 
   return (
     <div className="note-page">
-      <Link to="/notes" className="back-link">
-        ← 返回讲义列表
-      </Link>
+      {user ? (
+        <Link to="/notes" className="back-link">
+          ← 返回讲义列表
+        </Link>
+      ) : null}
 
       <div className={showToc ? 'note-layout' : 'note-layout note-layout-solo'}>
         <article className="note-main">
@@ -227,15 +234,23 @@ export function NotePage() {
           <header className="note-hero">
             <div className="note-hero-head">
               <h1>{title}</h1>
-              {isOwner ? (
-                <Link
-                  to={`/notes/${noteId}/settings`}
-                  className="btn btn-small btn-ghost note-hero-action"
-                >
-                  <Icon name="settings" size={16} />
-                  讲义设置
-                </Link>
-              ) : null}
+              <div className="note-hero-actions">
+                {user && note.visibility === 'public' ? (
+                  <>
+                    <FavoriteButton kind="note" itemId={noteId} />
+                    <ShareButton kind="note" targetId={noteId} />
+                  </>
+                ) : null}
+                {isOwner ? (
+                  <Link
+                    to={`/notes/${noteId}/settings`}
+                    className="btn btn-small btn-ghost note-hero-action"
+                  >
+                    <Icon name="settings" size={16} />
+                    讲义设置
+                  </Link>
+                ) : null}
+              </div>
             </div>
             {subtitle ? <p className="note-subtitle">{subtitle}</p> : null}
             {tags.length > 0 ? (

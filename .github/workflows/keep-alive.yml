@@ -1,7 +1,7 @@
 name: keep-alive
 
 # Render 免费 Web Service 闲置约 15 分钟会休眠，每 10 分钟打一次
-# /api/health 让它保持唤醒。这个接口不碰数据库，不消耗 Mongo 读写额度。
+# /api/health 让它保持唤醒。这个接口不碰数据库，不消耗 Mongo 写入额度。
 #
 # 如需换成别的地址：仓库 Settings → Secrets and variables → Actions →
 # Variables 新建 KEEP_ALIVE_URL，值为不带结尾斜杠的站点根地址。

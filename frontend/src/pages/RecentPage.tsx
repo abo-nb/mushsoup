@@ -93,9 +93,13 @@ function EntryTags({ tags }: { tags: string[] }) {
 }
 
 export function RecentPage() {
-  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks })
-  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes })
-  const recentsQuery = useQuery({ queryKey: ['recents'], queryFn: () => api.recentItems(12) })
+  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks, staleTime: 60_000 })
+  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes, staleTime: 2 * 60_000 })
+  const recentsQuery = useQuery({
+    queryKey: ['recents'],
+    queryFn: () => api.recentItems(12),
+    staleTime: 15_000,
+  })
 
   const banks = banksQuery.data ?? []
   const notes = notesQuery.data ?? []

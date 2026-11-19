@@ -72,7 +72,11 @@ function breakdownText(entry: LeaderboardEntry): string {
 export function LeaderboardPage() {
   const { user } = useAuth()
   const [sortKey, setSortKey] = useState<SortKey>('composite')
-  const leaderboardQuery = useQuery({ queryKey: ['leaderboard'], queryFn: api.leaderboard })
+  const leaderboardQuery = useQuery({
+    queryKey: ['leaderboard'],
+    queryFn: api.leaderboard,
+    staleTime: 5 * 60_000,
+  })
 
   const data = leaderboardQuery.data
   const entries = useMemo(() => sortEntries(data?.entries ?? [], sortKey), [data, sortKey])

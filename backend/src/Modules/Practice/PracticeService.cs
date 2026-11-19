@@ -45,6 +45,11 @@ sealed class PracticeService(
         [
             new CreateIndexModel<PracticeSessionDocument>(
                 Builders<PracticeSessionDocument>.IndexKeys.Ascending(x => x.UserId).Ascending(x => x.StartedAt)),
+            new CreateIndexModel<PracticeSessionDocument>(
+                Builders<PracticeSessionDocument>.IndexKeys
+                    .Ascending(x => x.UserId)
+                    .Ascending(x => x.BankId)
+                    .Ascending(x => x.FinishedAt)),
         ], cancellationToken);
 
         var events = database.Collection<ReviewEventDocument>(PracticeCollections.ReviewEvents);
@@ -160,12 +165,34 @@ sealed class PracticeService(
     public async Task<SessionDto> GetSessionAsync(string sessionId, CancellationToken cancellationToken) =>
         ToDto(await GetOwnedAsync(sessionId, cancellationToken));
 
+    /// <summary>最近一轮没做完的练习，供题库页显示「继续练习」。</summary>
+    public async Task<SessionDto?> GetActiveSessionAsync(string bankId, CancellationToken cancellationToken)
+    {
+        var userId = currentUser.RequireUserId();
+        var session = await Sessions
+            .Find(x => x.UserId == userId && x.BankId == bankId && x.FinishedAt == null)
+            .Sort(Builders<PracticeSessionDocument>.Sort.Descending(x => x.StartedAt))
+            .FirstOrDefaultAsync(cancellationToken);
+        return session is null ? null : ToDto(session);
+    }
+
     public async Task<NextCardResponse> GetNextAsync(string sessionId, CancellationToken cancellationToken)
     {
         var session = await GetOwnedAsync(sessionId, cancellationToken);
+        return await ServeNextAsync(session, cancellationToken);
+    }
+
+    /// <summary>
+    /// 给已加载的会话发放下一张卡。答题提交后也走这里，把「下一题」和判分结果一起返回，
+    /// 前端不必再发一次请求。
+    /// </summary>
+    private async Task<NextCardResponse> ServeNextAsync(
+        PracticeSessionDocument session,
+        CancellationToken cancellationToken)
+    {
         if (session.FinishedAt is not null)
         {
-            return new NextCardResponse(ToDto(session), null, session.Served.Count);
+            return new NextCardResponse(ToDto(session), null, session.Served.Count, [], "");
         }
 
         if (session.CurrentQuestionId is null)
@@ -173,7 +200,7 @@ sealed class PracticeService(
             if (session.Queue.Count == 0)
             {
                 await MarkFinishedAsync(session, cancellationToken);
-                return new NextCardResponse(ToDto(session), null, session.Served.Count);
+                return new NextCardResponse(ToDto(session), null, session.Served.Count, [], "");
             }
 
             session.CurrentQuestionId = session.Queue[0];
@@ -187,7 +214,11 @@ sealed class PracticeService(
         session.CurrentCardJson = JsonSerializer.Serialize(card, CardJsonOptions);
         await SaveAsync(session, cancellationToken);
 
-        return new NextCardResponse(ToDto(session), card, session.Served.Count);
+        var correctKeys = question.Options
+            .Where(option => option.Correct)
+            .Select(option => option.Key)
+            .ToList();
+        return new NextCardResponse(ToDto(session), card, session.Served.Count, correctKeys, question.Explanation);
     }
 
     public async Task<AnswerFeedbackDto> SubmitAnswerAsync(string sessionId, SubmitAnswerRequest request, CancellationToken cancellationToken)
@@ -234,6 +265,7 @@ sealed class PracticeService(
 
         await scheduler.ReviewAsync(session.UserId, question.Id, rating, cancellationToken);
 
+        var answeredIndex = session.Served.Count;
         session.CurrentQuestionId = null;
         session.CurrentCardJson = null;
         if (grade.Correct)
@@ -265,12 +297,21 @@ sealed class PracticeService(
             }
         }
 
-        if (session.Queue.Count == 0)
+        var finished = session.Queue.Count == 0;
+        SessionDto sessionAtAnswer;
+        NextCardResponse next;
+        if (finished)
         {
             session.FinishedAt = now;
+            await SaveAsync(session, cancellationToken);
+            sessionAtAnswer = ToDto(session);
+            next = new NextCardResponse(sessionAtAnswer, null, session.Served.Count, [], "");
         }
-
-        await SaveAsync(session, cancellationToken);
+        else
+        {
+            sessionAtAnswer = ToDto(session);
+            next = await ServeNextAsync(session, cancellationToken);
+        }
 
         return new AnswerFeedbackDto(
             grade.Correct,
@@ -279,10 +320,11 @@ sealed class PracticeService(
             BuildFeedbackOptions(card, question, selectedKeys),
             question.Explanation,
             rating,
-            session.Served.Count,
-            session.Queue.Count == 0,
+            answeredIndex,
+            finished,
             new SessionStatsDto(session.Correct, session.Wrong),
-            ToDto(session));
+            sessionAtAnswer,
+            next);
     }
 
     public async Task<SessionDto> FinishAsync(string sessionId, CancellationToken cancellationToken)

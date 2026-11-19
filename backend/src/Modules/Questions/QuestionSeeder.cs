@@ -47,6 +47,7 @@ internal static class QuestionSeeder
             var documents = BuildSeedDocuments(bank, DateTime.UtcNow);
             await questions.InsertManyAsync(documents, cancellationToken: cancellationToken);
             await banks.TouchQuestionCountAsync(bank.Id, documents.Count, cancellationToken);
+            services.GetRequiredService<QuestionCache>().Invalidate();
             logger.LogInformation("Seeded {Count} demo questions into bank {BankId}", documents.Count, bank.Id);
         }
         catch (Exception exception)

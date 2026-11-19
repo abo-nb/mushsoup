@@ -176,6 +176,7 @@ export function QuestionEditorPage() {
     queryKey: ['bank', bankId],
     queryFn: () => api.bank(bankId),
     enabled: Boolean(bankId),
+    staleTime: 60_000,
   })
 
   const questionQuery = useQuery({

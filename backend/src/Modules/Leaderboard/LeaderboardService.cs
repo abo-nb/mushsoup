@@ -4,6 +4,7 @@ using Classes.Contracts;
 using Identity.Contracts;
 using Leaderboard.Contracts;
 using Notes.Contracts;
+using Microsoft.Extensions.Caching.Memory;
 using Practice.Contracts;
 using Questions.Contracts;
 
@@ -16,11 +17,13 @@ internal sealed class LeaderboardService(
     IQuestionCatalog questions,
     IBankDirectory banks,
     INoteDirectory notes,
-    IPracticeStats practice)
+    IPracticeStats practice,
+    IMemoryCache cache)
 {
     private const double SmoothingCorrect = 5.0;
     private const double SmoothingAnswered = 10.0;
     private const int MinAnswered = 50;
+    private static readonly TimeSpan CacheTtl = TimeSpan.FromSeconds(60);
 
     private static readonly LeaderboardWeightsDto Weights = new(0.5, 0.3, 0.2);
 
@@ -32,6 +35,29 @@ internal sealed class LeaderboardService(
             classId = (await classes.GetDefaultAsync(cancellationToken)).Id;
         }
 
+        // 拿不到班级时不缓存，避免把空结果固化 60 秒。
+        if (string.IsNullOrWhiteSpace(classId))
+        {
+            return await BuildAsync(classId ?? string.Empty, cancellationToken);
+        }
+
+        var cacheKey = $"leaderboard:{classId}";
+        if (cache.TryGetValue(cacheKey, out LeaderboardDto? cached) && cached is not null)
+        {
+            return cached;
+        }
+
+        var leaderboard = await BuildAsync(classId, cancellationToken);
+        cache.Set(cacheKey, leaderboard, new MemoryCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = CacheTtl,
+        });
+
+        return leaderboard;
+    }
+
+    private async Task<LeaderboardDto> BuildAsync(string classId, CancellationToken cancellationToken)
+    {
         var members = await users.ListByClassAsync(classId, cancellationToken);
         if (members.Count == 0)
         {

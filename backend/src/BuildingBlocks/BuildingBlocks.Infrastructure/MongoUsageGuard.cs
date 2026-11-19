@@ -8,7 +8,7 @@ using MongoDB.Driver.Core.Events;
 namespace BuildingBlocks.Infrastructure;
 
 /// <summary>
-/// 在应用层按「文档数」统计 MongoDB 每日读写量，防止把上游免费额度用穿。
+/// 在应用层按「文档数」统计 MongoDB 每日写入量，防止把上游免费额度用穿。
 /// 超限时抛 <see cref="QuotaExceededException"/>，由 Host 转成 429。
 /// </summary>
 public sealed class MongoUsageGuard : IDisposable
@@ -23,7 +23,6 @@ public sealed class MongoUsageGuard : IDisposable
     private readonly Timer flushTimer;
 
     private DateOnly day = Today;
-    private long reads;
     private long writes;
     private bool dirty;
 
@@ -42,23 +41,6 @@ public sealed class MongoUsageGuard : IDisposable
 
     private static string DayKey(DateOnly value) =>
         value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-    public void EnsureRead()
-    {
-        if (!limits.Enabled)
-        {
-            return;
-        }
-
-        lock (gate)
-        {
-            Rollover();
-            if (reads >= limits.DailyReads)
-            {
-                throw new QuotaExceededException($"今天的数据库读取额度已用完（{limits.DailyReads} 次），请明天再试");
-            }
-        }
-    }
 
     public void EnsureWrite()
     {
@@ -86,7 +68,6 @@ public sealed class MongoUsageGuard : IDisposable
 
         try
         {
-            long readDelta = 0;
             long writeDelta = 0;
 
             switch (e.CommandName)
@@ -109,23 +90,11 @@ public sealed class MongoUsageGuard : IDisposable
                     }
 
                     break;
-                case "find":
-                case "aggregate":
-                    readDelta = GetBatchCount(e.Reply, "firstBatch");
-                    break;
-                case "getMore":
-                    readDelta = GetBatchCount(e.Reply, "nextBatch");
-                    break;
-                case "count":
-                case "distinct":
-                case "mapReduce":
-                    readDelta = 1;
-                    break;
                 default:
                     return;
             }
 
-            if (readDelta == 0 && writeDelta == 0)
+            if (writeDelta == 0)
             {
                 return;
             }
@@ -133,7 +102,6 @@ public sealed class MongoUsageGuard : IDisposable
             lock (gate)
             {
                 Rollover();
-                reads += readDelta;
                 writes += writeDelta;
                 dirty = true;
             }
@@ -141,14 +109,6 @@ public sealed class MongoUsageGuard : IDisposable
         catch
         {
             // 统计失败不能影响真实请求。
-        }
-    }
-
-    public (DateOnly Day, long Reads, long Writes) Snapshot()
-    {
-        lock (gate)
-        {
-            return (day, reads, writes);
         }
     }
 
@@ -165,7 +125,6 @@ public sealed class MongoUsageGuard : IDisposable
             state = new UsageState
             {
                 Day = DayKey(day),
-                Reads = reads,
                 Writes = writes,
             };
             dirty = false;
@@ -217,7 +176,6 @@ public sealed class MongoUsageGuard : IDisposable
                 return;
             }
 
-            reads = Math.Max(0, state.Reads);
             writes = Math.Max(0, state.Writes);
         }
         catch (Exception ex)
@@ -235,7 +193,6 @@ public sealed class MongoUsageGuard : IDisposable
         }
 
         day = today;
-        reads = 0;
         writes = 0;
         dirty = true;
     }
@@ -243,21 +200,9 @@ public sealed class MongoUsageGuard : IDisposable
     private static long GetNumber(BsonDocument reply, string name) =>
         reply.TryGetValue(name, out var value) && value.IsNumeric ? value.ToInt64() : 0;
 
-    private static int GetBatchCount(BsonDocument reply, string name)
-    {
-        if (!reply.TryGetValue("cursor", out var cursor) || cursor is not BsonDocument cursorDocument)
-        {
-            return 0;
-        }
-
-        return cursorDocument.TryGetValue(name, out var batch) && batch is BsonArray array ? array.Count : 0;
-    }
-
     private sealed class UsageState
     {
         public string? Day { get; set; }
-
-        public long Reads { get; set; }
 
         public long Writes { get; set; }
     }

@@ -9,9 +9,16 @@ using Questions.Contracts;
 
 namespace Questions;
 
-internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirectory banks, QuestionPoolStore pools)
+internal sealed class QuestionService(
+    MongoDatabaseProvider provider,
+    IBankDirectory banks,
+    QuestionPoolStore pools,
+    QuestionCache cache)
 {
     private const int MaxChapterIndexBanks = 100;
+
+    private static readonly TimeSpan ListTtl = TimeSpan.FromSeconds(30);
+    private static readonly TimeSpan ChapterIndexTtl = TimeSpan.FromSeconds(60);
 
     private IMongoCollection<QuestionDocument> Questions =>
         provider.Collection<QuestionDocument>(QuestionCollections.Questions);
@@ -30,20 +37,28 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
         var access = await banks.GetAccessAsync(bankId, userId, classId, cancellationToken);
         EnsureCanView(access);
 
+        var normalizedTag = string.IsNullOrWhiteSpace(tag) ? "" : tag.Trim();
+        var normalizedQuery = string.IsNullOrWhiteSpace(query) ? "" : query.Trim();
+        var key = cache.Key($"list:{bankId}:{normalizedTag}:{normalizedQuery}");
+        if (cache.TryGet(key, out IReadOnlyList<QuestionSummaryDto>? cached) && cached is not null)
+        {
+            return cached;
+        }
+
         var filter = Builders<QuestionDocument>.Filter.Eq(x => x.BankId, bankId)
                      & Builders<QuestionDocument>.Filter.Eq(x => x.DeletedAt, (DateTime?)null)
                      & Builders<QuestionDocument>.Filter.Ne(x => x.Status, QuestionStatus.Archived);
 
-        if (!string.IsNullOrWhiteSpace(tag))
+        if (normalizedTag.Length > 0)
         {
-            filter &= Builders<QuestionDocument>.Filter.AnyEq(x => x.Tags, tag.Trim());
+            filter &= Builders<QuestionDocument>.Filter.AnyEq(x => x.Tags, normalizedTag);
         }
 
-        if (!string.IsNullOrWhiteSpace(query))
+        if (normalizedQuery.Length > 0)
         {
             filter &= Builders<QuestionDocument>.Filter.Regex(
                 x => x.Stem,
-                new BsonRegularExpression(Regex.Escape(query.Trim()), "i"));
+                new BsonRegularExpression(Regex.Escape(normalizedQuery), "i"));
         }
 
         var documents = await Questions
@@ -51,7 +66,9 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
             .Sort(Builders<QuestionDocument>.Sort.Descending(x => x.UpdatedAt))
             .ToListAsync(cancellationToken);
 
-        return documents.Select(QuestionMapping.ToSummary).ToList();
+        IReadOnlyList<QuestionSummaryDto> result = documents.Select(QuestionMapping.ToSummary).ToList();
+        cache.Set(key, result, ListTtl);
+        return result;
     }
 
     public async Task<IReadOnlyList<BankChapterIndexDto>> GetChapterIndexAsync(
@@ -91,6 +108,13 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
             return [];
         }
 
+        visibleIds.Sort(StringComparer.Ordinal);
+        var key = cache.Key($"chapter-index:{string.Join(':', visibleIds)}");
+        if (cache.TryGet(key, out IReadOnlyList<BankChapterIndexDto>? cached) && cached is not null)
+        {
+            return cached;
+        }
+
         var filter = Builders<QuestionDocument>.Filter.In(x => x.BankId, visibleIds)
                      & Builders<QuestionDocument>.Filter.Eq(x => x.DeletedAt, (DateTime?)null)
                      & Builders<QuestionDocument>.Filter.Ne(x => x.Status, QuestionStatus.Archived);
@@ -114,9 +138,11 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
             }
         }
 
-        return visibleIds
+        IReadOnlyList<BankChapterIndexDto> result = visibleIds
             .Select(bankId => new BankChapterIndexDto(bankId, chaptersByBank[bankId].ToList()))
             .ToList();
+        cache.Set(key, result, ChapterIndexTtl);
+        return result;
     }
 
     public async Task<QuestionDto> CreateAsync(
@@ -141,6 +167,7 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
 
         await Questions.InsertOneAsync(document, cancellationToken: cancellationToken);
         await banks.TouchQuestionCountAsync(bankId, 1, cancellationToken);
+        cache.Invalidate();
 
         return QuestionMapping.ToDto(document);
     }
@@ -185,6 +212,7 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
         {
             await Questions.InsertManyAsync(documents, cancellationToken: cancellationToken);
             await banks.TouchQuestionCountAsync(bankId, documents.Count, cancellationToken);
+            cache.Invalidate();
         }
 
         return outcomes;
@@ -264,6 +292,7 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
             },
             cancellationToken: cancellationToken);
 
+        cache.Invalidate();
         return QuestionMapping.ToDto(document);
     }
 
@@ -292,6 +321,7 @@ internal sealed class QuestionService(MongoDatabaseProvider provider, IBankDirec
         }
 
         await banks.TouchQuestionCountAsync(document.BankId, -1, cancellationToken);
+        cache.Invalidate();
     }
 
     public async Task<IReadOnlyList<QuestionRevisionDto>> ListRevisionsAsync(

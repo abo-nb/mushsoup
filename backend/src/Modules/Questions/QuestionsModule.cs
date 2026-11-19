@@ -15,7 +15,9 @@ public sealed class QuestionsModule : IModule
 
     public void Register(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IQuestionCatalog, QuestionCatalog>();
+        services.AddSingleton<QuestionCache>();
+        services.AddSingleton<QuestionCatalog>();
+        services.AddSingleton<IQuestionCatalog>(sp => sp.GetRequiredService<QuestionCatalog>());
         services.AddSingleton<IQuestionGrader, StrictChoiceGrader>();
         services.AddSingleton<QuestionPoolStore>();
         services.AddScoped<ICardFactory, DeterministicCardFactory>();
@@ -31,6 +33,7 @@ public sealed class QuestionsModule : IModule
         app.MapQuestionEndpoints();
         app.MapQuestionPoolEndpoints();
         app.MapQuestionImportEndpoints();
+        app.MapPublicQuestionEndpoints();
     }
 
     public async Task EnsureIndexesAsync(IServiceProvider services, CancellationToken cancellationToken)

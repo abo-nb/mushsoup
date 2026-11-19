@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
 import { useAuth } from '../auth-context'
+import { FavoriteButton } from '../components/FavoriteButton'
 import { Icon } from '../components/Icon'
 import { EmptyState, ErrorNote, Loading } from '../components/Ui'
 import { formatDate } from '../format'
+import { naturalCompare } from '../natural-sort'
 import {
   SUBJECTS,
   canonicalSubject,
@@ -163,7 +165,7 @@ function collectOptions(dimension: FilterKey, entries: PublicEntry[]): Dimension
     else hasBlank = true
   }
 
-  const sorted = [...values].sort((left, right) => left.localeCompare(right, 'zh-CN'))
+  const sorted = [...values].sort(naturalCompare)
   return {
     choices: sorted.map((value) => ({
       value,
@@ -191,8 +193,8 @@ export function PublicBanksPage() {
   const [subjectFilter, setSubjectFilter] = useState(ALL)
   const [chapterFilter, setChapterFilter] = useState(ALL)
   const [query, setQuery] = useState('')
-  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks })
-  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes })
+  const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks, staleTime: 60_000 })
+  const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes, staleTime: 2 * 60_000 })
 
   const publicBanks = useMemo(
     () => (banksQuery.data ?? []).filter((bank) => bank.visibility === 'public'),
@@ -212,6 +214,7 @@ export function PublicBanksPage() {
     queryKey: ['bank-chapter-index', publicBankIds],
     queryFn: () => api.bankChapterIndex(publicBankIds),
     enabled: publicBankIds.length > 0,
+    staleTime: 5 * 60_000,
   })
 
   const bankChapters = useMemo(() => {
@@ -496,28 +499,30 @@ export function PublicBanksPage() {
             {visibleBanks.map((bank) => {
               const term = termLabel(bank.year, bank.semester)
               return (
-                <Link key={bank.id} to={`/banks/${bank.id}`} className="bank-card">
-                  <div className="bank-card-top">
-                    <h2>{bank.name}</h2>
-                    <span className="badge">公开</span>
-                  </div>
-                  <div className="bank-stats">
-                    <span className="bank-stat">
-                      <strong>{bank.questionCount}</strong>
-                      <span>道题</span>
-                    </span>
-                    <span className="bank-owner">
-                      {bank.ownerId === user?.id ? '我创建的' : '同学分享'}
-                    </span>
-                  </div>
-                  <p className="bank-desc">{bank.description || '暂无简介'}</p>
-                  <TagPills tags={bank.tags ?? []} max={3} />
-                  {term ? <span className="public-term">{term}</span> : null}
-                  <div className="bank-meta">
-                    <span className="bank-created">创建于 {formatDate(bank.createdAt)}</span>
-                    <Icon name="arrow-left" size={14} className="bank-open-icon" />
-                  </div>
-                </Link>
+                <div key={bank.id} className="card-favorite-wrap">
+                  <Link to={`/banks/${bank.id}`} className="bank-card">
+                    <div className="bank-card-top">
+                      <h2>{bank.name}</h2>
+                      <span className="badge">公开</span>
+                    </div>
+                    <div className="bank-stats">
+                      <span className="bank-stat">
+                        <strong>{bank.questionCount}</strong>
+                        <span>道题</span>
+                      </span>
+                      <span className="bank-owner">
+                        {bank.ownerId === user?.id ? '我创建的' : '同学分享'}
+                      </span>
+                    </div>
+                    <p className="bank-desc">{bank.description || '暂无简介'}</p>
+                    <TagPills tags={bank.tags ?? []} max={3} />
+                    {term ? <span className="public-term">{term}</span> : null}
+                    <div className="bank-meta">
+                      <span className="bank-created">创建于 {formatDate(bank.createdAt)}</span>
+                    </div>
+                  </Link>
+                  <FavoriteButton kind="bank" itemId={bank.id} compact />
+                </div>
               )
             })}
           </div>
@@ -536,18 +541,21 @@ export function PublicBanksPage() {
             {visibleNotes.map((note) => {
               const term = termLabel(note.year, note.semester)
               return (
-                <Link key={note.id} to={`/notes/${note.id}`} className="note-list-card">
-                  <h2>{note.title}</h2>
-                  {note.subtitle ? <p className="note-list-sub">{note.subtitle}</p> : null}
-                  <TagPills tags={note.tags ?? []} max={4} />
-                  <div className="note-list-foot">
-                    {term ? <span>{term}</span> : null}
-                    {note.sectionCount !== undefined ? (
-                      <span>{note.sectionCount} 节</span>
-                    ) : null}
-                    {note.updatedAt ? <span>更新于 {formatDate(note.updatedAt)}</span> : null}
-                  </div>
-                </Link>
+                <div key={note.id} className="card-favorite-wrap">
+                  <Link to={`/notes/${note.id}`} className="note-list-card">
+                    <h2>{note.title}</h2>
+                    {note.subtitle ? <p className="note-list-sub">{note.subtitle}</p> : null}
+                    <TagPills tags={note.tags ?? []} max={4} />
+                    <div className="note-list-foot">
+                      {term ? <span>{term}</span> : null}
+                      {note.sectionCount !== undefined ? (
+                        <span>{note.sectionCount} 节</span>
+                      ) : null}
+                      {note.updatedAt ? <span>更新于 {formatDate(note.updatedAt)}</span> : null}
+                    </div>
+                  </Link>
+                  <FavoriteButton kind="note" itemId={note.id} compact />
+                </div>
               )
             })}
           </div>

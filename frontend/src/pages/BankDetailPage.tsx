@@ -1,14 +1,41 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
 import type { QuestionSummary } from '../api'
 import { Icon } from '../components/Icon'
-import { DifficultyDots, EmptyState, ErrorNote, Loading } from '../components/Ui'
-import { formatDate, previewText, typeLabel } from '../format'
+import { ErrorNote, Loading } from '../components/Ui'
+import { ShareButton } from '../components/ShareButton'
+import { FavoriteButton } from '../components/FavoriteButton'
+import { naturalCompare } from '../natural-sort'
+import {
+  buildChapterLeaves,
+  leafNumberLabel,
+  resolveChapterRange,
+} from '../chapter-range'
 import { useRecordRecent } from '../recent'
 
 const CHAPTER_SEP = '\u001f'
+
+const MODE_LABELS: Record<string, string> = {
+  sequence: '顺序练习',
+  daily: '每日练习',
+  endless: '无限刷题',
+}
+
+// 与后端默认一致：每日/顺序练习一次 20 题，上限 100。
+const PRACTICE_LIMITS = [10, 20, 50, 100]
+const PRACTICE_LIMIT_KEY = 'ms_practice_limit'
+const DEFAULT_PRACTICE_LIMIT = 20
+
+function readPracticeLimit(): number {
+  try {
+    const stored = Number(window.localStorage.getItem(PRACTICE_LIMIT_KEY))
+    return PRACTICE_LIMITS.includes(stored) ? stored : DEFAULT_PRACTICE_LIMIT
+  } catch {
+    return DEFAULT_PRACTICE_LIMIT
+  }
+}
 
 function chapterKey(path: string[]): string {
   return path.join(CHAPTER_SEP)
@@ -52,14 +79,14 @@ function buildChapterTree(questions: QuestionSummary[]) {
   }
 
   const branches: ChapterBranch[] = [...majors.entries()]
-    .sort(([left], [right]) => left.localeCompare(right, 'zh-CN'))
+    .sort(([left], [right]) => naturalCompare(left, right))
     .map(([major, entry]) => ({
       name: major,
       key: chapterKey([major]),
       count: entry.count,
       directCount: entry.direct,
       minors: [...entry.minors.entries()]
-        .sort(([left], [right]) => left.localeCompare(right, 'zh-CN'))
+        .sort(([left], [right]) => naturalCompare(left, right))
         .map(([minor, count]) => ({ name: minor, key: chapterKey([major, minor]), count })),
     }))
 
@@ -106,116 +133,40 @@ function ChapterCheck({
   )
 }
 
-/**
- * 题目行单独 memo：章节勾选只更新章节面板，不必重建上千行题目。
- * 这里用到的 props 在章节切换时都保持引用稳定。
- */
-const QuestionList = memo(function QuestionList({
-  questions,
-  bankId,
-  canEdit,
-  deleting,
-  onPickTag,
-  onDelete,
-}: {
-  questions: QuestionSummary[]
-  bankId: string
-  canEdit: boolean
-  deleting: boolean
-  onPickTag: (tag: string) => void
-  onDelete: (question: QuestionSummary) => void
-}) {
-  return (
-    <ul className="question-list">
-      {questions.map((question) => (
-        <li key={question.id} className="question-row">
-          <div className="question-row-main">
-            {canEdit ? (
-              <Link
-                to={`/banks/${bankId}/questions/${question.id}`}
-                className="question-stem-link"
-              >
-                {previewText(question.stem)}
-              </Link>
-            ) : (
-              <span className="question-stem-link static">{previewText(question.stem)}</span>
-            )}
-            <div className="question-meta">
-              <span className="badge badge-quiet">{typeLabel(question.type)}</span>
-              <span className="meta-item">
-                难度 <DifficultyDots value={question.difficulty} />
-              </span>
-              {question.tags.slice(0, 3).map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  className="chip chip-small"
-                  onClick={() => onPickTag(item)}
-                >
-                  {item}
-                </button>
-              ))}
-              <span className="meta-time">更新于 {formatDate(question.updatedAt)}</span>
-            </div>
-          </div>
-          {canEdit ? (
-            <div className="question-actions">
-              <Link
-                to={`/banks/${bankId}/questions/${question.id}`}
-                className="btn btn-small btn-ghost"
-              >
-                编辑
-              </Link>
-              <button
-                type="button"
-                className="btn btn-small btn-danger-ghost"
-                onClick={() => onDelete(question)}
-                disabled={deleting}
-              >
-                删除
-              </button>
-            </div>
-          ) : null}
-        </li>
-      ))}
-    </ul>
-  )
-})
-
 export function BankDetailPage() {
   const { id } = useParams<{ id: string }>()
   useRecordRecent('bank', id)
   const bankId = id ?? ''
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
-  const [search, setSearch] = useState('')
-  const [query, setQuery] = useState('')
-  const [tag, setTag] = useState('')
+  const [limit, setLimit] = useState(readPracticeLimit)
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(() => new Set())
+  const [rangeText, setRangeText] = useState('')
+  const [rangeError, setRangeError] = useState('')
   const moreMenuRef = useRef<HTMLDetailsElement>(null)
 
   const accessQuery = useQuery({
     queryKey: ['bank', bankId],
     queryFn: () => api.bank(bankId),
     enabled: Boolean(bankId),
+    staleTime: 60_000,
   })
 
   const allQuestionsQuery = useQuery({
     queryKey: ['questions', bankId, '', ''],
     queryFn: () => api.questions(bankId),
     enabled: Boolean(bankId) && Boolean(accessQuery.data?.canView),
+    staleTime: 60_000,
   })
 
-  const questionsQuery = useQuery({
-    queryKey: ['questions', bankId, query, tag],
-    queryFn: () => api.questions(bankId, { q: query, tag }),
+  // 上次没做完的练习，用来在页面上给一个「继续」入口。
+  const activeSessionQuery = useQuery({
+    queryKey: ['active-session', bankId],
+    queryFn: () => api.activeSession(bankId),
     enabled: Boolean(bankId) && Boolean(accessQuery.data?.canView),
+    retry: false,
+    // 练习进度必须即时反映，不沿用全局 60 秒缓存。
+    staleTime: 0,
   })
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setQuery(search.trim()), 260)
-    return () => window.clearTimeout(timer)
-  }, [search])
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -241,19 +192,21 @@ export function BankDetailPage() {
     }
   }, [])
 
-  const tags = useMemo(() => {
-    const set = new Set<string>()
-    for (const question of allQuestionsQuery.data ?? []) {
-      for (const item of question.tags) set.add(item)
-    }
-    return [...set].sort((a, b) => a.localeCompare(b, 'zh-CN'))
-  }, [allQuestionsQuery.data])
-
   const chapterTree = useMemo(
     () => buildChapterTree(allQuestionsQuery.data ?? []),
     [allQuestionsQuery.data],
   )
   const chapters = chapterTree.branches
+
+  const chapterLeaves = useMemo(() => buildChapterLeaves(chapters), [chapters])
+  const rangeExample = useMemo(() => {
+    const numbered = chapterLeaves.filter((leaf) => leaf.tokens.length > 0)
+    if (numbered.length < 2) return null
+    return {
+      start: leafNumberLabel(numbered[0]),
+      end: leafNumberLabel(numbered[numbered.length - 1]),
+    }
+  }, [chapterLeaves])
 
   // 选中项只存路径 key，列表刷新或重新筛选都不会丢。
   const selectedPaths = useMemo(() => {
@@ -283,31 +236,25 @@ export function BankDetailPage() {
   )
 
   const startMutation = useMutation({
-    mutationFn: ({ mode, chapters: paths }: { mode: string; chapters?: string[][] }) =>
-      api.startSession(bankId, mode, undefined, paths),
+    mutationFn: ({
+      mode,
+      chapters: paths,
+      limit: count,
+    }: {
+      mode: string
+      chapters?: string[][]
+      limit?: number
+    }) => api.startSession(bankId, mode, count, paths),
     onSuccess: (session) => navigate(`/practice/${session.id}`),
   })
 
-  const deleteMutation = useMutation({
-    mutationFn: (questionId: string) => api.deleteQuestion(questionId),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['questions', bankId] })
-      void queryClient.invalidateQueries({ queryKey: ['bank', bankId] })
-    },
-  })
-
-  const handleDelete = useCallback(
-    (question: QuestionSummary) => {
-      const ok = window.confirm('确定删除这道题吗？此操作不可撤销。')
-      if (ok) deleteMutation.mutate(question.id)
-    },
-    [deleteMutation.mutate],
-  )
-
-  function clearFilters() {
-    setSearch('')
-    setQuery('')
-    setTag('')
+  function changePracticeLimit(next: number) {
+    setLimit(next)
+    try {
+      window.localStorage.setItem(PRACTICE_LIMIT_KEY, String(next))
+    } catch {
+      // 隐私模式下写入会失败，本次选择仍然生效。
+    }
   }
 
   function toggleMinor(branch: ChapterBranch, minorKey: string, next: boolean) {
@@ -343,6 +290,30 @@ export function BankDetailPage() {
       }
       return updated
     })
+  }
+
+  function branchSelection(branch: ChapterBranch) {
+    const selectedMinors = branch.minors.filter((minor) => selectedChapters.has(minor.key)).length
+    const checked =
+      branch.minors.length === 0
+        ? selectedChapters.has(branch.key)
+        : selectedMinors === branch.minors.length &&
+          (branch.directCount === 0 || selectedChapters.has(branch.key))
+    const mixed =
+      !checked &&
+      (selectedMinors > 0 || (branch.directCount > 0 && selectedChapters.has(branch.key)))
+    return { checked, mixed }
+  }
+
+  function applyChapterRange(event: FormEvent) {
+    event.preventDefault()
+    const result = resolveChapterRange(rangeText, chapters)
+    if ('error' in result) {
+      setRangeError(result.error)
+      return
+    }
+    setRangeError('')
+    setSelectedChapters(result.keys)
   }
 
   function selectAllChapters() {
@@ -385,7 +356,6 @@ export function BankDetailPage() {
 
   const access = accessQuery.data
   const bank = access.bank
-  const filtering = Boolean(query || tag)
   const startDisabled = bank.questionCount === 0 || startMutation.isPending
 
   return (
@@ -406,6 +376,12 @@ export function BankDetailPage() {
           </p>
         </div>
         <div className="header-actions bank-actions">
+          {bank.visibility === 'public' ? (
+            <>
+              <FavoriteButton kind="bank" itemId={bank.id} />
+              <ShareButton kind="bank" targetId={bank.id} />
+            </>
+          ) : null}
           <details className="more-menu" ref={moreMenuRef}>
             <summary className="btn btn-ghost more-summary">更多</summary>
             <div className="more-panel">
@@ -415,24 +391,30 @@ export function BankDetailPage() {
                   <span>题库设置</span>
                 </Link>
               ) : null}
+              <Link to={`/banks/${bank.id}/questions`} className="more-item">
+                <Icon name="document" size={16} />
+                <span>题目设置</span>
+              </Link>
               <Link to={`/banks/${bank.id}/pools`} className="more-item">
                 <Icon name="layers" size={16} />
                 <span>选项池</span>
               </Link>
-              {access.canEdit ? (
-                <Link to={`/banks/${bank.id}/import`} className="more-item">
-                  <Icon name="upload" size={16} />
-                  <span>批量导入</span>
-                </Link>
-              ) : null}
-              {access.canEdit ? (
-                <Link to={`/banks/${bank.id}/questions/new`} className="more-item">
-                  <Icon name="plus" size={16} />
-                  <span>新建题目</span>
-                </Link>
-              ) : null}
             </div>
           </details>
+          <label className="practice-count">
+            <span className="practice-count-label">题数</span>
+            <select
+              className="select practice-count-select"
+              value={limit}
+              onChange={(event) => changePracticeLimit(Number(event.target.value))}
+            >
+              {PRACTICE_LIMITS.map((item) => (
+                <option key={item} value={item}>
+                  {item} 题
+                </option>
+              ))}
+            </select>
+          </label>
           <button
             type="button"
             className="btn btn-ghost"
@@ -445,7 +427,7 @@ export function BankDetailPage() {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => startMutation.mutate({ mode: 'daily' })}
+            onClick={() => startMutation.mutate({ mode: 'daily', limit })}
             disabled={startDisabled}
             title={bank.questionCount === 0 ? '题库还没有题目' : undefined}
           >
@@ -455,7 +437,22 @@ export function BankDetailPage() {
       </header>
 
       {startMutation.isError ? <ErrorNote message={errorMessage(startMutation.error)} /> : null}
-      {deleteMutation.isError ? <ErrorNote message={errorMessage(deleteMutation.error)} /> : null}
+
+      {activeSessionQuery.data ? (
+        <section className="card resume-card" aria-labelledby="resume-title">
+          <div className="resume-body">
+            <p className="eyebrow">继续练习</p>
+            <h2 id="resume-title">
+              {MODE_LABELS[activeSessionQuery.data.mode] ?? '练习'} · 已答{' '}
+              {activeSessionQuery.data.answered} / {activeSessionQuery.data.total}
+            </h2>
+          </div>
+          <Link to={`/practice/${activeSessionQuery.data.id}`} className="btn btn-primary">
+            <Icon name="play" size={16} />
+            继续
+          </Link>
+        </section>
+      ) : null}
 
       {chapters.length > 0 ? (
         <section className="card chapter-panel" aria-labelledby="chapter-panel-title">
@@ -489,20 +486,97 @@ export function BankDetailPage() {
             </div>
           </div>
 
+          <div className="chapter-quick">
+            {chapters.length > 1 ? (
+              <div className="chapter-quick-row">
+                <span className="chapter-quick-label">大章</span>
+                <div className="chapter-chips" role="group" aria-label="快速选择大章">
+                  {chapters.map((branch) => {
+                    const state = branchSelection(branch)
+                    return (
+                      <button
+                        key={branch.key}
+                        type="button"
+                        className={
+                          state.checked
+                            ? 'chapter-chip is-active'
+                            : state.mixed
+                              ? 'chapter-chip is-mixed'
+                              : 'chapter-chip'
+                        }
+                        aria-pressed={state.checked}
+                        title={`${branch.name} · ${branch.count} 题`}
+                        onClick={() => toggleMajor(branch, !state.checked)}
+                      >
+                        {branch.name}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ) : null}
+
+            {rangeExample ? (
+              <form className="chapter-quick-row chapter-range" onSubmit={applyChapterRange}>
+                <label className="chapter-quick-label" htmlFor="chapter-range-input">
+                  范围
+                </label>
+                <input
+                  id="chapter-range-input"
+                  className="input chapter-range-input"
+                  type="text"
+                  autoComplete="off"
+                  placeholder={`如 ${rangeExample.start} ~ ${rangeExample.end}`}
+                  aria-label="章节范围"
+                  aria-invalid={rangeError ? true : undefined}
+                  aria-describedby={rangeError ? 'chapter-range-error' : undefined}
+                  value={rangeText}
+                  onChange={(event) => {
+                    setRangeText(event.target.value)
+                    if (rangeError) setRangeError('')
+                  }}
+                />
+                <button
+                  type="submit"
+                  className="btn btn-small btn-ghost"
+                  disabled={rangeText.trim() === ''}
+                >
+                  选这段
+                </button>
+                {rangeError ? (
+                  <span className="chapter-range-error" id="chapter-range-error" role="alert">
+                    {rangeError}
+                  </span>
+                ) : null}
+              </form>
+            ) : null}
+
+            <div className="chapter-quick-row chapter-quick-start">
+              <button
+                type="button"
+                className="btn btn-small btn-primary"
+                onClick={() =>
+                  startMutation.mutate({ mode: 'daily', chapters: selectedPaths, limit })
+                }
+                disabled={selectedQuestionCount === 0 || startMutation.isPending}
+              >
+                {startMutation.isPending ? '正在开始…' : '练习所选章节'}
+              </button>
+              <button
+                type="button"
+                className="btn btn-small btn-ghost"
+                onClick={() => startMutation.mutate({ mode: 'endless', chapters: selectedPaths })}
+                disabled={selectedQuestionCount === 0 || startMutation.isPending}
+              >
+                无限刷题
+              </button>
+              <span className="chapter-hint">最多 {limit} 题，无限刷题不受限</span>
+            </div>
+          </div>
+
           <ul className="chapter-tree">
             {chapters.map((branch) => {
-              const selectedMinors = branch.minors.filter((minor) =>
-                selectedChapters.has(minor.key),
-              ).length
-              const majorChecked =
-                branch.minors.length === 0
-                  ? selectedChapters.has(branch.key)
-                  : selectedMinors === branch.minors.length &&
-                    (branch.directCount === 0 || selectedChapters.has(branch.key))
-              const majorMixed =
-                !majorChecked &&
-                (selectedMinors > 0 ||
-                  (branch.directCount > 0 && selectedChapters.has(branch.key)))
+              const { checked: majorChecked, mixed: majorMixed } = branchSelection(branch)
 
               return (
                 <li key={branch.key} className="chapter-branch">
@@ -544,7 +618,7 @@ export function BankDetailPage() {
               type="button"
               className="btn btn-primary"
               onClick={() =>
-                startMutation.mutate({ mode: 'daily', chapters: selectedPaths })
+                startMutation.mutate({ mode: 'daily', chapters: selectedPaths, limit })
               }
               disabled={selectedQuestionCount === 0 || startMutation.isPending}
             >
@@ -569,96 +643,13 @@ export function BankDetailPage() {
         </p>
       ) : null}
 
-      <section className="card list-card">
-        <div className="list-toolbar">
-          <div className="search-field">
-            <Icon name="search" size={16} className="search-field-icon" />
-            <input
-              type="search"
-              className="input search-input"
-              placeholder="搜索题干…"
-              aria-label="搜索题目"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            {search ? (
-              <button
-                type="button"
-                className="search-clear"
-                aria-label="清除搜索"
-                onClick={() => {
-                  setSearch('')
-                  setQuery('')
-                }}
-              >
-                <Icon name="x" size={14} />
-              </button>
-            ) : null}
-          </div>
-          <span className="muted" role="status">
-            {questionsQuery.data ? `${questionsQuery.data.length} 道题目` : '题目列表'}
-          </span>
-        </div>
-
-        {tags.length > 0 ? (
-          <div className="tag-filter" role="group" aria-label="按标签筛选">
-            <button
-              type="button"
-              className={tag ? 'chip' : 'chip active'}
-              onClick={() => setTag('')}
-            >
-              全部
-            </button>
-            {tags.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={tag === item ? 'chip active' : 'chip'}
-                onClick={() => setTag(tag === item ? '' : item)}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        {questionsQuery.isPending ? <Loading /> : null}
-        {questionsQuery.isError ? (
-          <div className="list-pad">
-            <ErrorNote message={errorMessage(questionsQuery.error)} />
-          </div>
-        ) : null}
-
-        {questionsQuery.data && questionsQuery.data.length > 0 ? (
-          <QuestionList
-            questions={questionsQuery.data}
-            bankId={bank.id}
-            canEdit={access.canEdit}
-            deleting={deleteMutation.isPending}
-            onPickTag={setTag}
-            onDelete={handleDelete}
-          />
-        ) : null}
-
-        {questionsQuery.data && questionsQuery.data.length === 0 ? (
-          <EmptyState
-            title={filtering ? '没有找到匹配的题目' : '题库还是空的'}
-            hint={filtering ? '换个关键词，或清除筛选条件。' : '把第一道题放进来吧。'}
-          >
-            {filtering ? (
-              <button type="button" className="btn btn-ghost" onClick={clearFilters}>
-                <Icon name="x" size={16} />
-                清除筛选
-              </button>
-            ) : access.canEdit ? (
-              <Link to={`/banks/${bank.id}/questions/new`} className="btn btn-primary">
-                <Icon name="plus" size={16} />
-                新建题目
-              </Link>
-            ) : null}
-          </EmptyState>
-        ) : null}
-      </section>
+      {allQuestionsQuery.data && allQuestionsQuery.data.length === 0 ? (
+        <p className="chapter-note chapter-note-block">
+          {access.canEdit
+            ? '题库还没有题目。到「题目设置」里新建或批量导入。'
+            : '题库还没有题目。'}
+        </p>
+      ) : null}
     </div>
   )
 }

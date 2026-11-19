@@ -41,6 +41,30 @@ public sealed record ImportQuestionPreviewDto(
     string? PoolName = null,
     int? PoolCount = null);
 
+/// <summary>导入时顺便修改的题库设置，只包含 JSON 里写了的字段。</summary>
+public sealed record ImportBankChangeDto(
+    string? Name,
+    string? Description,
+    string? Visibility,
+    IReadOnlyList<string>? Tags,
+    string? Year,
+    string? Semester,
+    bool? DefaultShuffleOptions,
+    bool? RequireReview);
+
+public sealed record ImportPoolChangeDto(
+    string Name,
+    string Mode,
+    bool Delete,
+    int Add,
+    int Enable,
+    int Disable,
+    int Total);
+
+public sealed record ImportSummaryDto(
+    ImportBankChangeDto? Bank,
+    IReadOnlyList<ImportPoolChangeDto> Pools);
+
 public sealed record ImportPreviewDto(
     int Total,
     int Valid,
@@ -49,7 +73,8 @@ public sealed record ImportPreviewDto(
     IReadOnlyList<ImportQuestionPreviewDto> Questions,
     IReadOnlyList<ImportIssueDto> BatchIssues,
     IReadOnlyList<CardDto> SampleCards,
-    string PlanId = "");
+    string PlanId = "",
+    ImportSummaryDto? Summary = null);
 
 public sealed record ImportRequest(string Payload, bool Force = false);
 

@@ -40,7 +40,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         AggregateOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Aggregate(pipeline, options, cancellationToken);
     }
 
@@ -50,7 +49,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         AggregateOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Aggregate(session, pipeline, options, cancellationToken);
     }
 
@@ -59,7 +57,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         AggregateOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.AggregateAsync(pipeline, options, cancellationToken);
     }
 
@@ -69,7 +66,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         AggregateOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.AggregateAsync(session, pipeline, options, cancellationToken);
     }
 
@@ -155,7 +151,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Count(filter, options, cancellationToken);
     }
 
@@ -166,7 +161,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Count(session, filter, options, cancellationToken);
     }
 
@@ -176,7 +170,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountAsync(filter, options, cancellationToken);
     }
 
@@ -187,7 +180,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountAsync(session, filter, options, cancellationToken);
     }
 
@@ -196,7 +188,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountDocuments(filter, options, cancellationToken);
     }
 
@@ -206,7 +197,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountDocuments(session, filter, options, cancellationToken);
     }
 
@@ -215,7 +205,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountDocumentsAsync(filter, options, cancellationToken);
     }
 
@@ -225,7 +214,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         CountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.CountDocumentsAsync(session, filter, options, cancellationToken);
     }
 
@@ -343,7 +331,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Distinct(field, filter, options, cancellationToken);
     }
 
@@ -354,7 +341,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Distinct(session, field, filter, options, cancellationToken);
     }
 
@@ -364,7 +350,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctAsync(field, filter, options, cancellationToken);
     }
 
@@ -375,7 +360,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctAsync(session, field, filter, options, cancellationToken);
     }
 
@@ -385,7 +369,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctMany(field, filter, options, cancellationToken);
     }
 
@@ -396,7 +379,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctMany(session, field, filter, options, cancellationToken);
     }
 
@@ -406,7 +388,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctManyAsync(field, filter, options, cancellationToken);
     }
 
@@ -417,7 +398,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         DistinctOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.DistinctManyAsync(session, field, filter, options, cancellationToken);
     }
 
@@ -425,7 +405,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         EstimatedDocumentCountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.EstimatedDocumentCount(options, cancellationToken);
     }
 
@@ -433,7 +412,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         EstimatedDocumentCountOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.EstimatedDocumentCountAsync(options, cancellationToken);
     }
 
@@ -442,7 +420,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         FindOptions<TDocument, TProjection>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.FindAsync(filter, options, cancellationToken);
     }
 
@@ -452,7 +429,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         FindOptions<TDocument, TProjection>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.FindAsync(session, filter, options, cancellationToken);
     }
 
@@ -461,7 +437,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         FindOptions<TDocument, TProjection>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.FindSync(filter, options, cancellationToken);
     }
 
@@ -471,7 +446,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         FindOptions<TDocument, TProjection>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.FindSync(session, filter, options, cancellationToken);
     }
 
@@ -687,7 +661,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         MapReduceOptions<TDocument, TResult>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.MapReduce(map, reduce, options, cancellationToken);
     }
 
@@ -699,7 +672,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         MapReduceOptions<TDocument, TResult>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.MapReduce(session, map, reduce, options, cancellationToken);
     }
 
@@ -710,7 +682,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         MapReduceOptions<TDocument, TResult>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.MapReduceAsync(map, reduce, options, cancellationToken);
     }
 
@@ -722,7 +693,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         MapReduceOptions<TDocument, TResult>? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.MapReduceAsync(session, map, reduce, options, cancellationToken);
     }
 
@@ -906,7 +876,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         ChangeStreamOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Watch(pipeline, options, cancellationToken);
     }
 
@@ -916,7 +885,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         ChangeStreamOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.Watch(session, pipeline, options, cancellationToken);
     }
 
@@ -925,7 +893,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         ChangeStreamOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.WatchAsync(pipeline, options, cancellationToken);
     }
 
@@ -935,7 +902,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
         ChangeStreamOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        GuardRead();
         return inner.WatchAsync(session, pipeline, options, cancellationToken);
     }
 
@@ -947,8 +913,6 @@ internal sealed class GuardedMongoCollection<TDocument> : IMongoCollection<TDocu
 
     public IMongoCollection<TDocument> WithWriteConcern(WriteConcern writeConcern) =>
         Wrap(inner.WithWriteConcern(writeConcern), guard);
-
-    private void GuardRead() => guard.EnsureRead();
 
     private void GuardWrite() => guard.EnsureWrite();
 }

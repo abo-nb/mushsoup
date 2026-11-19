@@ -22,15 +22,13 @@ public sealed class MongoOptions
     /// <summary>可指向已解压的 mongod 所在目录，跳过运行时下载（离线环境用）。</summary>
     public string? BinaryDirectory { get; set; }
 
-    /// <summary>应用层每日读写额度，按受影响/返回的文档数计算。</summary>
+    /// <summary>应用层每日写入额度，按受影响/返回的文档数计算。</summary>
     public MongoUsageLimits UsageLimits { get; set; } = new();
 }
 
 public sealed class MongoUsageLimits
 {
     public bool Enabled { get; set; } = true;
-
-    public int DailyReads { get; set; } = 50_000;
 
     public int DailyWrites { get; set; } = 20_000;
 

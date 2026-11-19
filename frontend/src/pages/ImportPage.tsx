@@ -3,7 +3,12 @@ import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
-import type { ImportPreview, ImportQuestionPreview } from '../api'
+import type {
+  ImportBankChange,
+  ImportPoolChange,
+  ImportPreview,
+  ImportQuestionPreview,
+} from '../api'
 import { MarkdownView } from '../components/MarkdownView'
 import { Icon } from '../components/Icon'
 import { EmptyState, ErrorNote, Loading } from '../components/Ui'
@@ -18,6 +23,30 @@ const IMPORT_STEPS = [
 /** 一次导入可能上万题，预览列表只渲染一部分，避免浏览器卡死。 */
 const PREVIEW_ROW_LIMIT = 300
 
+function describeBankChange(bank: ImportBankChange): string {
+  const parts: string[] = []
+  if (bank.name) parts.push(`名称「${bank.name}」`)
+  if (bank.description !== null) parts.push(bank.description ? '更新简介' : '清空简介')
+  if (bank.visibility) parts.push(bank.visibility === 'public' ? '设为公开' : '设为私有')
+  if (bank.tags) parts.push(bank.tags.length > 0 ? `标签 ${bank.tags.join('、')}` : '清空标签')
+  if (bank.year !== null) parts.push(bank.year ? `学年 ${bank.year}` : '清空学年')
+  if (bank.semester !== null) parts.push(bank.semester ? `${bank.semester}学期` : '清空学期')
+  if (bank.defaultShuffleOptions !== null) {
+    parts.push(bank.defaultShuffleOptions ? '默认乱序' : '默认不乱序')
+  }
+  if (bank.requireReview !== null) parts.push(bank.requireReview ? '新题需审核' : '新题直接发布')
+  return parts.length > 0 ? parts.join(' · ') : '无改动'
+}
+
+function describePoolChange(pool: ImportPoolChange): string {
+  if (pool.delete) return '删除'
+  const parts = [`${pool.mode === 'replace' ? '替换为' : '合并后'} ${pool.total} 条可用`]
+  if (pool.add > 0) parts.push(`新增 ${pool.add}`)
+  if (pool.enable > 0) parts.push(`启用 ${pool.enable}`)
+  if (pool.disable > 0) parts.push(`停用 ${pool.disable}`)
+  return parts.join(' · ')
+}
+
 function StepHead({
   step,
   title,
@@ -26,7 +55,7 @@ function StepHead({
 }: {
   step: number
   title: string
-  hint: string
+  hint?: string
   children?: ReactNode
 }) {
   return (
@@ -36,7 +65,7 @@ function StepHead({
       </span>
       <div className="step-body">
         <h2 className="section-title">{title}</h2>
-        <p className="step-hint">{hint}</p>
+        {hint ? <p className="step-hint">{hint}</p> : null}
       </div>
       {children ? <div className="step-actions">{children}</div> : null}
     </div>
@@ -61,6 +90,7 @@ export function ImportPage() {
     queryKey: ['bank', bankId],
     queryFn: () => api.bank(bankId),
     enabled: Boolean(bankId),
+    staleTime: 60_000,
   })
 
   const promptQuery = useQuery({
@@ -302,7 +332,7 @@ export function ImportPage() {
             setPlanId('')
             setJobId(null)
           }}
-          placeholder={'{\n  "formatVersion": 1,\n  "questions": [ ... ]\n}'}
+          placeholder={'{\n  "formatVersion": 2,\n  "bank": { ... },\n  "pools": [ ... ],\n  "questions": [ ... ]\n}'}
           aria-label="待导入的 JSON"
           spellCheck={false}
         />
@@ -395,11 +425,7 @@ export function ImportPage() {
 
       {preview ? (
         <section id="import-step-3" className="card card-pad editor-section import-section">
-          <StepHead
-            step={3}
-            title="预览结果"
-            hint="逐题核对题干与提示；错误会标在具体题号上，修正 JSON 后可重新校验。"
-          >
+          <StepHead step={3} title="预览结果">
             <span className="muted">{issueCount} 条提示</span>
           </StepHead>
 
@@ -409,6 +435,20 @@ export function ImportPage() {
             <span className="stat-pill warn">警告 {preview.warnings}</span>
             <span className="stat-pill bad">错误 {preview.errors}</span>
           </div>
+
+          {preview.summary && (preview.summary.bank || preview.summary.pools.length > 0) ? (
+            <div className="import-summary">
+              <p className="import-summary-title">确认导入时会同时修改</p>
+              {preview.summary.bank ? (
+                <p>题库设置：{describeBankChange(preview.summary.bank)}</p>
+              ) : null}
+              {preview.summary.pools.map((pool) => (
+                <p key={pool.name}>
+                  选项池「{pool.name}」：{describePoolChange(pool)}
+                </p>
+              ))}
+            </div>
+          ) : null}
 
           {preview.batchIssues.length > 0 ? (
             <div className="notice import-batch-issues">

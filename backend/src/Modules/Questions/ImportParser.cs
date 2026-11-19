@@ -6,7 +6,9 @@ namespace Questions;
 internal sealed record ParsedImport(
     List<JsonElement> Questions,
     int FormatVersion,
-    List<ImportIssueDto> Issues);
+    List<ImportIssueDto> Issues,
+    JsonElement? Bank = null,
+    List<JsonElement>? Pools = null);
 
 /// <summary>
 /// LLM 的输出很少是干净的 JSON：会包代码围栏、加说明文字、留尾逗号。
@@ -84,17 +86,68 @@ internal static class ImportParser
                     version = parsedVersion;
                 }
 
-                if (!root.TryGetProperty("questions", out var questionElements) ||
-                    questionElements.ValueKind != JsonValueKind.Array)
+                var hasQuestions = root.TryGetProperty("questions", out var questionElements) &&
+                                   questionElements.ValueKind == JsonValueKind.Array;
+                questions = hasQuestions
+                    ? questionElements.EnumerateArray().Select(element => element.Clone()).ToList()
+                    : [];
+
+                JsonElement? bank = null;
+                List<JsonElement>? pools = null;
+                if (version >= 2)
+                {
+                    if (root.TryGetProperty("bank", out var bankElement) &&
+                        bankElement.ValueKind == JsonValueKind.Object)
+                    {
+                        bank = bankElement.Clone();
+                    }
+                    else if (bankElement.ValueKind is not (JsonValueKind.Undefined or JsonValueKind.Null))
+                    {
+                        issues.Add(new ImportIssueDto(
+                            ImportIssueCodes.Schema,
+                            "bank 必须是对象",
+                            ImportSeverity.Error));
+                    }
+
+                    if (root.TryGetProperty("pools", out var poolElements) &&
+                        poolElements.ValueKind == JsonValueKind.Array)
+                    {
+                        pools = poolElements.EnumerateArray().Select(element => element.Clone()).ToList();
+                    }
+                    else if (poolElements.ValueKind is not (JsonValueKind.Undefined or JsonValueKind.Null))
+                    {
+                        issues.Add(new ImportIssueDto(
+                            ImportIssueCodes.Schema,
+                            "pools 必须是数组",
+                            ImportSeverity.Error));
+                    }
+                }
+                else if (root.TryGetProperty("bank", out _) || root.TryGetProperty("pools", out _))
+                {
+                    issues.Add(new ImportIssueDto(
+                        ImportIssueCodes.FormatVersion,
+                        "bank / pools 需要 formatVersion 2，这次按题目导入处理，设置部分被忽略",
+                        ImportSeverity.Warning));
+                }
+
+                if (!hasQuestions && bank is null && pools is null)
                 {
                     issues.Add(new ImportIssueDto(
                         ImportIssueCodes.Schema,
-                        "缺少 questions 数组",
+                        "缺少 questions / bank / pools",
                         ImportSeverity.Error));
                     return new ParsedImport([], version, issues);
                 }
 
-                questions = questionElements.EnumerateArray().Select(element => element.Clone()).ToList();
+                if (version is not (1 or 2))
+                {
+                    issues.Add(new ImportIssueDto(
+                        ImportIssueCodes.FormatVersion,
+                        $"formatVersion 是 {version}，当前按 2 解析",
+                        ImportSeverity.Warning));
+                }
+
+                return new ParsedImport(questions, version, issues, bank, pools);
             }
             else
             {
@@ -103,14 +156,6 @@ internal static class ImportParser
                     "顶层必须是对象或数组",
                     ImportSeverity.Error));
                 return new ParsedImport([], version, issues);
-            }
-
-            if (version != 1)
-            {
-                issues.Add(new ImportIssueDto(
-                    ImportIssueCodes.FormatVersion,
-                    $"formatVersion 是 {version}，当前按 1 解析",
-                    ImportSeverity.Warning));
             }
 
             return new ParsedImport(questions, version, issues);

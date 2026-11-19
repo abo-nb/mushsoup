@@ -11,6 +11,17 @@ internal static class NoteEndpoints
 {
     internal static void MapNoteEndpoints(this IEndpointRouteBuilder app)
     {
+        // 游客入口：只暴露公开讲义，供短链接在未登录时阅读。
+        app.MapGet("/api/public/notes/{id}", async (
+            string id,
+            NoteService notes,
+            CancellationToken cancellationToken) =>
+        {
+            var note = await notes.GetVisibleAsync(id, "", cancellationToken)
+                ?? throw new NotFoundException("讲义不存在");
+            return Results.Ok(note);
+        });
+
         var group = app.MapGroup("/api/notes").RequireAuthorization();
 
         group.MapGet("", async (

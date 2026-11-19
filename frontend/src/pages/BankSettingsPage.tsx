@@ -22,6 +22,7 @@ export function BankSettingsPage() {
     queryKey: ['bank', bankId],
     queryFn: () => api.bank(bankId),
     enabled: Boolean(bankId),
+    staleTime: 60_000,
   })
 
   if (!bankId) {

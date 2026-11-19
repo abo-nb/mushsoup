@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
-import type { AnswerFeedback, SubmitAnswerBody } from '../api'
+import type { AnswerFeedback, NextCard, SubmitAnswerBody } from '../api'
 import { useAuth } from '../auth-context'
 import { Icon } from '../components/Icon'
 import { MarkdownView } from '../components/MarkdownView'
@@ -16,15 +16,23 @@ const MODE_LABELS: Record<string, string> = {
   endless: '无限刷题',
 }
 
+function optionState(correctKeys: Set<string>, picked: Set<string>, key: string): string {
+  if (correctKeys.has(key)) return picked.has(key) ? 'hit' : 'missed'
+  return picked.has(key) ? 'wrong' : 'neutral'
+}
+
 export function PracticePage() {
   const { sessionId } = useParams<{ sessionId: string }>()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { user } = useAuth()
   const submitMode = user?.prefs.submitMode === 'auto' ? 'auto' : 'space'
   const [selected, setSelected] = useState<string[]>([])
   const [feedback, setFeedback] = useState<AnswerFeedback | null>(null)
   const [advancing, setAdvancing] = useState(false)
   const startedAt = useRef(0)
+  const inFlightRef = useRef<Promise<unknown> | null>(null)
+  const pendingNextRef = useRef<NextCard | null>(null)
 
   const nextQuery = useQuery({
     queryKey: ['next-card', sessionId],
@@ -33,6 +41,8 @@ export function PracticePage() {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    // 答题状态必须即时反映，不沿用全局 60 秒缓存。
+    staleTime: 0,
   })
 
   const card = nextQuery.data?.card ?? null
@@ -42,7 +52,13 @@ export function PracticePage() {
   const submitMutation = useMutation({
     mutationFn: (body: SubmitAnswerBody) => api.submitAnswer(sessionId ?? '', body),
     onSuccess: (result) => {
+      // 服务端把下一题一起带回来了，按空格时不用再等一次请求。
+      pendingNextRef.current = result.next
       setFeedback(result)
+    },
+    onError: () => {
+      // 提交没成功就撤掉本地判分，用户可以重交，服务端状态也保持一致。
+      setFeedback(null)
     },
   })
 
@@ -53,14 +69,48 @@ export function PracticePage() {
   const submitWithKeys = useCallback(
     (keys: string[]) => {
       if (!card || feedback || keys.length === 0 || submitMutation.isPending) return
+      const current = nextQuery.data
+      if (!current?.card) return
+
       const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current))
-      submitMutation.mutate({
-        questionId: card.questionId,
+      const correctKeys = new Set(current.correctKeys ?? [])
+      const picked = new Set(keys)
+      const hit = keys.filter((key) => correctKeys.has(key)).length
+      const hasWrong = keys.some((key) => !correctKeys.has(key))
+      const score = hasWrong || correctKeys.size === 0 ? 0 : hit / correctKeys.size
+      const correct = correctKeys.size > 0 && !hasWrong && hit === correctKeys.size
+
+      // 先本地判分把反馈画出来，提交在后台完成。
+      setFeedback({
+        correct,
+        score,
+        stem: current.card.stem,
+        options: current.card.options.map((option) => ({
+          key: option.key,
+          text: option.text,
+          state: optionState(correctKeys, picked, option.key),
+        })),
+        explanation: current.explanation ?? '',
+        rating: '',
+        index: current.index,
+        finished: false,
+        stats: {
+          correct: current.session.stats.correct + (correct ? 1 : 0),
+          wrong: current.session.stats.wrong + (correct ? 0 : 1),
+        },
+        session: current.session,
+        next: null,
+      })
+
+      const promise = submitMutation.mutateAsync({
+        questionId: current.card.questionId,
         selectedKeys: keys,
         elapsedMs,
       })
+      inFlightRef.current = promise
+      promise.catch(() => undefined)
     },
-    [card, feedback, submitMutation],
+    [card, feedback, submitMutation, nextQuery.data],
   )
 
   const selectOption = useCallback(
@@ -95,9 +145,20 @@ export function PracticePage() {
     advancingRef.current = true
     setAdvancing(true)
     try {
-      if (feedback?.finished && sessionId) {
-        await api.finishSession(sessionId).catch(() => undefined)
+      const inFlight = inFlightRef.current
+      if (inFlight) await inFlight.catch(() => undefined)
+
+      const prepared = pendingNextRef.current
+      if (prepared && sessionId) {
+        pendingNextRef.current = null
+        queryClient.setQueryData(['next-card', sessionId], prepared)
+        setSelected([])
+        setFeedback(null)
+        submitMutation.reset()
+        startedAt.current = performance.now()
+        return
       }
+
       const result = await nextQuery.refetch()
       if (!result.isError && result.data) {
         setSelected([])

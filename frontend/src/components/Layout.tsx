@@ -41,6 +41,13 @@ export function Layout() {
               公开
             </NavLink>
             <NavLink
+              to="/favorites"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
+              <Icon name="star" size={18} />
+              收藏
+            </NavLink>
+            <NavLink
               to="/leaderboard"
               className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
             >

@@ -103,6 +103,18 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
         return dto;
     }
 
+    public async Task<bool> IsPublicAsync(string noteId, CancellationToken cancellationToken = default)
+    {
+        var f = Builders<NoteDocument>.Filter;
+        var count = await Notes
+            .CountDocumentsAsync(
+                f.And(
+                    ActiveIdFilter(noteId),
+                    f.Eq(x => x.Visibility, NoteVisibility.Public)),
+                cancellationToken: cancellationToken);
+        return count > 0;
+    }
+
     public async Task<NoteDto> CreateAsync(
         JsonElement content,
         string userId,

@@ -4,7 +4,11 @@ using Questions.Contracts;
 
 namespace Questions;
 
-internal sealed record CachedImportPlan(List<ImportCandidate> Candidates, List<ImportIssueDto> BatchIssues);
+internal sealed record CachedImportPlan(
+    List<ImportCandidate> Candidates,
+    List<ImportIssueDto> BatchIssues,
+    ImportBankPlan? Bank = null,
+    List<ImportPoolPlan>? Pools = null);
 
 internal sealed class ImportPlanCache
 {

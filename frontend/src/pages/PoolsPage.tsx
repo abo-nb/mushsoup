@@ -18,6 +18,7 @@ export function PoolsPage() {
     queryKey: ['bank', bankId],
     queryFn: () => api.bank(bankId),
     enabled: Boolean(bankId),
+    staleTime: 60_000,
   })
 
   const poolsQuery = useQuery({
@@ -125,9 +126,7 @@ export function PoolsPage() {
         <div className="page-heading">
           <p className="eyebrow">{bank.name}</p>
           <h1>选项池</h1>
-          <p className="page-sub">
-            把一组同类干扰项放在这里，出题时随机抽取。同一道题练多次也不会总是那几个选项。
-          </p>
+          <p className="page-sub">把一组同类干扰项放在这里，出题时随机抽取。</p>
         </div>
       </header>
 

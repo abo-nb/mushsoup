@@ -63,6 +63,25 @@ export interface RecentItem {
   openCount: number
 }
 
+export interface FavoriteItem {
+  kind: 'bank' | 'note'
+  itemId: string
+  createdAt: string
+}
+
+export interface ShortLink {
+  code: string
+  kind: 'bank' | 'note'
+  targetId: string
+}
+
+export interface GuestAnswer {
+  correct: boolean
+  correctKeys: string[]
+  stem: string
+  explanation: string
+}
+
 export interface BankAccess {
   bank: Bank
   isOwner: boolean
@@ -187,6 +206,32 @@ export interface ImportQuestionPreview {
   poolCount?: number | null
 }
 
+export interface ImportBankChange {
+  name: string | null
+  description: string | null
+  visibility: string | null
+  tags: string[] | null
+  year: string | null
+  semester: string | null
+  defaultShuffleOptions: boolean | null
+  requireReview: boolean | null
+}
+
+export interface ImportPoolChange {
+  name: string
+  mode: string
+  delete: boolean
+  add: number
+  enable: number
+  disable: number
+  total: number
+}
+
+export interface ImportSummary {
+  bank: ImportBankChange | null
+  pools: ImportPoolChange[]
+}
+
 export interface ImportPreview {
   total: number
   valid: number
@@ -196,6 +241,7 @@ export interface ImportPreview {
   batchIssues: ImportIssue[]
   sampleCards: Card[]
   planId: string
+  summary?: ImportSummary | null
 }
 
 export interface ImportJob {
@@ -278,6 +324,9 @@ export interface NextCard {
   session: Session
   card: Card | null
   index: number
+  /** 随卡下发的正确答案，用于本地即时判分。 */
+  correctKeys: string[]
+  explanation: string
 }
 
 export interface FeedbackOption {
@@ -297,6 +346,8 @@ export interface AnswerFeedback {
   finished: boolean
   stats: SessionStats
   session: Session
+  /** 服务端已经准备好的下一题，省掉一次「下一题」请求。 */
+  next: NextCard | null
 }
 
 export interface SubmitAnswerBody {
@@ -454,7 +505,10 @@ function normalizeErrors(raw: Record<string, string[] | string> | undefined): Re
 }
 
 function redirectToLogin() {
-  if (window.location.pathname === '/login') return
+  const path = window.location.pathname
+  if (path === '/login') return
+  // 分享链接允许游客浏览，不能因为会话探测失败就把人踢去登录页。
+  if (path.startsWith('/s/') || path.startsWith('/share/')) return
   window.location.assign('/login')
 }
 
@@ -471,7 +525,10 @@ function problemError(status: number, problem: ProblemBody | null, path: string)
     problem?.title ||
     `请求失败（${status}）`
 
-  if (status === 401 && !path.startsWith('/api/auth/')) {
+  // /api/me 是会话探测，401 只代表未登录；/api/public 本来就允许匿名。
+  const silent401 =
+    path === '/api/me' || path.startsWith('/api/auth/') || path.startsWith('/api/public/')
+  if (status === 401 && !silent401) {
     redirectToLogin()
   }
 
@@ -596,8 +653,45 @@ export const api = {
 
   recentItems: (limit = 6) => request<RecentItem[]>(`/api/recents?limit=${limit}`),
 
+  favorites: () => request<FavoriteItem[]>('/api/favorites'),
+
+  addFavorite: (kind: 'bank' | 'note', itemId: string) =>
+    request<void>('/api/favorites', { method: 'POST', body: { kind, itemId } }),
+
+  removeFavorite: (kind: 'bank' | 'note', itemId: string) =>
+    request<void>(`/api/favorites/${kind}/${encodeURIComponent(itemId)}`, { method: 'DELETE' }),
+
   recordRecent: (kind: 'bank' | 'note', itemId: string) =>
     request<void>('/api/recents', { method: 'POST', body: { kind, itemId } }),
+
+  createLink: (kind: 'bank' | 'note', targetId: string) =>
+    request<ShortLink>('/api/links', { method: 'POST', body: { kind, targetId } }),
+
+  resolveLink: (code: string) =>
+    request<ShortLink>(`/api/public/links/${encodeURIComponent(code)}`),
+
+  publicNote: (noteId: string) =>
+    request<Note>(`/api/public/notes/${encodeURIComponent(noteId)}`),
+
+  publicBank: (bankId: string) =>
+    request<Bank>(`/api/public/banks/${encodeURIComponent(bankId)}`),
+
+  publicBankQuestions: (bankId: string) =>
+    request<QuestionSummary[]>(`/api/public/banks/${encodeURIComponent(bankId)}/questions`),
+
+  publicCard: (bankId: string, questionId: string, attempt = 0) =>
+    request<Card>(
+      `/api/public/banks/${encodeURIComponent(bankId)}/questions/${encodeURIComponent(questionId)}/card?attempt=${attempt}`,
+    ),
+
+  publicAnswer: (bankId: string, questionId: string, selectedKeys: string[]) =>
+    request<GuestAnswer>(
+      `/api/public/banks/${encodeURIComponent(bankId)}/questions/${encodeURIComponent(questionId)}/answer`,
+      { method: 'POST', body: { selectedKeys } },
+    ),
+
+  activeSession: (bankId: string) =>
+    request<Session | null>(`/api/banks/${encodeURIComponent(bankId)}/sessions/active`),
 
   bank: (bankId: string) => request<BankAccess>(`/api/banks/${encodeURIComponent(bankId)}`),
 

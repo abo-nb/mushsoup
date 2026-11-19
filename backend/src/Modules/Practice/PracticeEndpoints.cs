@@ -18,6 +18,15 @@ static class PracticeEndpoints
             CancellationToken cancellationToken) =>
             Results.Ok(await practice.StartSessionAsync(bankId, request, cancellationToken)));
 
+        group.MapGet("/banks/{bankId}/sessions/active", async (
+            string bankId,
+            PracticeService practice,
+            CancellationToken cancellationToken) =>
+        {
+            var session = await practice.GetActiveSessionAsync(bankId, cancellationToken);
+            return session is null ? Results.NoContent() : Results.Ok(session);
+        });
+
         group.MapGet("/sessions/{id}", async (
             string id,
             PracticeService practice,

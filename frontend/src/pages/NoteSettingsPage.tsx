@@ -22,6 +22,7 @@ export function NoteSettingsPage() {
     queryKey: ['note', noteId],
     queryFn: () => api.note(noteId),
     enabled: Boolean(noteId),
+    staleTime: 5 * 60_000,
   })
 
   if (!noteId) {

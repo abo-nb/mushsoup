@@ -48,6 +48,110 @@
   white-space: nowrap;
 }
 
+/* 快速选择：大章小格 + 编号范围 */
+.chapter-quick {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  min-width: 0;
+}
+
+.chapter-quick-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.chapter-quick-label {
+  flex: 0 0 auto;
+  padding-top: 5px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.chapter-quick-start {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chapter-chips {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chapter-chip {
+  max-width: 240px;
+  min-height: 28px;
+  padding: 2px var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-label);
+  font: inherit;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.chapter-chip:hover {
+  border-color: var(--primary-border);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.chapter-chip:active {
+  background: var(--surface-3);
+}
+
+.chapter-chip.is-active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary-active);
+  font-weight: 600;
+}
+
+.chapter-chip.is-mixed {
+  border-style: dashed;
+  border-color: var(--primary-border);
+}
+
+.chapter-range {
+  align-items: center;
+  margin: 0;
+}
+
+.chapter-range .chapter-quick-label {
+  padding-top: 0;
+}
+
+.chapter-range-input {
+  flex: 1 1 180px;
+  max-width: 280px;
+  min-height: 32px;
+  font-size: var(--text-sm);
+}
+
+.chapter-range-error {
+  flex: 1 1 100%;
+  color: var(--danger);
+  font-size: var(--text-xs);
+  line-height: var(--leading-sm);
+}
+
 .chapter-tree {
   display: grid;
   margin: var(--space-3) 0 0;
@@ -185,6 +289,30 @@
     min-height: 44px;
   }
 
+  .chapter-chip {
+    max-width: 100%;
+    min-height: 36px;
+  }
+
+  .chapter-range-input {
+    flex: 1 1 140px;
+    max-width: none;
+    min-height: 40px;
+  }
+
+  .chapter-quick-start {
+    align-items: stretch;
+  }
+
+  .chapter-quick-start .btn {
+    flex: 1 1 100%;
+    min-height: 44px;
+  }
+
+  .chapter-quick-start .chapter-hint {
+    flex-basis: 100%;
+  }
+
   .chapter-minors .chapter-check {
     min-height: 42px;
   }
@@ -201,7 +329,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chapter-check {
+  .chapter-check,
+  .chapter-chip {
     transition: none;
   }
 }

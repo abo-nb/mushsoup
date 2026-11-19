@@ -55,6 +55,13 @@ public interface IBankDirectory
 
     Task<bool> CanEditAsync(string bankId, string userId, CancellationToken cancellationToken = default);
 
+    /// <summary>批量导入时一次性改写题库设置；只有创建者能调用。</summary>
+    Task<BankDto> UpdateAsync(
+        string bankId,
+        UpdateBankRequest request,
+        string userId,
+        CancellationToken cancellationToken = default);
+
     /// <summary>题目增删时由 Questions 模块调用，维护反规范化的题量。</summary>
     Task TouchQuestionCountAsync(string bankId, int delta, CancellationToken cancellationToken = default);
 

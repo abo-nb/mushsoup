@@ -615,6 +615,29 @@
   background: currentColor;
 }
 
+.import-summary {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text-label);
+  font-size: var(--text-sm);
+}
+
+.import-summary p {
+  margin: 0;
+}
+
+.import-summary p + p {
+  margin-top: var(--space-1);
+}
+
+.import-summary-title {
+  font-weight: 650;
+}
+
 .import-batch-issues {
   margin-top: 0;
 }
