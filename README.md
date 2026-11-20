@@ -410,3 +410,9 @@ dotnet test
 公开页的四个筛选（年 / 学期 / 学科 / 包含章）也做了接口级验证：题库和讲义的 `year` / `semester` 能写入并读回，讲义 `chapters` 由 11 个 section 正确派生，`GET /api/questions/chapter-index` 能按题库返回大章并跳过不可见题库。
 
 排行榜做了真实接口验证：登录后作答一次，`GET /api/leaderboard` 返回权重 0.5/0.3/0.2、该用户 answered=1、贡献 7（题 5 + 库 1 + 讲义 1），综合分按公式算出 72.7。前端排行榜页的桌面表格 / 移动卡片和深色模式在 375–1000px 下做过静态布局检查，未做浏览器端点击回归。
+
+## 许可证
+
+Copyright (C) 2026 abo-nb
+
+本项目以 GNU General Public License v3.0 或更新版本（GPL-3.0-or-later）发布，全文见 [LICENSE](LICENSE)。
