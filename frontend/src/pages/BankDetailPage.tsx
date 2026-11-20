@@ -7,6 +7,14 @@ import { Icon } from '../components/Icon'
 import { ErrorNote, Loading } from '../components/Ui'
 import { ShareButton } from '../components/ShareButton'
 import { FavoriteButton } from '../components/FavoriteButton'
+import { StartAlgorithmDialog } from '../components/StartAlgorithmDialog'
+import { useAuth } from '../auth-context'
+import {
+  isMemoryAlgorithm,
+  readStoredAlgorithm,
+  storeAlgorithm,
+  type MemoryAlgorithm,
+} from '../algorithms'
 import { naturalCompare } from '../natural-sort'
 import {
   buildChapterLeaves,
@@ -53,6 +61,13 @@ interface ChapterBranch {
   count: number
   directCount: number
   minors: ChapterMinor[]
+}
+
+interface PendingStart {
+  mode: string
+  chapters?: string[][]
+  limit?: number
+  context: string
 }
 
 function buildChapterTree(questions: QuestionSummary[]) {
@@ -138,11 +153,19 @@ export function BankDetailPage() {
   useRecordRecent('bank', id)
   const bankId = id ?? ''
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [limit, setLimit] = useState(readPracticeLimit)
+  const [lastAlgorithm, setLastAlgorithm] = useState<MemoryAlgorithm | null>(readStoredAlgorithm)
+  const [pendingStart, setPendingStart] = useState<PendingStart | null>(null)
+  const [dialogAlgorithm, setDialogAlgorithm] = useState<MemoryAlgorithm>('sm2')
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(() => new Set())
   const [rangeText, setRangeText] = useState('')
   const [rangeError, setRangeError] = useState('')
   const moreMenuRef = useRef<HTMLDetailsElement>(null)
+
+  const accountAlgorithm: MemoryAlgorithm = isMemoryAlgorithm(user?.prefs.memoryAlgorithm)
+    ? user.prefs.memoryAlgorithm
+    : 'sm2'
 
   const accessQuery = useQuery({
     queryKey: ['bank', bankId],
@@ -240,11 +263,13 @@ export function BankDetailPage() {
       mode,
       chapters: paths,
       limit: count,
+      algorithm: algorithmChoice,
     }: {
       mode: string
       chapters?: string[][]
       limit?: number
-    }) => api.startSession(bankId, mode, count, paths),
+      algorithm?: string
+    }) => api.startSession(bankId, mode, count, paths, algorithmChoice),
     onSuccess: (session) => navigate(`/practice/${session.id}`),
   })
 
@@ -255,6 +280,25 @@ export function BankDetailPage() {
     } catch {
       // 隐私模式下写入会失败，本次选择仍然生效。
     }
+  }
+
+  function openStart(pending: PendingStart) {
+    setDialogAlgorithm(lastAlgorithm ?? accountAlgorithm)
+    setPendingStart(pending)
+  }
+
+  function confirmStart() {
+    if (!pendingStart) return
+    setLastAlgorithm(dialogAlgorithm)
+    storeAlgorithm(dialogAlgorithm)
+    const { mode, chapters: paths, limit: count } = pendingStart
+    setPendingStart(null)
+    startMutation.mutate({
+      mode,
+      chapters: paths,
+      limit: count,
+      algorithm: dialogAlgorithm,
+    })
   }
 
   function toggleMinor(branch: ChapterBranch, minorKey: string, next: boolean) {
@@ -418,7 +462,9 @@ export function BankDetailPage() {
           <button
             type="button"
             className="btn btn-ghost"
-            onClick={() => startMutation.mutate({ mode: 'endless' })}
+            onClick={() =>
+              openStart({ mode: 'endless', context: '无限刷题 · 按自己的队列循环' })
+            }
             disabled={startDisabled}
             title={bank.questionCount === 0 ? '题库还没有题目' : undefined}
           >
@@ -427,7 +473,7 @@ export function BankDetailPage() {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => startMutation.mutate({ mode: 'daily', limit })}
+            onClick={() => openStart({ mode: 'daily', limit, context: `每日练习 · 最多 ${limit} 题` })}
             disabled={startDisabled}
             title={bank.questionCount === 0 ? '题库还没有题目' : undefined}
           >
@@ -556,7 +602,12 @@ export function BankDetailPage() {
                 type="button"
                 className="btn btn-small btn-primary"
                 onClick={() =>
-                  startMutation.mutate({ mode: 'daily', chapters: selectedPaths, limit })
+                  openStart({
+                    mode: 'daily',
+                    chapters: selectedPaths,
+                    limit,
+                    context: `已选 ${selectedQuestionCount} 题 · 最多 ${limit} 题`,
+                  })
                 }
                 disabled={selectedQuestionCount === 0 || startMutation.isPending}
               >
@@ -565,7 +616,13 @@ export function BankDetailPage() {
               <button
                 type="button"
                 className="btn btn-small btn-ghost"
-                onClick={() => startMutation.mutate({ mode: 'endless', chapters: selectedPaths })}
+                onClick={() =>
+                  openStart({
+                    mode: 'endless',
+                    chapters: selectedPaths,
+                    context: `已选 ${selectedQuestionCount} 题 · 无限刷题`,
+                  })
+                }
                 disabled={selectedQuestionCount === 0 || startMutation.isPending}
               >
                 无限刷题
@@ -618,7 +675,12 @@ export function BankDetailPage() {
               type="button"
               className="btn btn-primary"
               onClick={() =>
-                startMutation.mutate({ mode: 'daily', chapters: selectedPaths, limit })
+                openStart({
+                  mode: 'daily',
+                  chapters: selectedPaths,
+                  limit,
+                  context: `已选 ${selectedQuestionCount} 题 · 最多 ${limit} 题`,
+                })
               }
               disabled={selectedQuestionCount === 0 || startMutation.isPending}
             >
@@ -628,7 +690,11 @@ export function BankDetailPage() {
               type="button"
               className="btn btn-ghost"
               onClick={() =>
-                startMutation.mutate({ mode: 'endless', chapters: selectedPaths })
+                openStart({
+                  mode: 'endless',
+                  chapters: selectedPaths,
+                  context: `已选 ${selectedQuestionCount} 题 · 无限刷题`,
+                })
               }
               disabled={selectedQuestionCount === 0 || startMutation.isPending}
             >
@@ -642,6 +708,15 @@ export function BankDetailPage() {
           题目还没有章节。给题目填上「大章 / 小章」后，就能按章节练习。
         </p>
       ) : null}
+
+      <StartAlgorithmDialog
+        open={pendingStart !== null}
+        algorithm={dialogAlgorithm}
+        context={pendingStart?.context}
+        onCancel={() => setPendingStart(null)}
+        onChangeAlgorithm={setDialogAlgorithm}
+        onConfirm={confirmStart}
+      />
 
       {allQuestionsQuery.data && allQuestionsQuery.data.length === 0 ? (
         <p className="chapter-note chapter-note-block">

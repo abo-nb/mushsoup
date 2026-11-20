@@ -35,5 +35,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/Architecture.Tests/Architecture.Tests.csproj" />
     <Project Path="tests/Questions.Tests/Questions.Tests.csproj" />
+    <Project Path="tests/Scheduling.Tests/Scheduling.Tests.csproj" />
   </Folder>
 </Solution>

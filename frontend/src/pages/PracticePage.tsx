@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
+import { algorithmLabel } from '../algorithms'
 import type { AnswerFeedback, NextCard, SubmitAnswerBody } from '../api'
 import { useAuth } from '../auth-context'
 import { Icon } from '../components/Icon'
@@ -220,7 +221,8 @@ export function PracticePage() {
   }, [card, feedback, selectOption, handleSubmit, submitMode])
 
   const retryMutation = useMutation({
-    mutationFn: (input: { bankId: string; mode: string }) => api.startSession(input.bankId, input.mode),
+    mutationFn: (input: { bankId: string; mode: string; algorithm: string }) =>
+      api.startSession(input.bankId, input.mode, undefined, undefined, input.algorithm),
     onSuccess: (newSession) => navigate(`/practice/${newSession.id}`),
   })
 
@@ -283,7 +285,11 @@ export function PracticePage() {
                 type="button"
                 className="btn btn-primary"
                 onClick={() =>
-                  retryMutation.mutate({ bankId: activeSession.bankId, mode: activeSession.mode })
+                  retryMutation.mutate({
+                    bankId: activeSession.bankId,
+                    mode: activeSession.mode,
+                    algorithm: activeSession.algorithm,
+                  })
                 }
                 disabled={retryMutation.isPending}
               >
@@ -335,6 +341,9 @@ export function PracticePage() {
         </Link>
         <span className="practice-meta">
           {isEndless ? <span className="badge badge-quiet">无限刷题</span> : null}
+          {activeSession.algorithm !== 'sm2' ? (
+            <span className="badge badge-quiet">{algorithmLabel(activeSession.algorithm)}</span>
+          ) : null}
           <span className="muted">{nextQuery.data.session.bankName}</span>
         </span>
       </div>

@@ -31,7 +31,8 @@ public sealed record SessionDto(
     int Remaining,
     DateTime StartedAt,
     DateTime? FinishedAt,
-    SessionStatsDto Stats);
+    SessionStatsDto Stats,
+    string Algorithm);
 
 /// <summary>
 /// 一张待答的卡。CorrectKeys 与 Explanation 随卡下发，前端可以本地判分；
@@ -70,7 +71,8 @@ public sealed record AnswerFeedbackDto(
 public sealed record StartSessionRequest(
     int? Limit,
     string? Mode,
-    IReadOnlyList<IReadOnlyList<string>>? Chapters = null);
+    IReadOnlyList<IReadOnlyList<string>>? Chapters = null,
+    string? Algorithm = null);
 
 /// <summary>Answered 是作答次数，Correct 是其中答对的次数。</summary>
 public sealed record UserPracticeStatsDto(string UserId, int Answered, int Correct);

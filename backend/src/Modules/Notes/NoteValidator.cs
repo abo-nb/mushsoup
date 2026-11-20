@@ -23,8 +23,8 @@ internal sealed record NotePayload(
 internal static class NoteValidator
 {
     private const int MaxContentBytes = 4 * 1024 * 1024;
-    private const int MaxTitleLength = 120;
-    private const int MaxSubtitleLength = 500;
+    internal const int MaxTitleLength = 120;
+    internal const int MaxSubtitleLength = 500;
     internal const int MaxTagCount = 30;
     internal const int MaxTagLength = 40;
     internal const int MaxYearLength = 20;

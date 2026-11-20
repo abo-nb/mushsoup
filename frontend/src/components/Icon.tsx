@@ -18,6 +18,7 @@ export type IconName =
   | 'trophy'
   | 'star'
   | 'clock'
+  | 'more'
 
 const ICON_PATHS: Record<IconName, ReactNode> = {
   book: (
@@ -121,6 +122,13 @@ const ICON_PATHS: Record<IconName, ReactNode> = {
   star: (
     <>
       <path d="M11.5 2.7a.6.6 0 0 1 1 0l2.3 4.7a2.1 2.1 0 0 0 1.6 1.2l5.1.7a.6.6 0 0 1 .3 1l-3.7 3.6a2.1 2.1 0 0 0-.6 1.9l.9 5.1a.6.6 0 0 1-.9.6l-4.6-2.4a2.1 2.1 0 0 0-2 0l-4.6 2.4a.6.6 0 0 1-.9-.6l.9-5.1a2.1 2.1 0 0 0-.6-1.9L2.1 10.3a.6.6 0 0 1 .3-1l5.1-.7a2.1 2.1 0 0 0 1.6-1.2z" />
+    </>
+  ),
+  more: (
+    <>
+      <circle cx="5" cy="12" r="1.4" />
+      <circle cx="12" cy="12" r="1.4" />
+      <circle cx="19" cy="12" r="1.4" />
     </>
   ),
 }

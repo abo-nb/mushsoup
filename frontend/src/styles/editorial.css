@@ -578,6 +578,63 @@
   flex: 0 0 auto;
 }
 
+/* ---------- 开始练习：算法弹窗 ---------- */
+
+.algorithm-dialog {
+  width: min(520px, calc(100vw - 32px));
+  /* 四个算法卡片在横屏手机上会顶出视口，给弹窗自己留滚动。 */
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+}
+
+.algorithm-dialog::backdrop {
+  background: var(--scrim);
+}
+
+.algorithm-dialog-form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.algorithm-dialog-head {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.algorithm-dialog-head .eyebrow {
+  margin: 0;
+}
+
+.algorithm-dialog-head h2 {
+  margin: 0;
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+}
+
+.algorithm-dialog-context {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.algorithm-dialog-actions {
+  margin-top: var(--space-1);
+}
+
+@media (max-width: 640px) {
+  .algorithm-dialog-actions .btn {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
+}
+
 /* ---------- 题库详情 ---------- */
 
 .bank-actions {

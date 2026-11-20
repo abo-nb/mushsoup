@@ -57,7 +57,7 @@ export function NoteSettingsPage() {
         <div className="page-heading">
           <p className="eyebrow">讲义设置</p>
           <h1>{note.title}</h1>
-          <p className="page-sub">管理这份讲义的可见性和学科标签。</p>
+          <p className="page-sub">管理这份讲义的标题、简介、可见性和学科标签。</p>
         </div>
       </header>
 
@@ -73,6 +73,8 @@ export function NoteSettingsPage() {
 function NoteSettingsForm({ note }: { note: Note }) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const [title, setTitle] = useState(note.title || note.content?.title || '')
+  const [subtitle, setSubtitle] = useState(note.subtitle ?? note.content?.subtitle ?? '')
   const [visibility, setVisibility] = useState(
     (note.visibility ?? note.content?.visibility) === 'public' ? 'public' : 'private',
   )
@@ -83,11 +85,19 @@ function NoteSettingsForm({ note }: { note: Note }) {
     initialSemester === '上' || initialSemester === '下' ? initialSemester : '',
   )
 
+  const missingTitle = title.trim().length === 0
   const missingTags = visibility === 'public' && tags.length === 0
 
   const updateMutation = useMutation({
     mutationFn: () =>
-      api.updateNoteMeta(note.id, { visibility, tags, year: year.trim(), semester }),
+      api.updateNoteMeta(note.id, {
+        title: title.trim(),
+        subtitle: subtitle.trim(),
+        visibility,
+        tags,
+        year: year.trim(),
+        semester,
+      }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['note', note.id] })
       void queryClient.invalidateQueries({ queryKey: ['notes'] })
@@ -100,7 +110,7 @@ function NoteSettingsForm({ note }: { note: Note }) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (missingTags || updateMutation.isPending) return
+    if (missingTitle || missingTags || updateMutation.isPending) return
     updateMutation.mutate()
   }
 
@@ -122,6 +132,56 @@ function NoteSettingsForm({ note }: { note: Note }) {
   return (
     <>
       <form className="note-settings-form" onSubmit={handleSubmit}>
+        <section className="card card-pad note-settings-section">
+          <div className="note-settings-head">
+            <div>
+              <h2 className="section-title">基本信息</h2>
+              <p className="muted note-settings-desc">
+                标题和简介会显示在讲义列表、阅读页和公开内容里。
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="note-settings-title">标题</label>
+            <input
+              id="note-settings-title"
+              className="input"
+              type="text"
+              required
+              maxLength={120}
+              value={title}
+              onChange={(event) => {
+                markDirty()
+                setTitle(event.target.value)
+              }}
+              placeholder="如 企業管理概論"
+            />
+          </div>
+
+          <div className="field">
+            <label htmlFor="note-settings-subtitle">简介（选填）</label>
+            <textarea
+              id="note-settings-subtitle"
+              className="textarea"
+              rows={2}
+              maxLength={500}
+              value={subtitle}
+              onChange={(event) => {
+                markDirty()
+                setSubtitle(event.target.value)
+              }}
+              placeholder="一句话说明这份讲义的范围"
+            />
+          </div>
+
+          {missingTitle ? (
+            <p className="form-hint note-settings-warning" role="status">
+              标题不能为空。
+            </p>
+          ) : null}
+        </section>
+
         <section className="card card-pad note-settings-section">
           <div className="note-settings-head">
             <div>
@@ -245,7 +305,11 @@ function NoteSettingsForm({ note }: { note: Note }) {
           >
             {updateMutation.isPending ? '保存中…' : updateMutation.isSuccess ? '已保存' : ''}
           </span>
-          <button type="submit" className="btn btn-primary" disabled={missingTags || updateMutation.isPending}>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={missingTitle || missingTags || updateMutation.isPending}
+          >
             {updateMutation.isPending ? '保存中…' : '保存设置'}
           </button>
         </div>

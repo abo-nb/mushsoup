@@ -55,6 +55,9 @@ internal sealed class UserPrefsDocument
 
     [BsonElement("submitMode")]
     public string SubmitMode { get; set; } = UserPrefsDto.Default.SubmitMode;
+
+    [BsonElement("memoryAlgorithm")]
+    public string MemoryAlgorithm { get; set; } = UserPrefsDto.Default.MemoryAlgorithm;
 }
 
 public sealed class UserService(
@@ -181,6 +184,16 @@ public sealed class UserService(
             changes.Add(update.Set(candidate => candidate.Prefs.SubmitMode, request.SubmitMode));
         }
 
+        if (request.MemoryAlgorithm is not null)
+        {
+            if (request.MemoryAlgorithm is not ("sm2" or "speed" or "fsrs" or "leitner"))
+            {
+                throw new ValidationFailedException("memoryAlgorithm", "memoryAlgorithm 只能是 sm2、speed、fsrs 或 leitner");
+            }
+
+            changes.Add(update.Set(candidate => candidate.Prefs.MemoryAlgorithm, request.MemoryAlgorithm));
+        }
+
         if (changes.Count == 0)
         {
             throw new ValidationFailedException("prefs", "没有要更新的设置");
@@ -300,5 +313,6 @@ public sealed class UserService(
         user.ClassId,
         new UserPrefsDto(
             user.Prefs?.ShuffleOptions ?? UserPrefsDto.Default.ShuffleOptions,
-            user.Prefs?.SubmitMode ?? UserPrefsDto.Default.SubmitMode));
+            user.Prefs?.SubmitMode ?? UserPrefsDto.Default.SubmitMode,
+            user.Prefs?.MemoryAlgorithm ?? UserPrefsDto.Default.MemoryAlgorithm));
 }

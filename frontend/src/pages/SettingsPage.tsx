@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useSyncExternalStore } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
 import { useAuth } from '../auth-context'
@@ -7,6 +7,16 @@ import { ErrorNote } from '../components/Ui'
 import { SHUFFLE_HINTS, SHUFFLE_LABELS, SUBMIT_HINTS, SUBMIT_LABELS } from '../format'
 import { applyThemeMode, readThemeMode, type ThemeMode } from '../theme'
 import { useLanguage, type Lang } from '../i18n'
+import { ALGORITHM_OPTIONS, isMemoryAlgorithm, storeAlgorithm } from '../algorithms'
+import {
+  MAX_PINNED,
+  NAV_ITEMS_BY_KEY,
+  getNavConfig,
+  resetNavConfig,
+  setNavConfig,
+  subscribeNav,
+  type NavKey,
+} from '../nav'
 
 const THEME_LABELS: Record<ThemeMode, string> = {
   light: '浅色',
@@ -32,11 +42,13 @@ const LANG_HINTS: Record<Lang, string> = {
 
 export function SettingsPage() {
   const { user, logout } = useAuth()
+  const navConfig = useSyncExternalStore(subscribeNav, getNavConfig, getNavConfig)
   const { lang, setLang } = useLanguage()
   const queryClient = useQueryClient()
   const [themeMode, setThemeMode] = useState<ThemeMode>(readThemeMode)
   const [shuffle, setShuffle] = useState(user?.prefs.shuffleOptions ?? 'always')
   const [submitMode, setSubmitMode] = useState(user?.prefs.submitMode ?? 'space')
+  const [algorithm, setAlgorithm] = useState(user?.prefs.memoryAlgorithm ?? 'sm2')
 
   const invalidateMe = async () => {
     await queryClient.invalidateQueries({ queryKey: ['me'] })
@@ -58,6 +70,21 @@ export function SettingsPage() {
     },
   })
 
+  const algorithmMutation = useMutation({
+    mutationFn: (value: string) => api.updatePrefs({ memoryAlgorithm: value }),
+    onSuccess: invalidateMe,
+    onError: () => {
+      if (user) setAlgorithm(user.prefs.memoryAlgorithm ?? 'sm2')
+    },
+  })
+
+  function chooseAlgorithm(value: string) {
+    setAlgorithm(value)
+    // 开始练习的弹窗默认跟这里保持一致，改设置时顺手覆盖本机记忆。
+    if (isMemoryAlgorithm(value)) storeAlgorithm(value)
+    algorithmMutation.mutate(value)
+  }
+
   function chooseShuffle(value: string) {
     setShuffle(value)
     shuffleMutation.mutate(value)
@@ -66,6 +93,22 @@ export function SettingsPage() {
   function chooseSubmitMode(value: string) {
     setSubmitMode(value)
     submitMutation.mutate(value)
+  }
+
+  function moveNavItem(index: number, delta: number) {
+    const target = index + delta
+    if (target < 0 || target >= navConfig.order.length) return
+    const order = [...navConfig.order]
+    ;[order[index], order[target]] = [order[target], order[index]]
+    setNavConfig({ ...navConfig, order })
+  }
+
+  function toggleNavPin(key: NavKey) {
+    const pinned = navConfig.pinned.includes(key)
+      ? navConfig.pinned.filter((item) => item !== key)
+      : [...navConfig.pinned, key]
+    if (pinned.length > MAX_PINNED) return
+    setNavConfig({ ...navConfig, pinned })
   }
 
   function chooseTheme(value: ThemeMode) {
@@ -153,6 +196,117 @@ export function SettingsPage() {
               </label>
             ))}
           </div>
+        </section>
+
+        <section className="card card-pad settings-section">
+          <div className="settings-head">
+            <div>
+              <h2 className="section-title">底部导航</h2>
+              <p className="muted settings-desc">
+                竖屏时导航在屏幕底部，最多放 5 项，其余收进「更多」。排序和显示项只影响这台设备。
+              </p>
+            </div>
+            <button type="button" className="btn btn-small btn-ghost" onClick={resetNavConfig}>
+              恢复默认
+            </button>
+          </div>
+
+          <ul className="nav-settings-list">
+            {navConfig.order.map((key, index) => {
+              const item = NAV_ITEMS_BY_KEY.get(key)
+              if (!item) return null
+              const pinned = navConfig.pinned.includes(key)
+              const atLimit = navConfig.pinned.length >= MAX_PINNED
+              return (
+                <li key={key} className="nav-settings-row">
+                  <span className="nav-settings-icon" aria-hidden="true">
+                    <Icon name={item.icon} size={16} />
+                  </span>
+                  <span className="nav-settings-name">{item.label}</span>
+                  <span className={pinned ? 'badge' : 'badge badge-quiet'}>
+                    {pinned ? '底栏' : '更多'}
+                  </span>
+                  <div className="nav-settings-actions">
+                    <button
+                      type="button"
+                      className="btn btn-small btn-ghost"
+                      aria-label={`${item.label}上移`}
+                      disabled={index === 0}
+                      onClick={() => moveNavItem(index, -1)}
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-small btn-ghost"
+                      aria-label={`${item.label}下移`}
+                      disabled={index === navConfig.order.length - 1}
+                      onClick={() => moveNavItem(index, 1)}
+                    >
+                      ↓
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-small btn-ghost"
+                      disabled={!pinned && atLimit}
+                      onClick={() => toggleNavPin(key)}
+                    >
+                      {pinned ? '移入更多' : '放到底栏'}
+                    </button>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+
+        <section className="card card-pad settings-section">
+          <div className="settings-head">
+            <div>
+              <h2 className="section-title" id="algorithm-title">
+                记忆算法
+              </h2>
+              <p className="muted settings-desc">
+                决定复习节奏。开始练习前也可以在题库页临时切换。
+              </p>
+            </div>
+            <span className="settings-status" role="status" aria-live="polite">
+              {algorithmMutation.isPending ? (
+                <span className="form-hint">保存中…</span>
+              ) : algorithmMutation.isSuccess ? (
+                <span className="save-hint">已保存</span>
+              ) : null}
+            </span>
+          </div>
+
+          <div className="radio-cards" role="radiogroup" aria-labelledby="algorithm-title">
+            {ALGORITHM_OPTIONS.map((option) => (
+              <label
+                key={option.value}
+                className={algorithm === option.value ? 'radio-card selected' : 'radio-card'}
+              >
+                <input
+                  type="radio"
+                  name="memoryAlgorithm"
+                  value={option.value}
+                  checked={algorithm === option.value}
+                  onChange={() => chooseAlgorithm(option.value)}
+                  disabled={algorithmMutation.isPending}
+                />
+                <span className="radio-card-text">
+                  <strong>{option.label}</strong>
+                  <small>{option.hint}</small>
+                </span>
+                <span className="radio-card-check" aria-hidden="true">
+                  {algorithm === option.value ? <Icon name="check" size={16} /> : null}
+                </span>
+              </label>
+            ))}
+          </div>
+
+          {algorithmMutation.isError ? (
+            <ErrorNote message={errorMessage(algorithmMutation.error)} />
+          ) : null}
         </section>
 
         <section className="card card-pad settings-section">

@@ -10,6 +10,20 @@ public static class ReviewRating
     public static bool IsKnown(string rating) => rating is Again or Hard or Good or Easy;
 }
 
+/// <summary>sm2：间隔复习；speed：速度优先；fsrs：FSRS-5；leitner：固定档位的盒子。</summary>
+public static class ReviewAlgorithm
+{
+    public const string Sm2 = "sm2";
+    public const string Speed = "speed";
+    public const string Fsrs = "fsrs";
+    public const string Leitner = "leitner";
+
+    public static bool IsKnown(string algorithm) => algorithm is Sm2 or Speed or Fsrs or Leitner;
+
+    /// <summary>需要按到期时间排队、并且有「间隔」概念的算法。</summary>
+    public static bool IsScheduled(string algorithm) => algorithm is Sm2 or Fsrs or Leitner;
+}
+
 public static class MemoryState
 {
     public const string New = "new";
@@ -42,12 +56,18 @@ public interface IReviewScheduler
         string userId,
         string questionId,
         string rating,
+        string algorithm,
         CancellationToken cancellationToken = default);
 
-    Task<ReviewStateDto?> GetAsync(string userId, string questionId, CancellationToken cancellationToken = default);
+    Task<ReviewStateDto?> GetAsync(
+        string userId,
+        string questionId,
+        string algorithm,
+        CancellationToken cancellationToken = default);
 
     Task<IReadOnlyDictionary<string, ReviewStateDto>> GetManyAsync(
         string userId,
         IEnumerable<string> questionIds,
+        string algorithm,
         CancellationToken cancellationToken = default);
 }

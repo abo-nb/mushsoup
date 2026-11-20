@@ -176,7 +176,7 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
         return ToDto(result);
     }
 
-    /// <summary>只改元信息：可见性、标签、学年学期，并同步 ContentJson 里的同名字段。</summary>
+    /// <summary>只改元信息：标题、简介、可见性、标签、学年学期，并同步 ContentJson 里的同名字段。</summary>
     public async Task<NoteDto> UpdateMetadataAsync(
         string noteId,
         NoteMetadataRequest request,
@@ -185,6 +185,8 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
     {
         var note = await RequireOwnerAsync(noteId, userId, cancellationToken);
 
+        var title = request.Title is null ? note.Title : NormalizeTitle(request.Title);
+        var subtitle = request.Subtitle is null ? note.Subtitle : NormalizeSubtitle(request.Subtitle);
         var visibility = request.Visibility is null
             ? note.Visibility
             : NormalizeVisibility(request.Visibility);
@@ -200,11 +202,15 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
         var updated = await Notes.FindOneAndUpdateAsync(
             ActiveIdFilter(noteId),
             Builders<NoteDocument>.Update
+                .Set(x => x.Title, title)
+                .Set(x => x.Subtitle, subtitle)
                 .Set(x => x.Tags, tags)
                 .Set(x => x.Visibility, visibility)
                 .Set(x => x.Year, year)
                 .Set(x => x.Semester, semester)
-                .Set(x => x.ContentJson, SyncContentMetadata(note.ContentJson, tags, visibility, year, semester))
+                .Set(
+                    x => x.ContentJson,
+                    SyncContentMetadata(note.ContentJson, title, subtitle, tags, visibility, year, semester))
                 .Set(x => x.UpdatedAt, DateTime.UtcNow),
             new FindOneAndUpdateOptions<NoteDocument> { ReturnDocument = ReturnDocument.After },
             cancellationToken);
@@ -240,6 +246,33 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
         }
 
         return note;
+    }
+
+    private static string NormalizeTitle(string title)
+    {
+        var trimmed = title.Trim();
+        if (trimmed.Length == 0)
+        {
+            throw new ValidationFailedException("title", "标题不能为空");
+        }
+
+        if (trimmed.Length > NoteValidator.MaxTitleLength)
+        {
+            throw new ValidationFailedException("title", $"标题不能超过 {NoteValidator.MaxTitleLength} 字");
+        }
+
+        return trimmed;
+    }
+
+    private static string? NormalizeSubtitle(string subtitle)
+    {
+        var trimmed = subtitle.Trim();
+        if (trimmed.Length > NoteValidator.MaxSubtitleLength)
+        {
+            throw new ValidationFailedException("subtitle", $"简介不能超过 {NoteValidator.MaxSubtitleLength} 字");
+        }
+
+        return trimmed.Length == 0 ? null : trimmed;
     }
 
     private static string NormalizeVisibility(string visibility)
@@ -310,6 +343,8 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
     /// <summary>阅读页读的是 contentJson，必须和集合里的元信息保持一致。</summary>
     private static string SyncContentMetadata(
         string contentJson,
+        string title,
+        string? subtitle,
         IReadOnlyList<string> tags,
         string visibility,
         string year,
@@ -324,6 +359,16 @@ internal sealed class NoteService(MongoDatabaseProvider database, NoteCache cach
         foreach (var tag in tags)
         {
             tagArray.Add(tag);
+        }
+
+        content["title"] = title;
+        if (subtitle is null)
+        {
+            content.Remove("subtitle");
+        }
+        else
+        {
+            content["subtitle"] = subtitle;
         }
 
         content["tags"] = tagArray;

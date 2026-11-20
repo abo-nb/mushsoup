@@ -1,9 +1,9 @@
 namespace Identity.Contracts;
 
-/// <summary>ShuffleOptions: follow | always | never；SubmitMode: space | auto</summary>
-public sealed record UserPrefsDto(string ShuffleOptions, string SubmitMode)
+/// <summary>ShuffleOptions: follow | always | never；SubmitMode: space | auto；MemoryAlgorithm: sm2 | speed | fsrs | leitner</summary>
+public sealed record UserPrefsDto(string ShuffleOptions, string SubmitMode, string MemoryAlgorithm = "sm2")
 {
-    public static readonly UserPrefsDto Default = new("always", "space");
+    public static readonly UserPrefsDto Default = new("always", "space", "sm2");
 }
 
 /// <summary>用户的对外形态。Id 是 Discord 用户 ID。</summary>
@@ -17,7 +17,7 @@ public sealed record UserDto(
 
 public sealed record UserSummaryDto(string Id, string DisplayName, string? ClassId, string? AvatarUrl = null);
 
-public sealed record UpdatePrefsRequest(string? ShuffleOptions, string? SubmitMode);
+public sealed record UpdatePrefsRequest(string? ShuffleOptions, string? SubmitMode, string? MemoryAlgorithm = null);
 
 /// <summary>用 Discord 用户 ID 发起验证码投递。</summary>
 public sealed record VerifyRequest(string UserId);

@@ -1,6 +1,7 @@
 export interface UserPrefs {
   shuffleOptions: string
   submitMode: string
+  memoryAlgorithm: string
 }
 
 export interface User {
@@ -304,6 +305,7 @@ export interface Session {
   startedAt: string
   finishedAt: string | null
   stats: SessionStats
+  algorithm: string
 }
 
 export interface CardOption {
@@ -426,6 +428,8 @@ export interface Note extends NoteSummary {
 }
 
 export interface UpdateNoteMetaBody {
+  title?: string
+  subtitle?: string
   visibility?: string
   tags?: string[]
   year?: string
@@ -646,8 +650,11 @@ export const api = {
 
   logout: () => request<void>('/api/auth/logout', { method: 'POST' }),
 
-  updatePrefs: (prefs: { shuffleOptions?: string; submitMode?: string }) =>
-    request<User>('/api/me/prefs', { method: 'PATCH', body: prefs }),
+  updatePrefs: (prefs: {
+    shuffleOptions?: string
+    submitMode?: string
+    memoryAlgorithm?: string
+  }) => request<User>('/api/me/prefs', { method: 'PATCH', body: prefs }),
 
   banks: () => request<Bank[]>('/api/banks'),
 
@@ -750,10 +757,21 @@ export const api = {
   deleteQuestion: (questionId: string) =>
     request<void>(`/api/questions/${encodeURIComponent(questionId)}`, { method: 'DELETE' }),
 
-  startSession: (bankId: string, mode?: string, limit?: number, chapters?: string[][]) =>
+  startSession: (
+    bankId: string,
+    mode?: string,
+    limit?: number,
+    chapters?: string[][],
+    algorithm?: string,
+  ) =>
     request<Session>(`/api/banks/${encodeURIComponent(bankId)}/sessions`, {
       method: 'POST',
-      body: { limit: limit ?? null, mode: mode ?? null, chapters: chapters ?? null },
+      body: {
+        limit: limit ?? null,
+        mode: mode ?? null,
+        chapters: chapters ?? null,
+        algorithm: algorithm ?? null,
+      },
     }),
 
   nextCard: (sessionId: string) =>

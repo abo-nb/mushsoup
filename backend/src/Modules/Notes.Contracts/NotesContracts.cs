@@ -40,7 +40,9 @@ public sealed record NoteMetadataRequest(
     string? Visibility,
     IReadOnlyList<string>? Tags,
     string? Year = null,
-    string? Semester = null);
+    string? Semester = null,
+    string? Title = null,
+    string? Subtitle = null);
 
 /// <summary>讲义导入提示词：只描述格式，不规定内容。</summary>
 public sealed record NoteImportPromptDto(string Prompt);

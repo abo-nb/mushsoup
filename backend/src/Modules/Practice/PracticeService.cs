@@ -116,6 +116,15 @@ sealed class PracticeService(
             throw new ValidationFailedException("mode", "不支持的练习模式");
         }
 
+        var prefs = await users.GetPrefsAsync(userId, cancellationToken) ?? UserPrefsDto.Default;
+        var algorithm = string.IsNullOrWhiteSpace(request.Algorithm)
+            ? prefs.MemoryAlgorithm
+            : request.Algorithm.Trim().ToLowerInvariant();
+        if (!ReviewAlgorithm.IsKnown(algorithm))
+        {
+            throw new ValidationFailedException("algorithm", "不支持的记忆算法");
+        }
+
         var published = (await questions.GetByBankAsync(bankId, cancellationToken))
             .Where(question => question.Status == QuestionStatus.Published)
             .ToList();
@@ -142,8 +151,10 @@ sealed class PracticeService(
         var limit = Math.Clamp(request.Limit ?? DefaultLimit, 1, MaxLimit);
         var ordered = mode switch
         {
-            SessionMode.Endless => await BuildEndlessQueueAsync(userId, published, cancellationToken),
-            SessionMode.Daily => await BuildDailyQueueAsync(userId, published, limit, cancellationToken),
+            SessionMode.Endless => await BuildEndlessQueueAsync(userId, published, algorithm, cancellationToken),
+            SessionMode.Daily when algorithm == ReviewAlgorithm.Speed =>
+                await BuildSpeedQueueAsync(userId, published, limit, algorithm, cancellationToken),
+            SessionMode.Daily => await BuildDailyQueueAsync(userId, published, limit, algorithm, cancellationToken),
             _ => published.OrderBy(question => question.UpdatedAt).Take(limit).Select(question => question.Id).ToList(),
         };
 
@@ -154,6 +165,7 @@ sealed class PracticeService(
             BankId = bankId,
             BankName = access.Bank.Name,
             Mode = mode,
+            Algorithm = algorithm,
             QuestionIds = ordered.Distinct().ToList(),
             Queue = ordered,
             StartedAt = DateTime.UtcNow,
@@ -263,7 +275,7 @@ sealed class PracticeService(
             OccurredAt = now,
         }, cancellationToken: cancellationToken);
 
-        await scheduler.ReviewAsync(session.UserId, question.Id, rating, cancellationToken);
+        await scheduler.ReviewAsync(session.UserId, question.Id, rating, session.Algorithm, cancellationToken);
 
         var answeredIndex = session.Served.Count;
         session.CurrentQuestionId = null;
@@ -279,12 +291,17 @@ sealed class PracticeService(
 
         if (session.Mode == SessionMode.Endless)
         {
-            // 只有稳稳答对才累计连击；慢或犹豫（hard）不算「熟」。
-            var confident = grade.Correct && rating is ReviewRating.Good or ReviewRating.Easy;
+            var speed = session.Algorithm == ReviewAlgorithm.Speed;
+            var masteryStreak = speed ? 1 : EndlessMasteryStreak;
+            var requeueGap = speed ? 1 : RequeueGap;
+            // 间隔复习要求稳稳答对，慢或犹豫（hard）不算「熟」；速度优先和盒子只看对错。
+            var confident = session.Algorithm == ReviewAlgorithm.Sm2
+                ? grade.Correct && rating is ReviewRating.Good or ReviewRating.Easy
+                : grade.Correct;
             var streak = confident ? session.Streaks.GetValueOrDefault(question.Id) + 1 : 0;
             session.Streaks[question.Id] = streak;
 
-            if (streak >= EndlessMasteryStreak)
+            if (streak >= masteryStreak)
             {
                 if (!session.Mastered.Contains(question.Id))
                 {
@@ -293,8 +310,13 @@ sealed class PracticeService(
             }
             else
             {
-                session.Queue.Insert(Math.Min(session.Queue.Count, RequeueGap), question.Id);
+                session.Queue.Insert(Math.Min(session.Queue.Count, requeueGap), question.Id);
             }
+        }
+        else if (!grade.Correct && session.Algorithm != ReviewAlgorithm.Sm2)
+        {
+            // 速度优先、FSRS、Leitner 答错的题当轮隔一题再出现一次；SM-2 留给十几分钟后的复习队列。
+            session.Queue.Insert(Math.Min(session.Queue.Count, 1), question.Id);
         }
 
         var finished = session.Queue.Count == 0;
@@ -341,9 +363,10 @@ sealed class PracticeService(
     private async Task<List<string>> BuildEndlessQueueAsync(
         string userId,
         List<QuestionDto> published,
+        string algorithm,
         CancellationToken cancellationToken)
     {
-        var states = await scheduler.GetManyAsync(userId, published.Select(question => question.Id), cancellationToken);
+        var states = await scheduler.GetManyAsync(userId, published.Select(question => question.Id), algorithm, cancellationToken);
         var pool = published.Where(question => !IsMastered(states, question.Id)).ToList();
         if (pool.Count == 0)
         {
@@ -357,13 +380,39 @@ sealed class PracticeService(
             .ToList();
     }
 
+    /// <summary>
+    /// 速度优先：只练还没学会的题（答对一次就算学会），不看到期时间。
+    /// 没做过的题排前面，其余按上次复习时间从旧到新。
+    /// </summary>
+    private async Task<List<string>> BuildSpeedQueueAsync(
+        string userId,
+        List<QuestionDto> published,
+        int limit,
+        string algorithm,
+        CancellationToken cancellationToken)
+    {
+        var states = await scheduler.GetManyAsync(userId, published.Select(question => question.Id), algorithm, cancellationToken);
+
+        return published
+            .Where(question => !IsMastered(states, question.Id))
+            .OrderBy(question => states.ContainsKey(question.Id) ? 1 : 0)
+            .ThenBy(question => states.TryGetValue(question.Id, out var state)
+                ? state.LastReviewedAt ?? DateTime.MinValue
+                : DateTime.MinValue)
+            .ThenBy(question => question.UpdatedAt)
+            .Take(limit)
+            .Select(question => question.Id)
+            .ToList();
+    }
+
     private async Task<List<string>> BuildDailyQueueAsync(
         string userId,
         List<QuestionDto> published,
         int limit,
+        string algorithm,
         CancellationToken cancellationToken)
     {
-        var states = await scheduler.GetManyAsync(userId, published.Select(question => question.Id), cancellationToken);
+        var states = await scheduler.GetManyAsync(userId, published.Select(question => question.Id), algorithm, cancellationToken);
         var now = DateTime.UtcNow;
 
         var due = published
@@ -574,5 +623,6 @@ sealed class PracticeService(
         session.Queue.Count + (session.CurrentQuestionId is null ? 0 : 1),
         session.StartedAt,
         session.FinishedAt,
-        new SessionStatsDto(session.Correct, session.Wrong));
+        new SessionStatsDto(session.Correct, session.Wrong),
+        string.IsNullOrEmpty(session.Algorithm) ? ReviewAlgorithm.Sm2 : session.Algorithm);
 }

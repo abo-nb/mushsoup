@@ -866,6 +866,61 @@
 
 /* ---------- 设置 ---------- */
 
+.nav-settings-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.nav-settings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-settings-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text-subtle);
+}
+
+.nav-settings-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-sm);
+}
+
+.nav-settings-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.nav-settings-actions .btn {
+  min-width: 32px;
+  padding: 0 8px;
+}
+
+@media (max-width: 640px) {
+  .nav-settings-row {
+    flex-wrap: wrap;
+  }
+
+  .nav-settings-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .nav-settings-actions .btn {
+    min-height: 36px;
+  }
+}
+
 .settings-section {
   display: grid;
   gap: var(--space-4);

@@ -20,6 +20,9 @@ sealed class PracticeSessionDocument
 
     public string Mode { get; set; } = "sequence";
 
+    /// <summary>sm2 或 speed；老会话没有这个字段时按 sm2 处理。</summary>
+    public string Algorithm { get; set; } = "sm2";
+
     /// <summary>本轮涉及的不同题目，用于计算总量。</summary>
     public List<string> QuestionIds { get; set; } = [];
 

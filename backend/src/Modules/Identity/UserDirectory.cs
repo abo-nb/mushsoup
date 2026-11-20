@@ -71,7 +71,8 @@ public sealed class UserDirectory(MongoDatabaseProvider provider) : IUserDirecto
             ? null
             : new UserPrefsDto(
                 user.Prefs?.ShuffleOptions ?? UserPrefsDto.Default.ShuffleOptions,
-                user.Prefs?.SubmitMode ?? UserPrefsDto.Default.SubmitMode);
+                user.Prefs?.SubmitMode ?? UserPrefsDto.Default.SubmitMode,
+                user.Prefs?.MemoryAlgorithm ?? UserPrefsDto.Default.MemoryAlgorithm);
     }
 
     private static UserSummaryDto ToSummary(UserDocument user) => new(user.Id, user.DisplayName, user.ClassId, user.AvatarUrl);
