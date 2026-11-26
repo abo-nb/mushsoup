@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
+import type { PracticeRange } from '../api'
 import { useAuth } from '../auth-context'
 import { FavoriteButton } from '../components/FavoriteButton'
 import { Icon } from '../components/Icon'
@@ -32,13 +33,15 @@ interface FilterState {
 const FILTER_KEYS: FilterKey[] = ['year', 'semester', 'subject', 'chapter']
 
 interface PublicEntry {
-  kind: 'bank' | 'note'
+  kind: 'bank' | 'note' | 'range'
   id: string
   year?: string
   semester?: string
   tags: string[]
   /** undefined 表示题库章节索引还没拿到，既不算有章节也不算未标注。 */
   chapters?: string[]
+  /** 所属题库不在公开列表里：只在不加任何筛选时出现。 */
+  onlyAll?: boolean
   search: (string | null | undefined)[]
 }
 
@@ -113,12 +116,39 @@ function matchesChapter(chapters: string[] | undefined, filter: string): boolean
   return filter === UNSET ? values.length === 0 : values.includes(filter)
 }
 
+/** 范围章节路径的第一段就是大章名，筛选和摘要都用它。 */
+function rangeChapterHeads(chapters: string[][]): string[] {
+  const heads = new Set<string>()
+  for (const path of chapters) {
+    const head = (path[0] ?? '').trim()
+    if (head) heads.add(head)
+  }
+  return [...heads]
+}
+
+function rangeChapterSummary(chapters: string[][]): string {
+  const heads = rangeChapterHeads(chapters)
+  if (heads.length === 0) return ''
+  if (heads.length <= 2) return heads.join('、')
+  return `${heads[0]}、${heads[1]} 等 ${heads.length} 章`
+}
+
 function entryMatches(
   entry: PublicEntry,
   filters: FilterState,
   query: string,
   except?: FilterKey,
 ): boolean {
+  // 题库不在公开列表里的范围没有可筛的学年/学期/学科/章节，只在「全部」下出现。
+  if (
+    entry.onlyAll &&
+    (filters.year !== ALL ||
+      filters.semester !== ALL ||
+      filters.subject !== ALL ||
+      filters.chapter !== ALL)
+  ) {
+    return false
+  }
   if (except !== 'year' && !matchesTerm(entry.year, filters.year)) return false
   if (except !== 'semester' && !matchesTerm(entry.semester, filters.semester)) return false
   if (except !== 'subject' && !matchesSubjectFilter(entry.tags, filters.subject)) return false
@@ -133,6 +163,7 @@ function collectOptions(dimension: FilterKey, entries: PublicEntry[]): Dimension
     const found = new Set<string>()
     let hasBlank = false
     for (const entry of entries) {
+      if (entry.onlyAll) continue
       const subjects = entry.tags
         .map((tag) => canonicalSubject(tag))
         .filter((subject) => subject !== null)
@@ -154,6 +185,7 @@ function collectOptions(dimension: FilterKey, entries: PublicEntry[]): Dimension
   const values = new Set<string>()
   let hasBlank = false
   for (const entry of entries) {
+    if (entry.onlyAll) continue
     if (dimension === 'chapter') {
       if (entry.chapters === undefined) continue
       if (entry.chapters.length === 0) hasBlank = true
@@ -188,13 +220,16 @@ function activeValue(value: string, choices: string[]): string {
 
 export function PublicBanksPage() {
   const { user } = useAuth()
+  const queryClient = useQueryClient()
   const [yearFilter, setYearFilter] = useState(ALL)
   const [semesterFilter, setSemesterFilter] = useState(ALL)
   const [subjectFilter, setSubjectFilter] = useState(ALL)
   const [chapterFilter, setChapterFilter] = useState(ALL)
   const [query, setQuery] = useState('')
+  const [rangeError, setRangeError] = useState('')
   const banksQuery = useQuery({ queryKey: ['banks'], queryFn: api.banks, staleTime: 60_000 })
   const notesQuery = useQuery({ queryKey: ['notes'], queryFn: api.notes, staleTime: 2 * 60_000 })
+  const rangesQuery = useQuery({ queryKey: ['ranges'], queryFn: api.ranges, staleTime: 60_000 })
 
   const publicBanks = useMemo(
     () => (banksQuery.data ?? []).filter((bank) => bank.visibility === 'public'),
@@ -204,6 +239,20 @@ export function PublicBanksPage() {
     () => (notesQuery.data ?? []).filter((note) => note.visibility === 'public'),
     [notesQuery.data],
   )
+  const publicRanges = useMemo(() => rangesQuery.data ?? [], [rangesQuery.data])
+  const publicBankMap = useMemo(
+    () => new Map(publicBanks.map((bank) => [bank.id, bank])),
+    [publicBanks],
+  )
+
+  const deleteRange = useMutation({
+    mutationFn: (rangeId: string) => api.deleteRange(rangeId),
+    onSuccess: () => {
+      setRangeError('')
+      void queryClient.invalidateQueries({ queryKey: ['ranges'] })
+    },
+    onError: (cause) => setRangeError(errorMessage(cause)),
+  })
 
   const publicBankIds = useMemo(
     () => publicBanks.map((bank) => bank.id).sort(),
@@ -271,8 +320,38 @@ export function PublicBanksPage() {
         ],
       })
     }
+    for (const range of publicRanges) {
+      const bank = publicBankMap.get(range.bankId)
+      const ownerName = range.ownerName?.trim() || '同班同学'
+      const tags = bank?.tags ?? []
+      const heads = bank ? rangeChapterHeads(range.chapters) : undefined
+      // 没选章节的范围等同于整库练习，不参与「包含章」筛选（只出现在全部）。
+      const chapters = heads && heads.length > 0 ? heads : undefined
+      items.push({
+        kind: 'range',
+        id: range.id,
+        year: bank?.year,
+        semester: bank?.semester,
+        tags,
+        chapters,
+        onlyAll: bank === undefined,
+        search: [
+          range.name,
+          range.description,
+          range.bankName,
+          range.ownerName,
+          ownerName,
+          ...(chapters ?? []),
+          bank?.year,
+          bank?.semester,
+          termLabel(bank?.year, bank?.semester),
+          ...tags,
+          ...tags.map(subjectLabel),
+        ],
+      })
+    }
     return items
-  }, [publicBanks, publicNotes, bankChapters])
+  }, [publicBanks, publicNotes, publicRanges, publicBankMap, bankChapters])
 
   const queryText = query.trim().toLowerCase()
   const rawFilters = useMemo<FilterState>(
@@ -335,11 +414,19 @@ export function PublicBanksPage() {
     () => new Set(visible.filter((entry) => entry.kind === 'note').map((entry) => entry.id)),
     [visible],
   )
+  const visibleRangeIds = useMemo(
+    () => new Set(visible.filter((entry) => entry.kind === 'range').map((entry) => entry.id)),
+    [visible],
+  )
 
   const visibleBanks = publicBanks.filter((bank) => visibleBankIds.has(bank.id))
   const visibleNotes = publicNotes.filter((note) => visibleNoteIds.has(note.id))
+  const visibleRanges = publicRanges.filter((range) => visibleRangeIds.has(range.id))
 
-  const loaded = banksQuery.data !== undefined && notesQuery.data !== undefined
+  const loaded =
+    banksQuery.data !== undefined &&
+    notesQuery.data !== undefined &&
+    rangesQuery.data !== undefined
   const isEmpty = publicBanks.length === 0 && publicNotes.length === 0
   const hasFilters =
     yearFilter !== ALL ||
@@ -348,7 +435,12 @@ export function PublicBanksPage() {
     chapterFilter !== ALL ||
     queryText.length > 0
   const noMatches =
-    loaded && !isEmpty && hasFilters && visibleBanks.length === 0 && visibleNotes.length === 0
+    loaded &&
+    !isEmpty &&
+    hasFilters &&
+    visibleBanks.length === 0 &&
+    visibleRanges.length === 0 &&
+    visibleNotes.length === 0
 
   function clearFilters() {
     setYearFilter(ALL)
@@ -356,6 +448,12 @@ export function PublicBanksPage() {
     setSubjectFilter(ALL)
     setChapterFilter(ALL)
     setQuery('')
+  }
+
+  function confirmDeleteRange(range: PracticeRange) {
+    if (!window.confirm('删除这个练习范围？')) return
+    setRangeError('')
+    deleteRange.mutate(range.id)
   }
 
   return (
@@ -374,6 +472,10 @@ export function PublicBanksPage() {
       {notesQuery.isError ? (
         <ErrorNote message={`讲义：${errorMessage(notesQuery.error)}`} />
       ) : null}
+      {rangesQuery.isError ? (
+        <ErrorNote message={`练习范围：${errorMessage(rangesQuery.error)}`} />
+      ) : null}
+      {rangeError ? <ErrorNote message={`练习范围：${rangeError}`} /> : null}
 
       <div className="public-filters">
         <div className="search-field public-search">
@@ -381,7 +483,7 @@ export function PublicBanksPage() {
           <input
             type="search"
             className="input search-input"
-            placeholder="搜索题库、讲义、学年或章节…"
+            placeholder="搜索题库、范围、讲义、学年或章节…"
             aria-label="搜索公开内容"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -498,6 +600,8 @@ export function PublicBanksPage() {
           <div className="bank-grid">
             {visibleBanks.map((bank) => {
               const term = termLabel(bank.year, bank.semester)
+              const ownerLabel =
+                bank.ownerId === user?.id ? '我创建的' : bank.ownerName?.trim() || '同班同学'
               return (
                 <div key={bank.id} className="card-favorite-wrap">
                   <Link to={`/banks/${bank.id}`} className="bank-card">
@@ -510,8 +614,8 @@ export function PublicBanksPage() {
                         <strong>{bank.questionCount}</strong>
                         <span>道题</span>
                       </span>
-                      <span className="bank-owner">
-                        {bank.ownerId === user?.id ? '我创建的' : '同学分享'}
+                      <span className="bank-owner" title={ownerLabel}>
+                        {ownerLabel}
                       </span>
                     </div>
                     <p className="bank-desc">{bank.description || '暂无简介'}</p>
@@ -522,6 +626,80 @@ export function PublicBanksPage() {
                     </div>
                   </Link>
                   <FavoriteButton kind="bank" itemId={bank.id} compact />
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {visibleRanges.length > 0 ? (
+        <section className="public-section" aria-labelledby="public-ranges-heading">
+          <div className="section-head">
+            <h2 className="section-title" id="public-ranges-heading">
+              公开练习范围
+            </h2>
+            <span className="muted">{visibleRanges.length} 个</span>
+          </div>
+          <div className="bank-grid">
+            {visibleRanges.map((range) => {
+              const ownerName = range.ownerName?.trim() || '同班同学'
+              const summary = rangeChapterSummary(range.chapters)
+              const deleting = deleteRange.isPending && deleteRange.variables === range.id
+              return (
+                <div key={range.id} className="bank-card range-card">
+                  <div className="range-card-top">
+                    <h2 className="range-card-title">
+                      <Link
+                        to={`/banks/${range.bankId}?range=${encodeURIComponent(range.id)}`}
+                        className="range-card-link"
+                        title={range.name}
+                      >
+                        {range.name}
+                      </Link>
+                    </h2>
+                    {range.isMine ? (
+                      <button
+                        type="button"
+                        className="btn btn-small btn-ghost range-delete"
+                        onClick={() => confirmDeleteRange(range)}
+                        disabled={deleting}
+                      >
+                        {deleting ? '删除中…' : '删除'}
+                      </button>
+                    ) : null}
+                  </div>
+                  {range.description ? <p className="bank-desc">{range.description}</p> : null}
+                  <p className="range-bank">
+                    <span className="range-bank-label">题库</span>
+                    <Link
+                      to={`/banks/${range.bankId}`}
+                      className="range-bank-link"
+                      title={range.bankName}
+                    >
+                      {range.bankName}
+                    </Link>
+                  </p>
+                  <div className="bank-stats">
+                    <span className="bank-stat">
+                      <strong>{range.questionCount}</strong>
+                      <span>题</span>
+                    </span>
+                    {summary ? (
+                      <span className="range-chapters" title={summary}>
+                        {summary}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="bank-meta">
+                    <span className="bank-owner" title={ownerName}>
+                      {ownerName}
+                    </span>
+                    <span className="range-go">
+                      开始练习
+                      <Icon name="arrow-left" size={14} />
+                    </span>
+                  </div>
                 </div>
               )
             })}

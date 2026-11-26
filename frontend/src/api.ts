@@ -55,6 +55,7 @@ export interface Bank {
   questionCount: number
   createdAt: string
   updatedAt: string
+  ownerName?: string | null
 }
 
 export interface RecentItem {
@@ -68,6 +69,36 @@ export interface FavoriteItem {
   kind: 'bank' | 'note'
   itemId: string
   createdAt: string
+}
+
+/** 公开的练习范围：一个题库里的章节组合 + 题数 + 模式，别人打开就能照着练。 */
+export interface PracticeRange {
+  id: string
+  ownerId: string
+  ownerName: string | null
+  bankId: string
+  bankName: string
+  name: string
+  description: string | null
+  chapters: string[][]
+  questionCount: number
+  limit: number
+  mode: string
+  algorithm: string | null
+  isMine: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CreateRangeBody {
+  bankId: string
+  name: string
+  description?: string | null
+  chapters: string[][]
+  questionCount: number
+  limit: number
+  mode?: string
+  algorithm?: string | null
 }
 
 export interface ShortLink {
@@ -710,6 +741,17 @@ export const api = {
 
   deleteBank: (bankId: string) =>
     request<void>(`/api/banks/${encodeURIComponent(bankId)}`, { method: 'DELETE' }),
+
+  ranges: () => request<PracticeRange[]>('/api/ranges'),
+
+  range: (rangeId: string) =>
+    request<PracticeRange>(`/api/ranges/${encodeURIComponent(rangeId)}`),
+
+  createRange: (body: CreateRangeBody) =>
+    request<PracticeRange>('/api/ranges', { method: 'POST', body }),
+
+  deleteRange: (rangeId: string) =>
+    request<void>(`/api/ranges/${encodeURIComponent(rangeId)}`, { method: 'DELETE' }),
 
   addBankMember: (bankId: string, userId: string) =>
     request<Bank>(`/api/banks/${encodeURIComponent(bankId)}/members`, {

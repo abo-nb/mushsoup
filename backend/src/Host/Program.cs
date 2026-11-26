@@ -16,6 +16,7 @@ using Notes;
 using Practice;
 using KeepAlive;
 using Questions;
+using Ranges;
 using Recents;
 using Favorites;
 using ShortLinks;
@@ -91,6 +92,7 @@ IModule[] modules =
     new RecentsModule(),
     new FavoritesModule(),
     new ShortLinksModule(),
+    new RangesModule(),
 ];
 
 foreach (var module in modules)

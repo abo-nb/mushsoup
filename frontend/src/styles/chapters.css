@@ -255,6 +255,148 @@
   margin-left: var(--space-1);
 }
 
+/* ---------- 公开练习范围：横幅与发布弹窗 ---------- */
+
+.range-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-color: var(--primary-border);
+  background: var(--primary-soft);
+  box-shadow: none;
+}
+
+.range-banner-body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.range-banner-title {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-sm);
+  overflow-wrap: anywhere;
+}
+
+.range-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-sm);
+  overflow-wrap: anywhere;
+}
+
+.range-banner-desc {
+  flex: 1 1 100%;
+  overflow-wrap: anywhere;
+}
+
+.range-banner-clear {
+  flex: 0 0 auto;
+}
+
+.range-banner-empty {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-sm);
+}
+
+.range-published {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1 1 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-sm);
+}
+
+.range-published-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.range-published-link:hover {
+  color: var(--primary-hover);
+}
+
+.range-published-link:active {
+  color: var(--primary-active);
+}
+
+.range-dialog {
+  width: min(480px, calc(100vw - 32px));
+  /* 内容超高时让弹窗自己滚动，按钮不会被顶出视口。 */
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+}
+
+.range-dialog::backdrop {
+  background: var(--scrim);
+}
+
+.range-dialog-form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.range-dialog-head {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.range-dialog-head .eyebrow,
+.range-dialog-head h2,
+.range-dialog-context {
+  margin: 0;
+}
+
+.range-dialog-head h2 {
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+}
+
+.range-dialog-context {
+  font-size: var(--text-sm);
+}
+
+.range-dialog-textarea {
+  min-height: 76px;
+}
+
+.range-dialog-form .notice {
+  margin: 0;
+}
+
+.range-dialog-actions {
+  margin-top: var(--space-1);
+}
+
 /* ---------- 题目编辑器：章节字段 ---------- */
 
 .chapter-fields {
@@ -326,11 +468,29 @@
     flex-basis: 100%;
     margin-left: 0;
   }
+
+  .range-banner {
+    flex-wrap: wrap;
+  }
+
+  .range-banner-clear {
+    min-height: 44px;
+  }
+
+  .range-dialog-form {
+    padding: var(--space-4);
+  }
+
+  .range-dialog-actions .btn {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .chapter-check,
-  .chapter-chip {
+  .chapter-chip,
+  .range-published-link {
     transition: none;
   }
 }

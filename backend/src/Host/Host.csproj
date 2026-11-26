@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Modules\Recents\Recents.csproj" />
     <ProjectReference Include="..\Modules\Favorites\Favorites.csproj" />
     <ProjectReference Include="..\Modules\ShortLinks\ShortLinks.csproj" />
+    <ProjectReference Include="..\Modules\Ranges\Ranges.csproj" />
   </ItemGroup>
 
   <ItemGroup>

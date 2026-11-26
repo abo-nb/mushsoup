@@ -9,7 +9,7 @@ namespace Banks;
 
 file static class BankMapper
 {
-    public static BankDto ToDto(BankDocument bank) => new(
+    public static BankDto ToDto(BankDocument bank, string? ownerName = null) => new(
         bank.Id,
         bank.ClassId,
         bank.OwnerId,
@@ -23,7 +23,8 @@ file static class BankMapper
         bank.MemberIds,
         bank.QuestionCount,
         bank.CreatedAt,
-        bank.UpdatedAt);
+        bank.UpdatedAt,
+        ownerName);
 }
 
 internal sealed class BankService(
@@ -94,9 +95,53 @@ internal sealed class BankService(
             .Sort(Builders<BankDocument>.Sort.Descending(x => x.CreatedAt))
             .ToListAsync(cancellationToken);
 
-        var result = banks.Select(BankMapper.ToDto).ToList();
+        var result = await WithOwnerNamesAsync(banks, cancellationToken);
         cache.Set<IReadOnlyList<BankDto>>(key, result, ListTtl);
         return result;
+    }
+
+    public async Task<IReadOnlyCollection<string>> ListPublicIdsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var key = cache.Key("public-ids");
+        if (cache.TryGet<IReadOnlyCollection<string>>(key, out var cached) && cached is not null)
+        {
+            return cached;
+        }
+
+        var f = Builders<BankDocument>.Filter;
+        var ids = await Banks
+            .Find(f.And(
+                f.Eq(x => x.DeletedAt, (DateTime?)null),
+                f.Eq(x => x.Visibility, BankVisibility.Public)))
+            .Project(x => x.Id)
+            .ToListAsync(cancellationToken);
+
+        IReadOnlyCollection<string> result = ids;
+        cache.Set(key, result, ListTtl);
+        return result;
+    }
+
+    /// <summary>公开列表要显示创建者的 Discord 显示名，这里批量补齐，查不到就留空。</summary>
+    private async Task<IReadOnlyList<BankDto>> WithOwnerNamesAsync(
+        IReadOnlyList<BankDocument> banks,
+        CancellationToken cancellationToken)
+    {
+        var ownerIds = banks
+            .Select(bank => bank.OwnerId)
+            .Where(id => !string.IsNullOrEmpty(id))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        if (ownerIds.Count == 0)
+        {
+            return banks.Select(bank => BankMapper.ToDto(bank)).ToList();
+        }
+
+        var users = await userDirectory.GetManyAsync(ownerIds, cancellationToken);
+        var names = users.ToDictionary(user => user.Id, user => user.DisplayName, StringComparer.Ordinal);
+        return banks
+            .Select(bank => BankMapper.ToDto(bank, names.GetValueOrDefault(bank.OwnerId)))
+            .ToList();
     }
 
     public async Task<bool> CanEditAsync(string bankId, string userId, CancellationToken cancellationToken = default)

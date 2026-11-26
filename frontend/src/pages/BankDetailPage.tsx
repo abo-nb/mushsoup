@@ -1,8 +1,15 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type MouseEvent,
+} from 'react'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, errorMessage } from '../api'
-import type { QuestionSummary } from '../api'
+import type { CreateRangeBody, PracticeRange, QuestionSummary } from '../api'
 import { Icon } from '../components/Icon'
 import { ErrorNote, Loading } from '../components/Ui'
 import { ShareButton } from '../components/ShareButton'
@@ -161,7 +168,18 @@ export function BankDetailPage() {
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(() => new Set())
   const [rangeText, setRangeText] = useState('')
   const [rangeError, setRangeError] = useState('')
+  const [publishOpen, setPublishOpen] = useState(false)
+  const [publishName, setPublishName] = useState('')
+  const [publishDescription, setPublishDescription] = useState('')
+  const [publishError, setPublishError] = useState('')
+  const [publishedRange, setPublishedRange] = useState<PracticeRange | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
   const moreMenuRef = useRef<HTMLDetailsElement>(null)
+  const publishDialogRef = useRef<HTMLDialogElement>(null)
+  // 记住已回填过的范围 id，之后用户的改动不会被重新取数覆盖。
+  const appliedRangeRef = useRef<string | null>(null)
+  const queryClient = useQueryClient()
+  const rangeId = searchParams.get('range')
 
   const accountAlgorithm: MemoryAlgorithm = isMemoryAlgorithm(user?.prefs.memoryAlgorithm)
     ? user.prefs.memoryAlgorithm
@@ -190,6 +208,48 @@ export function BankDetailPage() {
     // 练习进度必须即时反映，不沿用全局 60 秒缓存。
     staleTime: 0,
   })
+
+  // 公开页的范围链接：?range=<id>。404 表示范围已删除或题库不再公开，不重试。
+  const sharedRangeQuery = useQuery({
+    queryKey: ['range', rangeId],
+    queryFn: () => api.range(rangeId ?? ''),
+    enabled: Boolean(rangeId),
+    retry: false,
+  })
+
+  // 回填只做一次：共享链接打开后用户手动改选，不会被取数结果覆盖。
+  useEffect(() => {
+    const range = sharedRangeQuery.data
+    if (!range || range.bankId !== bankId) return
+    if (appliedRangeRef.current === range.id) return
+    appliedRangeRef.current = range.id
+    setSelectedChapters(new Set(range.chapters.map((path) => path.join(CHAPTER_SEP))))
+    if (PRACTICE_LIMITS.includes(range.limit)) changePracticeLimit(range.limit)
+  }, [sharedRangeQuery.data, bankId])
+
+  useEffect(() => {
+    const dialog = publishDialogRef.current
+    if (!dialog) return
+
+    if (publishOpen && !dialog.open) {
+      dialog.showModal()
+    } else if (!publishOpen && dialog.open) {
+      dialog.close()
+    }
+  }, [publishOpen])
+
+  useEffect(() => {
+    const dialog = publishDialogRef.current
+    if (!dialog) return
+
+    function handleCancel(event: Event) {
+      event.preventDefault()
+      setPublishOpen(false)
+    }
+
+    dialog.addEventListener('cancel', handleCancel)
+    return () => dialog.removeEventListener('cancel', handleCancel)
+  }, [])
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -273,6 +333,21 @@ export function BankDetailPage() {
     onSuccess: (session) => navigate(`/practice/${session.id}`),
   })
 
+  const publishRangeMutation = useMutation({
+    mutationFn: (body: CreateRangeBody) => api.createRange(body),
+    onSuccess: (range) => {
+      // 先同步关掉原生弹窗，避免清空输入时闪一下空表单。
+      publishDialogRef.current?.close()
+      setPublishOpen(false)
+      setPublishName('')
+      setPublishDescription('')
+      setPublishError('')
+      setPublishedRange(range)
+      void queryClient.invalidateQueries({ queryKey: ['ranges'] })
+    },
+    onError: (cause) => setPublishError(errorMessage(cause)),
+  })
+
   function changePracticeLimit(next: number) {
     setLimit(next)
     try {
@@ -299,6 +374,46 @@ export function BankDetailPage() {
       limit: count,
       algorithm: dialogAlgorithm,
     })
+  }
+
+  function openPublishDialog() {
+    setPublishError('')
+    setPublishOpen(true)
+  }
+
+  function closePublishDialog() {
+    setPublishOpen(false)
+  }
+
+  function handlePublishBackdrop(event: MouseEvent<HTMLDialogElement>) {
+    if (event.target === publishDialogRef.current) setPublishOpen(false)
+  }
+
+  function submitPublish(event: FormEvent) {
+    event.preventDefault()
+    const name = publishName.trim()
+    if (!name) {
+      setPublishError('给这个范围起个名字')
+      return
+    }
+    if (selectedQuestionCount === 0 || publishRangeMutation.isPending) return
+    setPublishError('')
+    publishRangeMutation.mutate({
+      bankId,
+      name,
+      description: publishDescription.trim() || null,
+      chapters: selectedPaths,
+      questionCount: selectedQuestionCount,
+      limit,
+      mode: 'daily',
+      algorithm: null,
+    })
+  }
+
+  function clearSharedRange() {
+    const next = new URLSearchParams(searchParams)
+    next.delete('range')
+    setSearchParams(next, { replace: true })
   }
 
   function toggleMinor(branch: ChapterBranch, minorKey: string, next: boolean) {
@@ -401,6 +516,17 @@ export function BankDetailPage() {
   const access = accessQuery.data
   const bank = access.bank
   const startDisabled = bank.questionCount === 0 || startMutation.isPending
+  // 范围必须属于当前题库；链接里的 id 指向别的题库时按「不存在」处理。
+  const sharedRange = sharedRangeQuery.data?.bankId === bankId ? sharedRangeQuery.data : null
+  const sharedRangeMissing =
+    Boolean(rangeId) &&
+    (sharedRangeQuery.isError || (sharedRangeQuery.data !== undefined && sharedRange === null))
+  const publishBlockedReason =
+    bank.visibility !== 'public'
+      ? '题库公开后才能发布范围'
+      : selectedQuestionCount === 0
+        ? '先勾选章节'
+        : undefined
 
   return (
     <div>
@@ -498,6 +624,32 @@ export function BankDetailPage() {
             继续
           </Link>
         </section>
+      ) : null}
+
+      {rangeId ? (
+        sharedRange ? (
+          <div className="card range-banner">
+            <div className="range-banner-body">
+              <p className="range-banner-title">来自公开范围 · {sharedRange.name}</p>
+              <p className="range-banner-meta">
+                {sharedRange.description ? (
+                  <span className="range-banner-desc">{sharedRange.description}</span>
+                ) : null}
+                {sharedRange.ownerName ? <span>由 {sharedRange.ownerName} 发布</span> : null}
+                <span>{sharedRange.questionCount} 题</span>
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-small btn-ghost range-banner-clear"
+              onClick={clearSharedRange}
+            >
+              清除
+            </button>
+          </div>
+        ) : sharedRangeMissing ? (
+          <p className="range-banner-empty">这个练习范围不存在，或所属题库已不再公开</p>
+        ) : null
       ) : null}
 
       {chapters.length > 0 ? (
@@ -700,7 +852,28 @@ export function BankDetailPage() {
             >
               无限刷题
             </button>
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={openPublishDialog}
+              disabled={
+                Boolean(publishBlockedReason) ||
+                startMutation.isPending ||
+                publishRangeMutation.isPending
+              }
+              title={publishBlockedReason}
+            >
+              发布范围
+            </button>
             <p className="chapter-hint chapter-actions-hint">只练勾选的章节，其余题目不受影响。</p>
+            {publishedRange ? (
+              <p className="range-published" role="status">
+                已发布到公开页
+                <Link to="/public" className="range-published-link">
+                  查看
+                </Link>
+              </p>
+            ) : null}
           </div>
         </section>
       ) : allQuestionsQuery.data && allQuestionsQuery.data.length > 0 ? (
@@ -717,6 +890,72 @@ export function BankDetailPage() {
         onChangeAlgorithm={setDialogAlgorithm}
         onConfirm={confirmStart}
       />
+
+      <dialog
+        ref={publishDialogRef}
+        className="range-dialog"
+        aria-labelledby="range-dialog-title"
+        onClick={handlePublishBackdrop}
+      >
+        <form className="range-dialog-form" onSubmit={submitPublish}>
+          <header className="range-dialog-head">
+            <p className="eyebrow">公开范围</p>
+            <h2 id="range-dialog-title">发布练习范围</h2>
+            <p className="muted range-dialog-context">
+              当前已选 {selectedQuestionCount} 道题、最多 {limit} 题
+            </p>
+          </header>
+
+          <div className="field">
+            <label htmlFor="range-name">名称</label>
+            <input
+              id="range-name"
+              className="input"
+              type="text"
+              autoComplete="off"
+              maxLength={60}
+              required
+              value={publishName}
+              onChange={(event) => {
+                setPublishName(event.target.value)
+                if (publishError) setPublishError('')
+              }}
+            />
+          </div>
+
+          <div className="field">
+            <label htmlFor="range-description">解释</label>
+            <textarea
+              id="range-description"
+              className="textarea range-dialog-textarea"
+              rows={3}
+              maxLength={300}
+              value={publishDescription}
+              onChange={(event) => setPublishDescription(event.target.value)}
+            />
+            <p className="form-hint">可选，公开页会显示这段说明。</p>
+          </div>
+
+          {publishError ? <ErrorNote message={publishError} /> : null}
+
+          <div className="form-actions range-dialog-actions">
+            <button type="button" className="btn btn-ghost" onClick={closePublishDialog}>
+              取消
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={
+                publishName.trim() === '' ||
+                selectedQuestionCount === 0 ||
+                publishRangeMutation.isPending
+              }
+            >
+              {publishRangeMutation.isPending ? '正在发布…' : '发布'}
+            </button>
+          </div>
+        </form>
+      </dialog>
 
       {allQuestionsQuery.data && allQuestionsQuery.data.length === 0 ? (
         <p className="chapter-note chapter-note-block">

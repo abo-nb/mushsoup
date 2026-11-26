@@ -25,7 +25,9 @@ public sealed record BankDto(
     IReadOnlyList<string> MemberIds,
     int QuestionCount,
     DateTime CreatedAt,
-    DateTime UpdatedAt);
+    DateTime UpdatedAt,
+    /// <summary>创建者的 Discord 显示名；只有列表接口会填，单条接口可能为 null。</summary>
+    string? OwnerName = null);
 
 public sealed record BankAccessDto(BankDto Bank, bool IsOwner, bool IsMember, bool CanView, bool CanEdit);
 
@@ -69,4 +71,7 @@ public interface IBankDirectory
     Task<IReadOnlyDictionary<string, int>> CountOwnedByUsersAsync(
         IReadOnlyCollection<string> userIds,
         CancellationToken cancellationToken = default);
+
+    /// <summary>当前所有公开、未删除的题库 id，供跨模块过滤公开内容。</summary>
+    Task<IReadOnlyCollection<string>> ListPublicIdsAsync(CancellationToken cancellationToken = default);
 }

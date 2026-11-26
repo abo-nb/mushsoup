@@ -25,6 +25,8 @@
     <Project Path="src/Modules/Practice/Practice.csproj" />
     <Project Path="src/Modules/Questions.Contracts/Questions.Contracts.csproj" />
     <Project Path="src/Modules/Questions/Questions.csproj" />
+    <Project Path="src/Modules/Ranges.Contracts/Ranges.Contracts.csproj" />
+    <Project Path="src/Modules/Ranges/Ranges.csproj" />
     <Project Path="src/Modules/Recents.Contracts/Recents.Contracts.csproj" />
     <Project Path="src/Modules/Recents/Recents.csproj" />
     <Project Path="src/Modules/ShortLinks.Contracts/ShortLinks.Contracts.csproj" />
